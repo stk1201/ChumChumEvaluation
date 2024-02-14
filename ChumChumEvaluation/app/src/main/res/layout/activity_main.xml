@@ -24,6 +24,7 @@
         android:layout_width="189dp"
         android:layout_height="109dp"
         android:layout_marginTop="164dp"
+        android:onClick="onStartButtonTapped"
         android:text="START"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
