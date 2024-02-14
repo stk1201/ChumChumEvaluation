@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.VideoView;
+
+import java.io.File;
 
 public class Uploading extends AppCompatActivity {
 
@@ -13,7 +16,10 @@ public class Uploading extends AppCompatActivity {
         setContentView(R.layout.activity_uploading);
     }
 
+   VideoView user_dance;
+
     public void onUploadButtonTapped(View View){
+
 
     }
 }
