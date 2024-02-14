@@ -4,6 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 
 public class videoStorage {
+    //動画をストックする場所。
+    //ユーザが踊っている動画と本家のダンス動画をそれぞれの配列に保存する。
+    //Uriが動画用の型である。
 
     private Uri[] userVideo_array = new Uri[5];
     private  Uri[] originalVideo_array = new Uri[5];
@@ -30,6 +33,9 @@ public class videoStorage {
         }
     }
 
+    //動画を取り出すメゾットを後で作成予定
+    //TensorFlowでbufferした動画もストックする予定
+    //5本の動画が保存できる設定なので抽出するときに抽出する動画を間違いないようにプログラミングする必要がある。
 
 
 
