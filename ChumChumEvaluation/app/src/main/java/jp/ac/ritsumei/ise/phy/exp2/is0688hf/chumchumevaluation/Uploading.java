@@ -17,17 +17,31 @@ import android.Manifest;
 
 public class Uploading extends AppCompatActivity {
 
+    videoStorage storage;//動画ストレージ
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uploading);
+
+        storage = new videoStorage();//動画ストレージを作成
     }
 
     //スマホのフォルダーにアクセス
     private static final int REQUEST_VIDEO_CAPTURE = 101;
     private static final int REQUEST_PERMISSION = 102;
 
-    public void onUserUploadButtonTapped(View View){//Uploadボタンを押されたとき
+    private int flag = 0;//ユーザ動画か本家動画の判定
+
+    public void onUploadButtonTapped(View View){//Uploadボタンを押されたとき
+        //どのUploadボタンが押されたのかの判定
+        if(View.getId() == R.id.user_button){
+            flag = 1;
+        }
+        else{
+            flag = 2;
+        }
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -57,12 +71,19 @@ public class Uploading extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {//動画ファイルの取得とコピー保存
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {//動画ファイルの取得と保存
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
-            Uri userDance = data.getData();//ユーザのダンス動画の取得
-            // ここで動画を処理する
+            Uri savedVideo = data.getData();//ダンス動画の取得
+
+            if(flag == 1){
+                storage.addUserVideo(savedVideo);//動画ストレージにあるuserVideo_arrayに保存する
+            }
+            if(flag == 2){
+                storage.addOriginalVideo(savedVideo);//動画ストレージにあるoriginalVideo_arrayに保存する
+            }
+
         }
     }
 
