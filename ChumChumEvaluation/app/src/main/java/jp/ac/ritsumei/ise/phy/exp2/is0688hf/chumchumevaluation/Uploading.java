@@ -42,10 +42,10 @@ public class Uploading extends AppCompatActivity {
             flag = 2;
         }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_VIDEO)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    new String[]{Manifest.permission.READ_MEDIA_VIDEO},
                     REQUEST_PERMISSION);
         } else {
             dispatchPickVideoIntent();
