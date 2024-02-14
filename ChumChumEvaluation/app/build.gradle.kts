@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "jp.ac.ritsumei.ise.phy.exp2.is0688hf.chumchumevaluation"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "jp.ac.ritsumei.ise.phy.exp2.is0688hf.chumchumevaluation"
