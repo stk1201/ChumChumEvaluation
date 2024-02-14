@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     //アップロード画面に遷移
     public void onStartButtonTapped(View view) {
-        Intent intent = new Intent(this, Uploading.class) ;
-        startActivity(intent) ;
+        Intent intent = new Intent(this, Uploading.class);
+        startActivity(intent);
     }
 }
