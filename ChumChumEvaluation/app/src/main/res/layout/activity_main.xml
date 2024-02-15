@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     tools:context=".MainActivity">
 
     <TextView
@@ -20,10 +21,12 @@
         app:layout_constraintVertical_bias="0.325" />
 
     <Button
-        android:id="@+id/StartBotton"
+        android:id="@+id/StartButton"
         android:layout_width="189dp"
         android:layout_height="109dp"
         android:layout_marginTop="164dp"
+        android:onClick="onStartButtonTapped"
+
         android:text="START"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
