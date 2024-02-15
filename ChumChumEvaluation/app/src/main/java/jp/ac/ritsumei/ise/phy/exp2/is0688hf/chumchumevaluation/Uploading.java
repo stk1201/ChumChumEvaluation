@@ -24,7 +24,7 @@ public class Uploading extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uploading);
 
-        storage = new videoStorage();//動画ストレージを作成
+        storage = new videoStorage();//動画ストレージclassを作成
     }
 
     //スマホのフォルダーにアクセス
