@@ -1,37 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#333333"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="262dp"
         android:layout_height="71dp"
-        android:textColor="#FFFFFF"
         android:text="Your Score is"
         android:textSize="32sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.046" />
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="69dp" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
         android:text="Detail"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.845"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.925" />
+        tools:layout_editor_absoluteX="283dp"
+        tools:layout_editor_absoluteY="646dp" />
 
     <TextView
         android:id="@+id/textView5"
@@ -39,25 +27,15 @@
         android:layout_height="50dp"
         android:text="You are"
         android:textSize="32sp"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.073"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        tools:layout_editor_absoluteX="50dp"
+        tools:layout_editor_absoluteY="390dp" />
 
     <TextView
         android:id="@+id/Score"
         android:layout_width="97dp"
         android:layout_height="70dp"
         android:text="Score"
-        android:textColor="#FFFFFF"
         android:textSize="32sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.321"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.21" />
+        tools:layout_editor_absoluteX="166dp"
+        tools:layout_editor_absoluteY="245dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
