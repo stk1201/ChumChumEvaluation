@@ -3,6 +3,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 public class Score1 extends AppCompatActivity {
+    //総合スコアを表示する場所。
+    //ロード画面でTensorFlowのバッファーがかけられた後に出てくる画面になる。
 
     private Coodinate coordinate;
     @Override
@@ -10,9 +12,11 @@ public class Score1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score2);
 
-        coordinate = new Coodinate();//座標クラスの作成
+        coordinate = new Coodinate();//Coodinateクラスの作成
     }
 
+    //各パーツの座標をCoodinateクラスから抽出する。
+    //double[0][]にはそのパーツのx座標の配列が、double[1][]にはそのパーツのy座標の配列が挿入されている。
     private double nose[][] = coordinate.outCoordinate(0);
     private double leftEye[][] = coordinate.outCoordinate(1);
     private double rightEye[][] = coordinate.outCoordinate(2);
