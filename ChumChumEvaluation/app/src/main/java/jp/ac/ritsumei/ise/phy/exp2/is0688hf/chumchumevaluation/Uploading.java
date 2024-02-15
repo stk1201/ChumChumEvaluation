@@ -88,4 +88,6 @@ public class Uploading extends AppCompatActivity {
         }
     }
 
+    //動画アップロードされたときにその動画のファイル名を枠内に表示し、アップロードしたことを表す予定。
+
 }
