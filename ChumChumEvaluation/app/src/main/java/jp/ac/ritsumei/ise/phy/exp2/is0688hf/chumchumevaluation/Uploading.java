@@ -36,7 +36,7 @@ public class Uploading extends AppCompatActivity {
 
     public void onUploadButtonTapped(View View){//Uploadボタンを押されたとき
         //どのUploadボタンが押されたのかの判定
-        if(View.getId() == R.id.user_button){
+        if(View.getId() == R.id.user1){
             flag = 1;
         }
         else{
