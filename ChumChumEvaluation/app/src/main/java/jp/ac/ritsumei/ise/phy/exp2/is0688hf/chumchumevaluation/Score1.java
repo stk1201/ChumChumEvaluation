@@ -2,6 +2,7 @@ package jp.ac.ritsumei.ise.phy.exp2.is0688hf.chumchumevaluation;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import java.lang.Math;
 public class Score1 extends AppCompatActivity {
     //総合スコアを表示する場所。
     //ロード画面でTensorFlowのバッファーがかけられた後に出てくる画面になる。
@@ -49,19 +50,27 @@ private static double[][][] calculateVectors(double[][] startPoint, double[][] e
     vectors[1] = calculateVector(startPoint, endPoint2);// startPointからendPoint2へのベクトルを計算
     return vectors;
 }
-//内積計算関数
-private static double calculateDotProduct(double[][][] vectors) {
-    double dotProduct;
-
+//コサイン計算関数
+private static double calculateCosine(double[][][] vectors) {
     // ベクトル1の要素
-    double x1 = vectors[0][0][0];
-    double y1 = vectors[0][0][1];
+    double x1 = vectors[0][1][0] - vectors[0][0][0];
+    double y1 = vectors[0][1][1] - vectors[0][0][1];
+
     // ベクトル2の要素
-    double x2 = vectors[1][0][0];
-    double y2 = vectors[1][0][1];
-    //内積
-    dotProduct = x1 * x2 + y1 * y2;//内積
-    return dotProduct;
+    double x2 = vectors[1][1][0] - vectors[1][0][0];
+    double y2 = vectors[1][1][1] - vectors[1][0][1];
+
+    // ベクトルの大きさを計算
+    double magnitude1 = Math.sqrt(x1 * x1 + y1 * y1);
+    double magnitude2 = Math.sqrt(x2 * x2 + y2 * y2);
+
+    // 内積計算
+    double dotProduct = x1 * x2 + y1 * y2;
+
+    // 各ベクトルの大きさの積で割る
+    double cosine = dotProduct / (magnitude1 * magnitude2);
+
+    return cosine;
 }
 //スコア導出関数
     private static double normalizeAndScale(double value) {
