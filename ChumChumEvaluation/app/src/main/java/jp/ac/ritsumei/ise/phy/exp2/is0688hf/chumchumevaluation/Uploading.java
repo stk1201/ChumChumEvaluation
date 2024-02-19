@@ -14,10 +14,8 @@ import android.view.View;
 import android.widget.Toast;
 import android.Manifest;
 
-
 public class Uploading extends AppCompatActivity {
     //ユーザが自身のフォルダから動画をアップロードする場所。
-
     videoStorage storage;//動画ストレージ
 
     @Override

@@ -8,32 +8,31 @@
     tools:context=".MainActivity">
 
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="602dp"
+        android:layout_height="400dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.368"
+        app:srcCompat="@drawable/logo3" />
+
     <Button
         android:id="@+id/StartButton"
-        android:layout_width="189dp"
-        android:layout_height="109dp"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:backgroundTint="@color/white"
         android:onClick="onStartButtonTapped"
         android:text="START"
-        android:backgroundTint="@color/white"
         android:textColor="@color/black"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.781" />
-
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="247dp"
-        android:layout_height="307dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.432"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.261"
-        app:srcCompat="@drawable/logo" />
+        app:layout_constraintVertical_bias="0.774" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

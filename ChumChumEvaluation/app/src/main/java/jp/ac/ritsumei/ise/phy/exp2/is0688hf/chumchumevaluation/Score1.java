@@ -20,7 +20,7 @@ public class Score1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_score2);
+        setContentView(R.layout.activity_score1);
 
         coordinate = new Coodinate();//Coodinateクラスの作成
         double user_coordinate[][][] = coordinate.outCoordinate(0);//ユーザの座標を入力する。
@@ -116,8 +116,8 @@ private static double[][] scoring(double preScore[][],double Score[][]){
     }
 
 
-//    スコア表示関数
-//    待ち画面への遷移
+// プログレスバー
+
 
 
 
