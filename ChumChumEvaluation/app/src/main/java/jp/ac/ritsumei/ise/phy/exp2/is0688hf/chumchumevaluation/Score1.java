@@ -25,19 +25,34 @@ public class Score1 extends AppCompatActivity {
     private double original_coordinate[][][] = coordinate.outCoordinate(1);//オリジナルの座標を入力する。
 
 //    ベクトル算出関数
-private static double[][]calculateVector(double[][] point1, double[][] point2) {
-    double[][] vector = new double[1][2];
-    vector[0][0] = point2[0][0] - point1[0][0];//x方向
-    vector[0][1] = point2[0][1] - point1[0][1];//y方向
+private static double[][][]calculateVector(double[][] point1, double[][] point2,int num) {
+    double[][] vector = new double[2][num];
+    vector[0][num] = point2[0][num] - point1[0][num];//x方向
+    vector[1][num] = point2[1][num] - point1[1][num];//y方向
     return vector;
 }
 // 三角形のベクトル計算
-private static double[][][] calculateVectors(double[][] startPoint, double[][] endPoint1, double[][] endPoint2) {
-    double[][][] vectors = new double[2][1][2];// ベクトルの配列を初期化
-    vectors[0] = calculateVector(startPoint, endPoint1);// startPointからendPoint1へのベクトル
-    vectors[1] = calculateVector(startPoint, endPoint2);// startPointからendPoint2へのベクトルを計算
-    return vectors;
+private static double[][]calculateVectors(double[][] startPoint1, double[][] startPoint2, double[][] endPoint,int num,int parts) {
+    double[][]CulculatedVectors = new double[2][2];
+    for (int i = 0; i < parts; i++) {
+        double[][] posi1 = new double[1][2];
+        double[][] posi2 = new double[1][2];
+        posi1= calculateVector(startPoint1, endPoint,num);
+        double Xposi1=posi1[0][0];
+        double Yposi1=posi1[1][0];
+        posi1= calculateVector(startPoint2, endPoint,num);
+        double Xposi2=posi1[0][0];
+        double Yposi2=posi1[1][0];
+
+        CulculatedVectors[0][0] = Xposi1;// startPoint1からendPoint1へのベクトル
+        CulculatedVectors[0][1] =Yposi1;
+        CulculatedVectors[1][0] = Xposi2;// startPoint2からendPoint1へのベクトル
+        CulculatedVectors[1][1] =Yposi2;
+
+    }
+    return CulculatedVectors;
 }
+
 //コサイン計算関数
 private static double calculateCosine(double[][][] vectors) {
     // ベクトル1の要素
@@ -60,6 +75,15 @@ private static double calculateCosine(double[][][] vectors) {
 
     return cosine;
 }
+//スコア合算
+private static double scoring(double value1,double value2) {
+    double normalizedValue1 = value1+1;// 値を0から1の範囲に正規化する
+    double normalizedValue2 = value2+1;// 値を0から1の範囲に正規化する
+    double AddValue=normalizedValue1+normalizedValue2;
+    double score=(AddValue/4)*100;
+    return score;//0~100の値を返す
+}
+
 //スコア導出関数
     private static double normalizeAndScale(double value) {
         double normalizedValue = value+1;// 値を0から1の範囲に正規化する
