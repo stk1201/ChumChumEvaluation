@@ -32,7 +32,7 @@ public class Score1 extends AppCompatActivity {
 
         calculateVector(user_coordinate,5,userRightVector);//ユーザー右肩からの方向ベクトル
         calculateVector(user_coordinate,5,userLeftVector);//ユーザー左肩からの方向ベクトル
-        calculateVector(original_coordinate,4,originalRightVector);//オリジナル左肩からの方向ベクトル
+        calculateVector(original_coordinate,4,originalRightVector);//オリジナル右肩からの方向ベクトル
         calculateVector(original_coordinate,4,originalLeftVector);//オリジナル左肩からの方向ベクトル
 
         //コサイン計算
@@ -51,70 +51,70 @@ public class Score1 extends AppCompatActivity {
 
     }
 
-//    ある基準点からのベクトル関数
-private static double[][][]calculateVector(double user_coordinate[][][], int RightOrLeft,double userOrOriginalVector[][][]) {
-    for (int i=0;i<16;i++) {//パーツごとの繰り返し
-        for (int j = 0; j < userOrOriginalVector[0][0].length; j++) {//時間ごとの繰り返し
-            double x1 = user_coordinate[i][0][j] - user_coordinate[RightOrLeft][0][j];//x方向ベクトル
-            double y1 = user_coordinate[i][1][j] - user_coordinate[RightOrLeft][1][j];//y方向ベクトル
-            double magnitude1 = Math.sqrt(x1 * x1 + y1 * y1);//正規化
-            userOrOriginalVector[i][0][j]=x1/magnitude1;
-            userOrOriginalVector[i][1][j]=y1/magnitude1;
-        }
-    }
-    return userOrOriginalVector;
-}
-
-// 三角形のコサイン計算
-private static double[][]calculateCosine(double userVector[][][],double originalVector[][][], double Cosin1or2[][]) {
-    for (int i = 0; i < 16; i++) {//パーツごと
-        for (int j = 0; j < userVector[0][0].length; j++) {//時間ごと
-            double x1 = userVector[i][0][j];
-            double y1 =userVector[i][1][j];
-            double x2 = originalVector[i][0][j];
-            double y2 =originalVector[i][1][j];
-            double dotProduct = x1 * x2 + y1 * y2; //(-1<dotProduct<1)
-            dotProduct=dotProduct+1;//(1<dotProduct<2)
-            Cosin1or2[i][j]=dotProduct;
-        }
-    }
-    return Cosin1or2;
-}
-//スコア合算二つの基準点からプレスコアを導出(それぞれのパーツと時間)
-double preScore[][]=new double[15][user_coordinate.length];
-private static double[][] preScoring(double Cosin1[][],double Cosin2[][],double preScore[][]) {
-    for (int i = 0; i < 16; i++) {//パーツごと
-        for (int j = 0; j < Cosin1[0].length; j++) {//時間ごと
-            double cos1=Cosin1[i][j];
-            double cos2=Cosin2[i][j];
-            double AddValue = cos1+cos2;
-            preScore[i][j]=AddValue;
-        }
-    }
-    return preScore;
-}    //スコア付け関数
-double Score[][]=new double[2][2];
-private static double[][] scoring(double preScore[][],double Score[][]){
-    double score=0;
-    double average;
-    double bestScore=0;
-        for (int i = 0; i < 16; i++) {//パーツごと
-            for (int j = 0; j < preScore[0].length; j++) {//時間ごと
-                score=score+preScore[i][j];//スコア総和
-                if(preScore[i][j]>bestScore){//採点中の最高点ならばbestScore書き換え
-                    bestScore=preScore[i][j];
-                    Score[1][0]=bestScore;//ベストスコアの更新
-                    Score[1][1]=j;//ベストスコア更新時の時刻
-                }
+    //ある基準点からのベクトル関数
+    private static double[][][]calculateVector(double coordinate[][][], int RightOrLeft,double vector[][][]) {
+        for (int i=0;i<16;i++) {//パーツごとの繰り返し
+            for (int j = 0; j < vector[0][0].length; j++) {//時間ごとの繰り返し
+                double x1 = coordinate[i][0][j] - coordinate[RightOrLeft][0][j];//x方向ベクトル
+                double y1 = coordinate[i][1][j] - coordinate[RightOrLeft][1][j];//y方向ベクトル
+                double magnitude1 = Math.sqrt(x1 * x1 + y1 * y1);//正規化
+                vector[i][0][j]=x1/magnitude1;
+                vector[i][1][j]=y1/magnitude1;
             }
         }
-        average=score/(preScore[0].length*15);//平均計算
-        Score[0][0]=average;
-        return Score;
+        return vector;
     }
 
+    // 三角形のコサイン計算
+    private static double[][]calculateCosine(double userVector[][][],double originalVector[][][], double Cosin1or2[][]) {
+        for (int i = 0; i < 16; i++) {//パーツごと
+            for (int j = 0; j < userVector[0][0].length; j++) {//時間ごと
+                double x1 = userVector[i][0][j];
+                double y1 =userVector[i][1][j];
+                double x2 = originalVector[i][0][j];
+                double y2 =originalVector[i][1][j];
+                double dotProduct = x1 * x2 + y1 * y2; //(-1<dotProduct<1)
+                dotProduct=dotProduct+1;//(1<dotProduct<2)
+                Cosin1or2[i][j]=dotProduct;
+            }
+        }
+        return Cosin1or2;
+    }
+    //スコア合算二つの基準点からプレスコアを導出(それぞれのパーツと時間)
+    double preScore[][]=new double[15][user_coordinate.length];
+    private static double[][] preScoring(double Cosin1[][],double Cosin2[][],double preScore[][]) {
+        for (int i = 0; i < 16; i++) {//パーツごと
+            for (int j = 0; j < Cosin1[0].length; j++) {//時間ごと
+                double cos1=Cosin1[i][j];
+                double cos2=Cosin2[i][j];
+                double AddValue = cos1+cos2;
+                preScore[i][j]=AddValue;
+            }
+        }
+        return preScore;
+    }    //スコア付け関数
+    double Score[][]=new double[2][2];
+    private static double[][] scoring(double preScore[][],double Score[][]){
+        double score=0;
+        double average;
+        double bestScore=0;
+            for (int i = 0; i < 16; i++) {//パーツごと
+                for (int j = 0; j < preScore[0].length; j++) {//時間ごと
+                    score=score+preScore[i][j];//スコア総和
+                    if(preScore[i][j]>bestScore){//採点中の最高点ならばbestScore書き換え
+                        bestScore=preScore[i][j];
+                        Score[1][0]=bestScore;//ベストスコアの更新
+                        Score[1][1]=j;//ベストスコア更新時の時刻
+                    }
+                }
+            }
+            average=score/(preScore[0].length*15);//平均計算
+            Score[0][0]=average;
+            return Score;
+        }
 
-// プログレスバー
+
+    // プログレスバー
 
 
 
