@@ -15,13 +15,15 @@ public class Loading extends AppCompatActivity {
     //アップロード画面で動画をアップロードしてスタートボタンを押したときにこの画面に遷移する。
     //ここではユーザからはロード画面が見えてるが裏ではTensorFlowを導入する。
 
+    private AutoModel4 model;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitvity_loading);
 
         try {
-            AutoModel4 model = AutoModel4.newInstance(this);
+            model = AutoModel4.newInstance(this);
 
             // Creates inputs for reference.
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 192, 192, 3}, DataType.UINT8);
@@ -36,6 +38,5 @@ public class Loading extends AppCompatActivity {
         } catch (IOException e) {
             // TODO Handle the exception
         }
-
     }
 }

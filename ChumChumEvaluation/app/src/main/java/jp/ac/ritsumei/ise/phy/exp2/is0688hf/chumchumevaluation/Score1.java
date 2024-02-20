@@ -13,8 +13,8 @@ public class Score1 extends AppCompatActivity {
     //鼻は0、左目は1、右目は2、左耳は3、右耳は3、左肩は4、右肩は5、左肘は6、右肘は7、左手首は8、右手首は9、左腰は10、右腰は11、左膝は12、右膝は13、左足首は14、右足首は15
     // double[][0][]にはそのパーツのx座標の配列が、double[][1][]にはそのパーツのy座標の配列が挿入されている。
     //double[][][t]は時間を示す。
-    private double user_coordinate[][][];
-    private double original_coordinate[][][] ;
+    private double user_coordinate[][][] = coordinate.outCoordinate(0);//ユーザの座標を入力する。;
+    private double original_coordinate[][][] = coordinate.outCoordinate(1);;
 //    private double user_coordinate[][][] = coordinate.outCoordinate(0);//ユーザの座標を入力する。
 //    private double original_coordinate[][][] = coordinate.outCoordinate(1);//オリジナルの座標を入力する。
     @Override
@@ -23,14 +23,12 @@ public class Score1 extends AppCompatActivity {
         setContentView(R.layout.activity_score1);
 
         coordinate = new Coodinate();//Coodinateクラスの作成
-        double user_coordinate[][][] = coordinate.outCoordinate(0);//ユーザの座標を入力する。
-        double original_coordinate[][][] = coordinate.outCoordinate(1);//オリジナルの座標を入力する。
 
         //ベクトル計算
         double[][][] userRightVector = new double[15][2][user_coordinate[0][0].length];//
         double[][][] userLeftVector = new double[15][2][user_coordinate[0][0].length];//
-        double[][][] originalRightVector = new double[15][2][user_coordinate[0][0].length];
-        double[][][] originalLeftVector = new double[15][2][user_coordinate[0][0].length];
+        double[][][] originalRightVector = new double[15][2][original_coordinate[0][0].length];
+        double[][][] originalLeftVector = new double[15][2][original_coordinate[0][0].length];
 
         calculateVector(user_coordinate,5,userRightVector);//ユーザー右肩からの方向ベクトル
         calculateVector(user_coordinate,5,userLeftVector);//ユーザー左肩からの方向ベクトル
