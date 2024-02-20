@@ -72,7 +72,7 @@ public class Score1 extends AppCompatActivity {
                 double y1 =userVector[i][1][j];
                 double x2 = originalVector[i][0][j];
                 double y2 =originalVector[i][1][j];
-                double dotProduct = x1 * x2 + y1 * y2; //ユーザのベクトルと本家のベクトルで内積を求める。範囲は(-1<dotProduct<1)
+                double dotProduct = x1 * x2 + y1 * y2; //ユーザのベクトルと本家のベクトルでcosを求める。範囲は(-1<dotProduct<1)
                 dotProduct=dotProduct+1;//範囲を(0<dotProduct<2)に変更する。
                 Cosin1or2[i][j]=dotProduct;
             }
@@ -102,13 +102,13 @@ public class Score1 extends AppCompatActivity {
                     score=score+preScore[i][j];//スコア総和
                     if(preScore[i][j]>bestScore){//採点中が最高点ならばbestScore書き換え
                         bestScore=preScore[i][j];
-                        Score[1][0]=bestScore;//ベストスコアの更新
+                        Score[1][0]=bestScore*25;//ベストスコアの更新&100点換算
                         Score[1][1]=j;//ベストスコア更新時の時刻
                     }
                 }
             }
             average=score/(preScore[0].length*15);//平均計算
-            Score[0][0]=average;
+            Score[0][0]=average*25;//平均の100点換算
             return Score;
         }
 
