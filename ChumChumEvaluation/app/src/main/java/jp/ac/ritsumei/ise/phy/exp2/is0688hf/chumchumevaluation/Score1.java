@@ -14,9 +14,8 @@ public class Score1 extends AppCompatActivity {
     // double[][0][]にはそのパーツのx座標の配列が、double[][1][]にはそのパーツのy座標の配列が挿入されている。
     //double[][][t]は時間を示す。
     private double user_coordinate[][][] = coordinate.outCoordinate(0);//ユーザの座標を入力する。;
-    private double original_coordinate[][][] = coordinate.outCoordinate(1);;
-//    private double user_coordinate[][][] = coordinate.outCoordinate(0);//ユーザの座標を入力する。
-//    private double original_coordinate[][][] = coordinate.outCoordinate(1);//オリジナルの座標を入力する。
+    private double original_coordinate[][][] = coordinate.outCoordinate(1);//オリジナルの座標を入力する。
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +30,8 @@ public class Score1 extends AppCompatActivity {
         double[][][] originalLeftVector = new double[15][2][original_coordinate[0][0].length];
 
         calculateVector(user_coordinate,5,userRightVector);//ユーザー右肩からの方向ベクトル
-        calculateVector(user_coordinate,5,userLeftVector);//ユーザー左肩からの方向ベクトル
-        calculateVector(original_coordinate,4,originalRightVector);//オリジナル右肩からの方向ベクトル
+        calculateVector(user_coordinate,4,userLeftVector);//ユーザー左肩からの方向ベクトル
+        calculateVector(original_coordinate,5,originalRightVector);//オリジナル右肩からの方向ベクトル
         calculateVector(original_coordinate,4,originalLeftVector);//オリジナル左肩からの方向ベクトル
 
         //コサイン計算
@@ -55,11 +54,11 @@ public class Score1 extends AppCompatActivity {
     private static double[][][]calculateVector(double coordinate[][][], int RightOrLeft,double vector[][][]) {
         for (int i=0;i<16;i++) {//パーツごとの繰り返し
             for (int j = 0; j < vector[0][0].length; j++) {//時間ごとの繰り返し
-                double x1 = coordinate[i][0][j] - coordinate[RightOrLeft][0][j];//x方向ベクトル
-                double y1 = coordinate[i][1][j] - coordinate[RightOrLeft][1][j];//y方向ベクトル
-                double magnitude1 = Math.sqrt(x1 * x1 + y1 * y1);//正規化
-                vector[i][0][j]=x1/magnitude1;
-                vector[i][1][j]=y1/magnitude1;
+                double x = coordinate[i][0][j] - coordinate[RightOrLeft][0][j];//x方向ベクトル
+                double y = coordinate[i][1][j] - coordinate[RightOrLeft][1][j];//y方向ベクトル
+                double magnitude1 = Math.sqrt(x * x + y * y);//正規化
+                vector[i][0][j]=x/magnitude1;
+                vector[i][1][j]=y/magnitude1;
             }
         }
         return vector;
