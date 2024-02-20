@@ -72,8 +72,8 @@ public class Score1 extends AppCompatActivity {
                 double y1 =userVector[i][1][j];
                 double x2 = originalVector[i][0][j];
                 double y2 =originalVector[i][1][j];
-                double dotProduct = x1 * x2 + y1 * y2; //(-1<dotProduct<1)
-                dotProduct=dotProduct+1;//(1<dotProduct<2)
+                double dotProduct = x1 * x2 + y1 * y2; //ユーザのベクトルと本家のベクトルで内積を求める。範囲は(-1<dotProduct<1)
+                dotProduct=dotProduct+1;//範囲を(0<dotProduct<2)に変更する。
                 Cosin1or2[i][j]=dotProduct;
             }
         }
@@ -100,7 +100,7 @@ public class Score1 extends AppCompatActivity {
             for (int i = 0; i < 16; i++) {//パーツごと
                 for (int j = 0; j < preScore[0].length; j++) {//時間ごと
                     score=score+preScore[i][j];//スコア総和
-                    if(preScore[i][j]>bestScore){//採点中の最高点ならばbestScore書き換え
+                    if(preScore[i][j]>bestScore){//採点中が最高点ならばbestScore書き換え
                         bestScore=preScore[i][j];
                         Score[1][0]=bestScore;//ベストスコアの更新
                         Score[1][1]=j;//ベストスコア更新時の時刻
