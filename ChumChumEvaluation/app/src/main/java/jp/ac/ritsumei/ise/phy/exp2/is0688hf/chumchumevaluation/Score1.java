@@ -33,8 +33,8 @@ public class Score1 extends AppCompatActivity {
         double[][][] originalLeftVector = new double[15][2][user_coordinate[0][0].length];
 
         calculateVector(user_coordinate,5,userRightVector);//ユーザー右肩からの方向ベクトル
-        calculateVector(user_coordinate,5,userLeftVector);//ユーザー左肩からの方向ベクトル
-        calculateVector(original_coordinate,4,originalRightVector);//オリジナル左肩からの方向ベクトル
+        calculateVector(user_coordinate,4,userLeftVector);//ユーザー左肩からの方向ベクトル
+        calculateVector(original_coordinate,5,originalRightVector);//オリジナル右肩からの方向ベクトル
         calculateVector(original_coordinate,4,originalLeftVector);//オリジナル左肩からの方向ベクトル
 
         //コサイン計算
