@@ -86,6 +86,11 @@ public class Uploading extends AppCompatActivity {
         }
     }
 
+    public void onEvaluateButtonTapped(View view) {
+        Intent intent = new Intent(this, Loading.class);
+        startActivity(intent);
+    }
+
     //動画アップロードされたときにその動画のファイル名を枠内に表示し、アップロードしたことを表す予定。
 
 }
