@@ -31,6 +31,9 @@ public class Loading extends AppCompatActivity {
         storage = new videoStorage();//videoStorageクラスの作成
         coordinate = new Coodinate();//Coodinateクラスの作成
 
+        userVideo = storage.getVideo(0);// userVideoの初期化
+        originalVideo = storage.getVideo(1);// originalVideoの初期化
+
         try {
             analysis(userVideo, 0);
             analysis(originalVideo, 1);
@@ -40,8 +43,9 @@ public class Loading extends AppCompatActivity {
 
     }
 
-    private Uri userVideo = storage.getVideo(0);
-    private Uri originalVideo = storage.getVideo(1);
+    private Uri userVideo; // フィールドとして宣言
+    private Uri originalVideo; // フィールドとして宣言
+
     double frameRate = 30;//1秒間に何フレームか
 
 
