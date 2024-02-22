@@ -8,15 +8,17 @@ public class videoStorage {
     //ユーザが踊っている動画と本家のダンス動画をそれぞれの配列に保存する。
     //Uriが動画用の型である。
 
-    private Uri[] userVideo_array = new Uri[6];//要素0に評価する動画を、それ以外には過去の動画を挿入する。
-    private  Uri[] originalVideo_array = new Uri[6];//要素0に評価する動画を、それ以外には過去の動画を挿入する。
+    private Uri[] userVideo_array;//ユーザの動画を保存する配列。
+    private  Uri[] originalVideo_array;//本家の動画を保存する配列。
 
-    public void videoStorage(){
-
+    public videoStorage(){
+        userVideo_array = new Uri[6];//要素0に評価する動画を、それ以外には過去の動画を挿入する。
+        originalVideo_array = new Uri[6];//要素0に評価する動画を、それ以外には過去の動画を挿入する。
     }
 
     public void addUserVideo(Uri savedVideo){
         userVideo_array[0] = savedVideo;
+        System.out.println("video is okay");
     }
 
     public void addOriginalVideo(Uri savedVideo){
