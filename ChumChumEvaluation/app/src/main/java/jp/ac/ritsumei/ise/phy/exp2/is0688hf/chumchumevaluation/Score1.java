@@ -38,34 +38,30 @@ public class Score1 extends AppCompatActivity {
         calculateVector(original_coordinate,4,originalLeftVector);//オリジナル左肩からの方向ベクトル
 
         //コサイン計算
-        double [][]Cosine1= new double[15][user_coordinate[0][0].length];//右肩
-        double [][]Cosine2= new double[15][user_coordinate[0][0].length];//左肩
-        calculateCosine(userRightVector,originalRightVector,Cosine1);
-        calculateCosine(userLeftVector,originalLeftVector,Cosine2);
-
-        //スコア付前処理
-        double preScore[][]=new double[15][user_coordinate[0][0].length];
-        preScoring(Cosine1,Cosine2,preScore);
+        double [][]Cos1= new double[15][user_coordinate[0][0].length];//右肩
+        double [][]Cos2= new double[15][user_coordinate[0][0].length];//左肩
+        calculateCosine(userRightVector,originalRightVector,Cos1);
+        calculateCosine(userLeftVector,originalLeftVector,Cos2);
 
         //スコア付
+        double preScore[][]=new double[15][user_coordinate[0][0].length];
         double Score[]=new double[preScore[0].length];
         double FinalScore[]=new double[3];
-        scoring(preScore,Score,FinalScore);
-
+        Scoring(Cos1, Cos2, preScore, Score, FinalScore);
     }
 
     //    ある基準点からのベクトル関数
-    private static double[][][]calculateVector(double user_coordinate[][][], int RightOrLeft,double userOrOriginalVector[][][]) {
+    private static double[][][]calculateVector(double coordinate[][][], int RightOrLeft,double Vector[][][]) {
         for (int i=0;i<16;i++) {//パーツごとの繰り返し
-            for (int j = 0; j < userOrOriginalVector[0][0].length; j++) {//時間ごとの繰り返し
-                double x1 = user_coordinate[i][0][j] - user_coordinate[RightOrLeft][0][j];//x方向ベクトル
-                double y1 = user_coordinate[i][1][j] - user_coordinate[RightOrLeft][1][j];//y方向ベクトル
+            for (int j = 0; j < Vector[0][0].length; j++) {//時間ごとの繰り返し
+                double x1 = coordinate[i][0][j] - coordinate[RightOrLeft][0][j];//x方向ベクトル
+                double y1 = coordinate[i][1][j] - coordinate[RightOrLeft][1][j];//y方向ベクトル
                 double magnitude1 = Math.sqrt(x1 * x1 + y1 * y1);//正規化
-                userOrOriginalVector[i][0][j]=x1/magnitude1;
-                userOrOriginalVector[i][1][j]=y1/magnitude1;
+                Vector[i][0][j]=x1/magnitude1;
+                Vector[i][1][j]=y1/magnitude1;
             }
         }
-        return userOrOriginalVector;
+        return Vector;
     }
 
     // 三角形のコサイン計算
@@ -84,39 +80,38 @@ public class Score1 extends AppCompatActivity {
         return Cosin1or2;
     }
     //スコア合算二つの基準点からプレスコアを導出(それぞれのパーツと時間)
-    double preScore[][]=new double[15][user_coordinate.length];
-    private static double[][] preScoring(double Cosin1[][],double Cosin2[][],double preScore[][]) {
+
+    private static double[] Scoring(double Cos1[][],double Cos2[][],double preScore[][],double Score[],double FinalScore[]) {
         for (int i = 0; i < 16; i++) {//パーツごと
-            for (int j = 0; j < Cosin1[0].length; j++) {//時間ごと
-                double cos1=Cosin1[i][j];
-                double cos2=Cosin2[i][j];
-                double AddValue = cos1+cos2;
-                preScore[i][j]=AddValue;
+            for (int j = 0; j < Cos1[0].length; j++) {//時間ごと
+                double cos1 = Cos1[i][j];
+                double cos2 = Cos2[i][j];
+                double AddValue = cos1 + cos2;
+                preScore[i][j] = AddValue;
             }
         }
-        return preScore;
-    } //スコア付け関数
-
-    private static double[] scoring(double preScore[][],double Score[],double FinalScore[]){
         double score=0;
         double average;
         double bestScore=0;
-            for (int i = 0; i < preScore[0].length; i++) {//時間ごと
-                for (int j = 0; j < 16; j++) {//パーツごと
-                    Score[i] = Score[i] + preScore[i][j];
-                }
-                if(Score[i]>bestScore) {//採点中の最高点ならばbestScore書き換え
-                    bestScore = Score[i];
-                    FinalScore[0] = i;//ベストスコアの時刻
-                    FinalScore[1] = bestScore * 25;//ベストスコア更新時の時刻
-                }
-            }for (int i= 0; i < Score.length; i++) {
-                    score=score+Score[i];
+
+        for (int i = 0; i < preScore[0].length; i++) {//時間ごとに得点を出す
+            for (int j = 0; j < 16; j++) {//パーツごと
+                Score[i] = Score[i] + preScore[i][j];
             }
-            average=score/(Score.length);//平均計算
-            FinalScore[3]=average*25;
-            return FinalScore;
+            if(Score[i]>bestScore) {//採点中の最高点ならばbestScore書き換え
+                bestScore = Score[i];
+                FinalScore[0] = i;//ベストスコアの時刻
+                FinalScore[1] = bestScore * 25;//ベストスコアを代入
+            }
+        }for (int i= 0; i < Score.length; i++) {//合計点を出す
+            score=score+Score[i];
         }
+        average=score/(Score.length);//平均計算
+        FinalScore[3]=average*25;//最終結果を代入
+
+        return FinalScore;
+        }
+
 
 
     // プログレスバー
