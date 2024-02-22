@@ -8,6 +8,9 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import org.tensorflow.lite.DataType;
+import org.tensorflow.lite.support.image.ImageProcessor;
+import org.tensorflow.lite.support.image.TensorImage;
+import org.tensorflow.lite.support.image.ops.ResizeOp;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.IOException;
@@ -16,6 +19,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import jp.ac.ritsumei.ise.phy.exp2.is0688hf.chumchumevaluation.ml.AutoModel4;
+import jp.ac.ritsumei.ise.phy.exp2.is0688hf.chumchumevaluation.ml.LiteModelMovenetSingleposeLightningTfliteFloat164;
 
 public class Loading extends AppCompatActivity {
     //アップロード画面で動画をアップロードしてスタートボタンを押したときにこの画面に遷移する。
@@ -65,6 +69,9 @@ public class Loading extends AppCompatActivity {
     }
 
     double frameRate = 30;//1秒間に何フレームか
+    ImageProcessor imageProcessor = new ImageProcessor.Builder()
+            .add(new ResizeOp(192, 192, ResizeOp.ResizeMethod.BILINEAR))
+            .build();
 
 
     private void analysis(Uri video, int flag) throws IOException {
@@ -85,13 +92,20 @@ public class Loading extends AppCompatActivity {
         //フレームごとに推定を行う。
         for (long i = 0; i < duration; i += 1000000 / frameRate) {
             Bitmap frameBitmap = mediaMetadataRetriever.getFrameAtTime(i, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);//1フレームのBitmap
-            Bitmap resizedBitmap = Bitmap.createScaledBitmap(frameBitmap, 192, 192, true);//TensorFlowの入力サイズに合わせる。
+            Bitmap argbBitmap = frameBitmap.copy(Bitmap.Config.ARGB_8888, true);
 
-            // ビットマップのピクセルデータを取得する
-            ByteBuffer buffer = ByteBuffer.allocateDirect(192 * 192 * 3 ); // バッファのサイズは入力テンソルのサイズに合わせる
-            resizedBitmap.copyPixelsToBuffer(buffer);
+//            Bitmap resizedBitmap = Bitmap.createScaledBitmap(frameBitmap, 192, 192, true);//TensorFlowの入力サイズに合わせる。
+//
+//            // ビットマップのピクセルデータを取得する
+//            ByteBuffer buffer = ByteBuffer.allocateDirect(192 * 192 * 3 ); // バッファのサイズは入力テンソルのサイズに合わせる
+//            resizedBitmap.copyPixelsToBuffer(buffer);
+//
+//            buffer.rewind(); // バッファのポジションを最初に戻す
 
-            buffer.rewind(); // バッファのポジションを最初に戻す
+            TensorImage tensorImage = new TensorImage(DataType.UINT8);
+            tensorImage.load(argbBitmap);
+            tensorImage = imageProcessor.process(tensorImage);//リサイズ
+            ByteBuffer buffer = tensorImage.getBuffer();// リサイズ後のTensorImageオブジェクトからバッファを取得する
 
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 192, 192, 3}, DataType.UINT8);//TensorBufferの作成
             inputFeature0.loadBuffer(buffer);
