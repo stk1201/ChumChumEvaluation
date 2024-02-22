@@ -19,7 +19,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import jp.ac.ritsumei.ise.phy.exp2.is0688hf.chumchumevaluation.ml.AutoModel4;
-import jp.ac.ritsumei.ise.phy.exp2.is0688hf.chumchumevaluation.ml.LiteModelMovenetSingleposeLightningTfliteFloat164;
 
 public class Loading extends AppCompatActivity {
     //アップロード画面で動画をアップロードしてスタートボタンを押したときにこの画面に遷移する。
@@ -30,7 +29,7 @@ public class Loading extends AppCompatActivity {
     public static Coodinate coordinate;
     private Uri userVideo; // フィールドとして宣言
     private Uri originalVideo; // フィールドとして宣言
-    private final int numThreads = 4; // 使用するスレッドの数。これにより並行処理が可能になる。
+    private final int numThreads = 1; // 使用するスレッドの数。これにより並行処理が可能になる。
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +67,7 @@ public class Loading extends AppCompatActivity {
         }
     }
 
-    double frameRate = 30;//1秒間に何フレームか
+    double frameRate = 5;//1秒間に何フレームか
     ImageProcessor imageProcessor = new ImageProcessor.Builder()
             .add(new ResizeOp(192, 192, ResizeOp.ResizeMethod.BILINEAR))
             .build();
@@ -94,14 +93,6 @@ public class Loading extends AppCompatActivity {
             Bitmap frameBitmap = mediaMetadataRetriever.getFrameAtTime(i, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);//1フレームのBitmap
             Bitmap argbBitmap = frameBitmap.copy(Bitmap.Config.ARGB_8888, true);
 
-//            Bitmap resizedBitmap = Bitmap.createScaledBitmap(frameBitmap, 192, 192, true);//TensorFlowの入力サイズに合わせる。
-//
-//            // ビットマップのピクセルデータを取得する
-//            ByteBuffer buffer = ByteBuffer.allocateDirect(192 * 192 * 3 ); // バッファのサイズは入力テンソルのサイズに合わせる
-//            resizedBitmap.copyPixelsToBuffer(buffer);
-//
-//            buffer.rewind(); // バッファのポジションを最初に戻す
-
             TensorImage tensorImage = new TensorImage(DataType.UINT8);
             tensorImage.load(argbBitmap);
             tensorImage = imageProcessor.process(tensorImage);//リサイズ
@@ -113,10 +104,10 @@ public class Loading extends AppCompatActivity {
             AutoModel4.Outputs outputs = model.process(inputFeature0);//モデルの実行し、出力する。
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();//出力結果
 
-            System.out.println("this is fine");
             System.out.println(outputFeature0);
 
         }
+        System.out.println("finish");
         model.close();//MoveNetの終了
         mediaMetadataRetriever.release();
     }
