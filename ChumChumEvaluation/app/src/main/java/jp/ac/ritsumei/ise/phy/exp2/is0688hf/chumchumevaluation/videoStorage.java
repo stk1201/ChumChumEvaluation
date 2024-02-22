@@ -8,17 +8,24 @@ public class videoStorage {
     //ユーザが踊っている動画と本家のダンス動画をそれぞれの配列に保存する。
     //Uriが動画用の型である。
 
-    private Uri[] userVideo_array;//ユーザの動画を保存する配列。
-    private  Uri[] originalVideo_array;//本家の動画を保存する配列。
+    private Context context;
+    private static videoStorage storage;
+    private Uri[] userVideo_array = new Uri[6];//要素0に評価する動画を、それ以外には過去の動画を挿入する。;
+    private Uri[] originalVideo_array = new Uri[6];//要素0に評価する動画を、それ以外には過去の動画を挿入する。;
 
-    public videoStorage(){
-        userVideo_array = new Uri[6];//要素0に評価する動画を、それ以外には過去の動画を挿入する。
-        originalVideo_array = new Uri[6];//要素0に評価する動画を、それ以外には過去の動画を挿入する。
+    private videoStorage(Context context){
+        this.context = context.getApplicationContext();
+    }
+
+    public static synchronized videoStorage getInstance(Context context){
+        if(storage == null){
+            storage = new videoStorage(context);
+        }
+        return storage;
     }
 
     public void addUserVideo(Uri savedVideo){
         userVideo_array[0] = savedVideo;
-        System.out.println("video is okay");
     }
 
     public void addOriginalVideo(Uri savedVideo){
@@ -27,6 +34,7 @@ public class videoStorage {
 
     public Uri getVideo(int flag){//flagが0のときにユーザの動画を1のときに本家の動画を取得するメゾット。
         if(flag == 0){
+            System.out.println(userVideo_array[0]);
             return userVideo_array[0];
         }
         else{

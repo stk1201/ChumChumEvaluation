@@ -10,7 +10,7 @@ public class Coodinate {
     // double[][0][]にはそのパーツのx座標の配列が、double[][1][]にはそのパーツのy座標の配列が挿入されている。
     //double[][][t]は時間を示す。
 
-    public void coordinate(){
+    public Coodinate(){
 
     }
 

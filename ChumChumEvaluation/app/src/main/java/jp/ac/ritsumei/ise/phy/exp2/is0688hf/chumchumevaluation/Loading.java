@@ -20,31 +20,35 @@ public class Loading extends AppCompatActivity {
     //ここではユーザからはロード画面が見えてるが裏ではTensorFlowを導入する。
 
     private static AutoModel4 model;
-    private videoStorage storage;
-    private Coodinate coordinate;
+    videoStorage storage;
+    public static Coodinate coordinate;
+    private Uri userVideo; // フィールドとして宣言
+    private Uri originalVideo; // フィールドとして宣言
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitvity_loading);
 
-        storage = new videoStorage();//videoStorageクラスの作成
+        storage = storage.getInstance(this);//videoStorageクラスのインスタンスの取得
         coordinate = new Coodinate();//Coodinateクラスの作成
 
+        // storageの初期化後にuserVideoとoriginalVideoを初期化する
         userVideo = storage.getVideo(0);// userVideoの初期化
         originalVideo = storage.getVideo(1);// originalVideoの初期化
 
-        try {
-            analysis(userVideo, 0);
-            analysis(originalVideo, 1);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        System.out.println("fine");
+
+        if(userVideo != null && originalVideo != null){
+            System.out.println("let's go");
+            try {
+                analysis(userVideo, 0);
+                analysis(originalVideo, 1);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-
     }
-
-    private Uri userVideo; // フィールドとして宣言
-    private Uri originalVideo; // フィールドとして宣言
 
     double frameRate = 30;//1秒間に何フレームか
 
@@ -57,32 +61,30 @@ public class Loading extends AppCompatActivity {
         String durationString = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
         long duration = Long.parseLong(durationString) * 1000; // 動画の長さ。単位はマイクロ秒
 
+        try{
+            model = AutoModel4.newInstance(this);//モデルのインスタンス作成
+        }catch (IOException e) {
+            // TODO Handle the exception
+        }
+
         //フレームごとに推定を行う。
         for (long i = 0; i < duration; i += 1000000 / frameRate) {
             Bitmap frameBitmap = mediaMetadataRetriever.getFrameAtTime(i, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);//1フレームのBitmap
+            Bitmap resizedBitmap = Bitmap.createScaledBitmap(frameBitmap, 192, 192, true);//TensorFlowの入力サイズに合わせる。
 
-            try {
-                model = AutoModel4.newInstance(this);//モデルのインスタンス作成
+            // ビットマップのピクセルデータを取得する
+            ByteBuffer buffer = ByteBuffer.allocateDirect(192 * 192 * 3 ); // バッファのサイズは入力テンソルのサイズに合わせる
+            resizedBitmap.copyPixelsToBuffer(buffer);
 
-                // ビットマップのピクセルデータを取得する
-                int bytes = frameBitmap.getByteCount();
-                ByteBuffer buffer = ByteBuffer.allocate(bytes);
-                frameBitmap.copyPixelsToBuffer(buffer);
+            buffer.rewind(); // バッファのポジションを最初に戻す
 
-                buffer.rewind();// バッファのポジションを最初に戻す
+            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 192, 192, 3}, DataType.UINT8);//TensorBufferの作成
+            inputFeature0.loadBuffer(buffer);
 
-                TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 192, 192, 3}, DataType.UINT8);//TensorBufferの作成
-                inputFeature0.loadBuffer(buffer);
+            AutoModel4.Outputs outputs = model.process(inputFeature0);//モデルの実行し、出力する。
+            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();//出力結果
 
-                AutoModel4.Outputs outputs = model.process(inputFeature0);//モデルの実行し、出力する。
-                TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();//出力結果
-
-                System.out.println(outputFeature0);
-
-
-            } catch (IOException e) {
-                // TODO Handle the exception
-            }
+            //System.out.println(outputFeature0);
 
         }
 
