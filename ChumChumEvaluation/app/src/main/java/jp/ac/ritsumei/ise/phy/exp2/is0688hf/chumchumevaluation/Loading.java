@@ -113,6 +113,7 @@ public class Loading extends AppCompatActivity {
             AutoModel4.Outputs outputs = model.process(inputFeature0);//モデルの実行し、出力する。
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();//出力結果
 
+            System.out.println("this is fine");
             System.out.println(outputFeature0);
 
         }
