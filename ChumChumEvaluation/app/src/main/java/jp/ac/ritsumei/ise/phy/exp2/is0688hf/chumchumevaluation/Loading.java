@@ -12,6 +12,8 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import jp.ac.ritsumei.ise.phy.exp2.is0688hf.chumchumevaluation.ml.AutoModel4;
 
@@ -24,6 +26,7 @@ public class Loading extends AppCompatActivity {
     public static Coodinate coordinate;
     private Uri userVideo; // フィールドとして宣言
     private Uri originalVideo; // フィールドとして宣言
+    private final int numThreads = 4; // 使用するスレッドの数。これにより並行処理が可能になる。
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +40,26 @@ public class Loading extends AppCompatActivity {
         userVideo = storage.getVideo(0);// userVideoの初期化
         originalVideo = storage.getVideo(1);// originalVideoの初期化
 
-        System.out.println("fine");
-
         if(userVideo != null && originalVideo != null){
-            System.out.println("let's go");
+            ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
             try {
-                analysis(userVideo, 0);
-                analysis(originalVideo, 1);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                executorService.execute(() -> {
+                    try {
+                        analysis(userVideo, 0);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                executorService.execute(() -> {
+                    try {
+                        analysis(originalVideo, 1);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            } finally {
+                executorService.shutdown();
             }
         }
     }
@@ -65,6 +79,7 @@ public class Loading extends AppCompatActivity {
             model = AutoModel4.newInstance(this);//モデルのインスタンス作成
         }catch (IOException e) {
             // TODO Handle the exception
+            throw new RuntimeException(e);
         }
 
         //フレームごとに推定を行う。
@@ -84,16 +99,11 @@ public class Loading extends AppCompatActivity {
             AutoModel4.Outputs outputs = model.process(inputFeature0);//モデルの実行し、出力する。
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();//出力結果
 
-            //System.out.println(outputFeature0);
+            System.out.println(outputFeature0);
 
         }
-
+        model.close();//MoveNetの終了
         mediaMetadataRetriever.release();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        model.close();//MoveNetの終了
-    }
 }
