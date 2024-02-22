@@ -87,8 +87,6 @@
         android:layout_width="312dp"
         android:layout_height="59dp"
         android:background="#b5b5b5"
-        android:backgroundTint=
-
         android:text="dancer"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
