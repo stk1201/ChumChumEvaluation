@@ -2,6 +2,7 @@ package jp.ac.ritsumei.ise.phy.exp2.is0688hf.chumchumevaluation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
@@ -15,11 +16,11 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import jp.ac.ritsumei.ise.phy.exp2.is0688hf.chumchumevaluation.ml.AutoModel4;
-import jp.ac.ritsumei.ise.phy.exp2.is0688hf.chumchumevaluation.ml.LiteModelMovenetSingleposeLightningTfliteFloat164;
 
 public class Loading extends AppCompatActivity {
     //アップロード画面で動画をアップロードしてスタートボタンを押したときにこの画面に遷移する。
@@ -27,10 +28,10 @@ public class Loading extends AppCompatActivity {
 
     private static AutoModel4 model;
     videoStorage storage;
-    public static Coodinate coordinate;
+    Coodinate coordinate;
     private Uri userVideo; // フィールドとして宣言
     private Uri originalVideo; // フィールドとして宣言
-    private final int numThreads = 4; // 使用するスレッドの数。これにより並行処理が可能になる。
+    private final int numThreads = 1; // 使用するスレッドの数。これにより並行処理が可能になる。
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class Loading extends AppCompatActivity {
         setContentView(R.layout.acitvity_loading);
 
         storage = storage.getInstance(this);//videoStorageクラスのインスタンスの取得
-        coordinate = new Coodinate();//Coodinateクラスの作成
+        coordinate = coordinate.getInstance(this);//Coodinateクラスの作成
 
         // storageの初期化後にuserVideoとoriginalVideoを初期化する
         userVideo = storage.getVideo(0);// userVideoの初期化
@@ -66,21 +67,24 @@ public class Loading extends AppCompatActivity {
                 executorService.shutdown();
             }
         }
+
     }
 
-    double frameRate = 30;//1秒間に何フレームか
+    double frameRate = 5;//1秒間に何フレームか
     ImageProcessor imageProcessor = new ImageProcessor.Builder()
             .add(new ResizeOp(192, 192, ResizeOp.ResizeMethod.BILINEAR))
             .build();
 
+    private int analysisCount = 0; // analysisメソッドの呼び出し回数をカウントするための変数
 
-    private void analysis(Uri video, int flag) throws IOException {
+    private void analysis(Uri video, int flag) throws IOException {//flagでユーザ動画か本家動画か区別する。0がユーザで1が本家になる。
         //フレーム処理と取得
         MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
         mediaMetadataRetriever.setDataSource(this, video);
 
         String durationString = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-        long duration = Long.parseLong(durationString) * 1000; // 動画の長さ。単位はマイクロ秒
+        int duration = Integer.parseInt(durationString); // 動画の長さ。単位はミリ秒
+        int totalFrame = (int) (duration * frameRate / 1000); // 総フレーム数
 
         try{
             model = AutoModel4.newInstance(this);//モデルのインスタンス作成
@@ -89,18 +93,16 @@ public class Loading extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
+        //座標用の配列を用意する。
+        //総フレーム数を計算して配列を用意する。listにして後で配列に変換するという方法もある。
+        //51の内訳は17(各パーツのx座標)+17(各パーツのy座標)+17(各パーツのスコア)
+        //配列には各フレームにパーツごとにx座標、y座標、スコアで並ぶ。
+        float data[][] = new float[totalFrame][51];
+
         //フレームごとに推定を行う。
-        for (long i = 0; i < duration; i += 1000000 / frameRate) {
+        for (int i = 0; i < totalFrame; i+= 1000/frameRate) {
             Bitmap frameBitmap = mediaMetadataRetriever.getFrameAtTime(i, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);//1フレームのBitmap
             Bitmap argbBitmap = frameBitmap.copy(Bitmap.Config.ARGB_8888, true);
-
-//            Bitmap resizedBitmap = Bitmap.createScaledBitmap(frameBitmap, 192, 192, true);//TensorFlowの入力サイズに合わせる。
-//
-//            // ビットマップのピクセルデータを取得する
-//            ByteBuffer buffer = ByteBuffer.allocateDirect(192 * 192 * 3 ); // バッファのサイズは入力テンソルのサイズに合わせる
-//            resizedBitmap.copyPixelsToBuffer(buffer);
-//
-//            buffer.rewind(); // バッファのポジションを最初に戻す
 
             TensorImage tensorImage = new TensorImage(DataType.UINT8);
             tensorImage.load(argbBitmap);
@@ -113,12 +115,19 @@ public class Loading extends AppCompatActivity {
             AutoModel4.Outputs outputs = model.process(inputFeature0);//モデルの実行し、出力する。
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();//出力結果
 
-            System.out.println("this is fine");
-            System.out.println(outputFeature0);
-
+            data[i] = outputFeature0.getFloatArray();
         }
+        coordinate.addCoordinate(flag, data);
+        System.out.println("finish");
         model.close();//MoveNetの終了
         mediaMetadataRetriever.release();
+
+        analysisCount++;// analysisCountをインクリメント
+        // analysisメソッドが2回呼び出されたら遷移
+        if (analysisCount == 2) {
+            Intent intent = new Intent(this, Score1.class);
+            startActivity(intent);
+        }
     }
 
 }

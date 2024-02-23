@@ -4,36 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="#000b24"
     tools:context=".MainActivity">
 
 
-    <Button
-        android:id="@+id/StartButton"
-        android:layout_width="250dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="391dp"
-        android:layout_marginBottom="240dp"
-        android:backgroundTint="@color/white"
-        android:onClick="onStartButtonTapped"
-        android:text="START"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="488dp"
-        android:layout_height="858dp"
-        android:layout_marginTop="-180dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="477dp"
+        android:layout_height="338dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/title" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="344dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="239dp"
+        android:backgroundTint="#000b24"
+        android:onClick="onStartButtonTapped"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:srcCompat="@drawable/start" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
