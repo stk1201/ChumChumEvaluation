@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.Manifest;
 
@@ -78,9 +79,15 @@ public class Uploading extends AppCompatActivity {
 
             if(flag == 1){
                 storage.addUserVideo(savedVideo);//動画ストレージにあるuserVideo_arrayに保存する
+                //インテントで動画を保存したときにファイル名を保存する。
+                TextView fileName = (TextView)findViewById(R.id.userFileName);
+                fileName.setText(savedVideo.toString());
             }
             if(flag == 2){
                 storage.addOriginalVideo(savedVideo);//動画ストレージにあるoriginalVideo_arrayに保存する
+                //インテントで動画を保存したときにファイル名を保存する。
+                TextView fileName = (TextView)findViewById(R.id.originalFileName);
+                fileName.setText(savedVideo.toString());
             }
 
         }
