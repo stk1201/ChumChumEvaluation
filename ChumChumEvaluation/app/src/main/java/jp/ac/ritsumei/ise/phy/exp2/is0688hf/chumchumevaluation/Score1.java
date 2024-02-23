@@ -60,6 +60,7 @@ public class Score1 extends AppCompatActivity {
             }
         }
 
+        //合計計算をする
         float total_pregrade[]=new float[user_coordinate[0][0].length];
         float upper_pregrade[]=new float[user_coordinate[0][0].length];
         float lower_pregrade[]=new float[user_coordinate[0][0].length];
@@ -93,6 +94,7 @@ public class Score1 extends AppCompatActivity {
             head_grade += head_pregrade[t];
         }
 
+        //100点換算
         total_grade = (100*total_grade)/(48*user_coordinate[0][0].length);
         upper_grade = (100*upper_grade)/(16*user_coordinate[0][0].length);
         lower_grade = (100*lower_grade)/(16*user_coordinate[0][0].length);
