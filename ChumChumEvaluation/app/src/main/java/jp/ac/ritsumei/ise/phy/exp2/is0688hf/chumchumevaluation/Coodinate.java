@@ -8,8 +8,8 @@ public class Coodinate {
 
     private Context context;
     private static Coodinate coordinate;
-    private double[][][] user_coordinate = new double[17][2][];
-    private double[][][] original_coordinate = new double[17][2][];
+    private float[][][] user_coordinate = new float[17][2][];
+    private float[][][] original_coordinate = new float[17][2][];
     //double[n][][]はパーツを示している。
     //鼻は0、左目は1、右目は2、左耳は3、右耳は4、左肩は5、右肩は6、左肘は7、右肘は8、左手首は9、右手首は10、左腰は11、右腰は12、左膝は13、右膝は14、左足首は15、右足首は16
     // double[][0][]にはそのパーツのx座標の配列が、double[][1][]にはそのパーツのy座標の配列が挿入されている。
@@ -32,22 +32,34 @@ public class Coodinate {
         //partはパーツを表している。数字とパーツの関係は上記のdouble[n][][]と同じ
        switch (flag){
            case 0://ユーザの配列に挿入
-               user_coordinate[part][0] = new double[x.length];
-               user_coordinate[part][0] = x;
-               user_coordinate[part][1] = new double[y.length];
-               user_coordinate[part][1] = y;
+               for(int frame = 0; frame < data.length; frame++){
+                   for(int part = 0; part < 17; part+=3){//part = x座標、part+1 = y座標、part+2 = スコア
+                       //x座標の入力
+                       user_coordinate[part][0] = new float[data.length];
+                       user_coordinate[part][0][frame] = data[frame][part];
+                       //y座標の入力
+                       user_coordinate[part][1] = new float[data.length];
+                       user_coordinate[part][1][frame] = data[frame][part+1];
+                   }
+               }
+
            break;
            case 1://本家の配列に挿入
-               original_coordinate[part][0] = new double[x.length];
-               original_coordinate[part][0] = x;
-               original_coordinate[part][1] = new double[y.length];
-               original_coordinate[part][1] = y;
-
+               for(int frame = 0; frame < data.length; frame++){
+                   for(int part = 0; part < 17; part+=3){//part = x座標、part+1 = y座標、part+2 = スコア
+                       //x座標の入力
+                       original_coordinate[part][0] = new float[data.length];
+                       original_coordinate[part][0][frame] = data[frame][part];
+                       //y座標の入力
+                       original_coordinate[part][1] = new float[data.length];
+                       original_coordinate[part][1][frame] = data[frame][part+1];
+                   }
+               }
        }
 
     }
 
-    public double[][][] outCoordinate(int flag) {
+    public float[][][] outCoordinate(int flag) {
         //flagによって抽出する配列が変わる。
         // 0はユーザの座標配列に抽出し、1は本家の座標の配列を抽出する。
         switch (flag) {

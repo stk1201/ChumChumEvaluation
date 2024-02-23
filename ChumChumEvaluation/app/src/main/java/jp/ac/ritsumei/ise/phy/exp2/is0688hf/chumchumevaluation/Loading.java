@@ -31,7 +31,6 @@ public class Loading extends AppCompatActivity {
     private Uri userVideo; // フィールドとして宣言
     private Uri originalVideo; // フィールドとして宣言
     private final int numThreads = 1; // 使用するスレッドの数。これにより並行処理が可能になる。
-    private String outputArray[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
