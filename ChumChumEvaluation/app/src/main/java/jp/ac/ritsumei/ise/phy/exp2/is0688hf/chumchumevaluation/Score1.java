@@ -110,9 +110,7 @@ public class Score1 extends AppCompatActivity {
 
         //総合スコアを表示する
         TextView score = (TextView)findViewById(R.id.totalScore);
-        score.setText((int) total_grade);
-
-
+        score.setText(String.valueOf((int) total_grade));
     }
 
     //    ある基準点からのベクトル関数

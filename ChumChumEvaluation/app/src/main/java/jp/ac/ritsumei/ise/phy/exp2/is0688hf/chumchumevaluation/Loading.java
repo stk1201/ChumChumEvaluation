@@ -68,8 +68,6 @@ public class Loading extends AppCompatActivity {
             }
         }
 
-        Intent intent = new Intent(this, Score1.class);
-        startActivity(intent);
     }
 
     double frameRate = 5;//1秒間に何フレームか
@@ -77,6 +75,7 @@ public class Loading extends AppCompatActivity {
             .add(new ResizeOp(192, 192, ResizeOp.ResizeMethod.BILINEAR))
             .build();
 
+    private int analysisCount = 0; // analysisメソッドの呼び出し回数をカウントするための変数
 
     private void analysis(Uri video, int flag) throws IOException {//flagでユーザ動画か本家動画か区別する。0がユーザで1が本家になる。
         //フレーム処理と取得
@@ -122,6 +121,13 @@ public class Loading extends AppCompatActivity {
         System.out.println("finish");
         model.close();//MoveNetの終了
         mediaMetadataRetriever.release();
+
+        analysisCount++;// analysisCountをインクリメント
+        // analysisメソッドが2回呼び出されたら遷移
+        if (analysisCount == 2) {
+            Intent intent = new Intent(this, Score1.class);
+            startActivity(intent);
+        }
     }
 
 }

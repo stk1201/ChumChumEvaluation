@@ -16,6 +16,7 @@ public class Coodinate {
     //double[][][t]は時間を示す。
 
     private Coodinate(Context context){
+
         this.context = context.getApplicationContext();
     }
 

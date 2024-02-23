@@ -34,7 +34,6 @@ public class videoStorage {
 
     public Uri getVideo(int flag){//flagが0のときにユーザの動画を1のときに本家の動画を取得するメゾット。
         if(flag == 0){
-            System.out.println(userVideo_array[0]);
             return userVideo_array[0];
         }
         else{
