@@ -20,7 +20,9 @@
         <activity
             android:name=".Loading"
             android:exported="false" />
-        <activity android:name=".Uploading" />
+        <activity
+            android:name=".Uploading"
+            android:exported="true"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

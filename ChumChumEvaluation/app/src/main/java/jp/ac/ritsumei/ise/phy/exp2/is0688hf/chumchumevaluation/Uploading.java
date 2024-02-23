@@ -14,10 +14,8 @@ import android.view.View;
 import android.widget.Toast;
 import android.Manifest;
 
-
 public class Uploading extends AppCompatActivity {
     //ユーザが自身のフォルダから動画をアップロードする場所。
-
     videoStorage storage;//動画ストレージ
 
     @Override
@@ -25,7 +23,7 @@ public class Uploading extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uploading);
 
-        storage = new videoStorage();//動画ストレージclassを作成
+        storage = storage.getInstance(this);//動画ストレージのインスタンスを作成
     }
 
     //スマホのフォルダーにアクセス
@@ -86,6 +84,11 @@ public class Uploading extends AppCompatActivity {
             }
 
         }
+    }
+
+    public void onEvaluateButtonTapped(View view) {
+        Intent intent = new Intent(this, Loading.class);
+        startActivity(intent);
     }
 
     //動画アップロードされたときにその動画のファイル名を枠内に表示し、アップロードしたことを表す予定。

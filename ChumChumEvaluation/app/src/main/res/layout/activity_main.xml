@@ -10,30 +10,30 @@
 
     <Button
         android:id="@+id/StartButton"
-        android:layout_width="189dp"
-        android:layout_height="109dp"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="391dp"
+        android:layout_marginBottom="240dp"
+        android:backgroundTint="@color/white"
         android:onClick="onStartButtonTapped"
         android:text="START"
-        android:backgroundTint="@color/white"
         android:textColor="@color/black"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.781" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="247dp"
-        android:layout_height="307dp"
+        android:id="@+id/imageView3"
+        android:layout_width="488dp"
+        android:layout_height="858dp"
+        android:layout_marginTop="-180dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.432"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.261"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
