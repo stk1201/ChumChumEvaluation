@@ -22,9 +22,9 @@ public class Score1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score1);
 
-        coordinate = new Coodinate();//Coodinateクラスの作成
-        double user_coordinate[][][] = coordinate.outCoordinate(0);//ユーザの座標を入力する。
-        double original_coordinate[][][] = coordinate.outCoordinate(1);//オリジナルの座標を入力する。
+        coordinate = coordinate.getInstance(this);//Coodinateクラスの作成
+        float user_coordinate[][][] = coordinate.outCoordinate(0);//ユーザの座標を入力する。
+        float original_coordinate[][][] = coordinate.outCoordinate(1);//オリジナルの座標を入力する。
 
         //ベクトル計算
         double[][][][] userVector = new double[17][17][2][user_coordinate[0][0].length];//
