@@ -24,14 +24,18 @@ public class Score1 extends AppCompatActivity {
         float original_coordinate[][][] = coordinate.outCoordinate(1);//オリジナルの座標を入力する。
 
         //ベクトル計算
-        float userVector[][][][] = new float[17][17][2][user_coordinate[0][0].length];//
+        //Vector[part][][][]は各パーツ
+        //Vector[][base][][]は基準点。全てのパーツを基準にして計算しているが使うのは一部。
+        //Vector[][][xy][]は座標。0がx座標で1がy座標。
+        //Vector[][][][t]は時間。
+        float userVector[][][][] = new float[17][17][2][user_coordinate[0][0].length];
         float originalVector[][][][] = new float[17][17][2][user_coordinate[0][0].length];
 
         //コサイン計算
         float pregrade[][][] = new float[17][17][user_coordinate[0][0].length];//pregradeは100点変換前の点数
 
 
-        int mp_label[] = {1,2,3,4,7,9,13,15,8,10,14,16};
+        int mp_label[] = {1,2,3,4,7,9,13,15,8,10,14,16};//基準点以外のパーツ
 
         for (int i=0; i<12; i++) {
             if (i<8) {
@@ -134,36 +138,36 @@ public class Score1 extends AppCompatActivity {
     }
     //スコア合算二つの基準点からプレスコアを導出(それぞれのパーツと時間)
 
-    private static float[] Scoring(float Cos1[][],float Cos2[][],float preScore[][],float Score[],float FinalScore[]) {
-        for (int i = 0; i < 16; i++) {//パーツごと
-            for (int j = 0; j < Cos1[0].length; j++) {//時間ごと
-                float cos1 = Cos1[i][j];
-                float cos2 = Cos2[i][j];
-                float AddValue = cos1 + cos2;
-                preScore[i][j] = AddValue;
-            }
-        }
-        float score=0;
-        float average;
-        float bestScore=0;
-
-        for (int i = 0; i < preScore[0].length; i++) {//時間ごとに得点を出す
-            for (int j = 0; j < 16; j++) {//パーツごと
-                Score[i] = Score[i] + preScore[i][j];
-            }
-            if(Score[i]>bestScore) {//採点中の最高点ならばbestScore書き換え
-                bestScore = Score[i];
-                FinalScore[0] = i;//ベストスコアの時刻
-                FinalScore[1] = bestScore * 25;//ベストスコアを代入
-            }
-        }for (int i= 0; i < Score.length; i++) {//合計点を出す
-            score=score+Score[i];
-        }
-        average=score/(Score.length);//平均計算
-        FinalScore[3]=average*25;//最終結果を代入
-
-        return FinalScore;
-        }
+//    private static float[] Scoring(float Cos1[][],float Cos2[][],float preScore[][],float Score[],float FinalScore[]) {
+//        for (int i = 0; i < 16; i++) {//パーツごと
+//            for (int j = 0; j < Cos1[0].length; j++) {//時間ごと
+//                float cos1 = Cos1[i][j];
+//                float cos2 = Cos2[i][j];
+//                float AddValue = cos1 + cos2;
+//                preScore[i][j] = AddValue;
+//            }
+//        }
+//        float score=0;
+//        float average;
+//        float bestScore=0;
+//
+//        for (int i = 0; i < preScore[0].length; i++) {//時間ごとに得点を出す
+//            for (int j = 0; j < 16; j++) {//パーツごと
+//                Score[i] = Score[i] + preScore[i][j];
+//            }
+//            if(Score[i]>bestScore) {//採点中の最高点ならばbestScore書き換え
+//                bestScore = Score[i];
+//                FinalScore[0] = i;//ベストスコアの時刻
+//                FinalScore[1] = bestScore * 25;//ベストスコアを代入
+//            }
+//        }for (int i= 0; i < Score.length; i++) {//合計点を出す
+//            score=score+Score[i];
+//        }
+//        average=score/(Score.length);//平均計算
+//        FinalScore[3]=average*25;//最終結果を代入
+//
+//        return FinalScore;
+//        }
 
 
 
