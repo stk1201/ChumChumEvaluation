@@ -27,15 +27,13 @@ public class Score1 extends AppCompatActivity {
         double original_coordinate[][][] = coordinate.outCoordinate(1);//オリジナルの座標を入力する。
 
         //ベクトル計算
-        double[][][] userRightVector = new double[15][2][user_coordinate[0][0].length];//
-        double[][][] userLeftVector = new double[15][2][user_coordinate[0][0].length];//
-        double[][][] originalRightVector = new double[15][2][user_coordinate[0][0].length];
-        double[][][] originalLeftVector = new double[15][2][user_coordinate[0][0].length];
+        double[][][][] userVector = new double[17][17][2][user_coordinate[0][0].length];//
+        double[][][][] originalVector = new double[17][17][2][user_coordinate[0][0].length];
 
-        calculateVector(user_coordinate,5,userRightVector);//ユーザー右肩からの方向ベクトル
-        calculateVector(user_coordinate,4,userLeftVector);//ユーザー左肩からの方向ベクトル
-        calculateVector(original_coordinate,5,originalRightVector);//オリジナル右肩からの方向ベクトル
-        calculateVector(original_coordinate,4,originalLeftVector);//オリジナル左肩からの方向ベクトル
+        calculateVector(user_coordinate,1,5,userVector);//ユーザー右肩からの方向ベクトル
+        calculateVector(user_coordinate,1,userVector);//ユーザー左肩からの方向ベクトル
+        calculateVector(original_coordinate,5,originalVector);//オリジナル右肩からの方向ベクトル
+        calculateVector(original_coordinate,4,originalVector);//オリジナル左肩からの方向ベクトル
 
 
         //コサイン計算
@@ -52,16 +50,16 @@ public class Score1 extends AppCompatActivity {
     }
 
     //    ある基準点からのベクトル関数
-    private static double[][][]calculateVector(double coordinate[][][], int RightOrLeft,double Vector[][][]) {
-        for (int i=0;i<16;i++) {//パーツごとの繰り返し
-            for (int j = 0; j < Vector[0][0].length; j++) {//時間ごとの繰り返し
-                double x1 = coordinate[i][0][j] - coordinate[RightOrLeft][0][j];//x方向ベクトル
-                double y1 = coordinate[i][1][j] - coordinate[RightOrLeft][1][j];//y方向ベクトル
-                double magnitude1 = Math.sqrt(x1 * x1 + y1 * y1);//正規化
-                Vector[i][0][j]=x1/magnitude1;
-                Vector[i][1][j]=y1/magnitude1;
-            }
+    private static double[][][][]calculateVector(double coordinate[][][],int measurepoint, int basepoint,double Vector[][][][]) { //measurepointは測定したい点、// basepointは基準点
+
+        for (int j = 0; j < Vector[0][0][0].length; j++) {//時間ごとの繰り返し
+            double x1 = coordinate[measurepoint][0][j] - coordinate[basepoint][0][j];//x方向ベクトル
+            double y1 = coordinate[measurepoint][1][j] - coordinate[basepoint][1][j];//y方向ベクトル
+            double magnitude1 = Math.sqrt(x1 * x1 + y1 * y1);//正規化
+            Vector[measurepoint][basepoint][0][j]=x1/magnitude1;
+            Vector[measurepoint][basepoint][1][j]=y1/magnitude1;
         }
+
         return Vector;
     }
 
