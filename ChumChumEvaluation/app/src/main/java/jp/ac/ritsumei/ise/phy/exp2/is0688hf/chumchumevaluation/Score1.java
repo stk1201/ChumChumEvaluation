@@ -38,22 +38,22 @@ public class Score1 extends AppCompatActivity {
         int mp_label[] = {1,2,3,4,7,9,13,15,8,10,14,16};//基準点以外のパーツ
 
         for (int i=0; i<12; i++) {
-            if (i<8) {
+            if (i<8) {//左肩を基準にし、顔と左半身のベクトルを計算する。
                 calculateVector(user_coordinate,mp_label[i],5,userVector);
                 calculateVector(original_coordinate,mp_label[i],5,originalVector);
                 calculateCosine(mp_label[i],5,userVector,originalVector,pregrade);
             }
-            if (i<4 || 7<i) {
+            if (i<4 || 7<i) {//右肩を基準にし、顔と右半身のベクトルを計算する。
                 calculateVector(user_coordinate,mp_label[i],6,userVector);
                 calculateVector(original_coordinate,mp_label[i],6,originalVector);
                 calculateCosine(mp_label[i],6,userVector,originalVector,pregrade);
             }
-            if (i>3 && i<8) {
+            if (i>3 && i<8) {//左腰を基準にし、左半身を計算する。
                 calculateVector(user_coordinate,mp_label[i],11,userVector);
                 calculateVector(original_coordinate,mp_label[i],11,originalVector);
                 calculateCosine(mp_label[i],11,userVector,originalVector,pregrade);
             }
-            if (i>7) {
+            if (i>7) {//右腰を基準にし、右半身を計算する。
                 calculateVector(user_coordinate,mp_label[i],12,userVector);
                 calculateVector(original_coordinate,mp_label[i],12,originalVector);
                 calculateCosine(mp_label[i],12,userVector,originalVector,pregrade);
@@ -98,17 +98,10 @@ public class Score1 extends AppCompatActivity {
         lower_grade = (100*lower_grade)/(16*user_coordinate[0][0].length);
         head_grade = (100*head_grade)/(16*user_coordinate[0][0].length);
 
-        /*
-        //スコア付
-        float preScore[][]=new float[15][user_coordinate[0][0].length];
-        float Score[]=new float[preScore[0].length];
-        float FinalScore[]=new float[3];
-        Scoring(Cos1, Cos2, preScore, Score, FinalScore);
-         */
     }
 
     //    ある基準点からのベクトル関数
-    private static float[][][][]calculateVector(float coordinate[][][],int measurepoint, int basepoint,float Vector[][][][]) { //measurepointは測定したい点、// basepointは基準点
+    private void calculateVector(float coordinate[][][],int measurepoint, int basepoint,float Vector[][][][]) { //measurepointは測定したい点、basepointは基準点
 
         for (int j = 0; j < Vector[0][0][0].length; j++) {//時間ごとの繰り返し
             float x1 = coordinate[measurepoint][0][j] - coordinate[basepoint][0][j];//x方向ベクトル
@@ -118,11 +111,10 @@ public class Score1 extends AppCompatActivity {
             Vector[measurepoint][basepoint][1][j]=y1/magnitude1;
         }
 
-        return Vector;
     }
 
     // 三角形のコサイン計算
-    private static float[][][]calculateCosine(int measurepoint, int basepoint,float userVector[][][][],float originalVector[][][][], float Cosin[][][]) {
+    private void calculateCosine(int measurepoint, int basepoint,float userVector[][][][],float originalVector[][][][], float Cosin[][][]) {
 
         for (int j = 0; j < userVector[0][0][0].length; j++) {//時間ごと
             float x1 = userVector[measurepoint][basepoint][0][j];
@@ -134,40 +126,9 @@ public class Score1 extends AppCompatActivity {
             Cosin[measurepoint][basepoint][j] = dotProduct;
         }
 
-        return Cosin;
     }
     //スコア合算二つの基準点からプレスコアを導出(それぞれのパーツと時間)
 
-//    private static float[] Scoring(float Cos1[][],float Cos2[][],float preScore[][],float Score[],float FinalScore[]) {
-//        for (int i = 0; i < 16; i++) {//パーツごと
-//            for (int j = 0; j < Cos1[0].length; j++) {//時間ごと
-//                float cos1 = Cos1[i][j];
-//                float cos2 = Cos2[i][j];
-//                float AddValue = cos1 + cos2;
-//                preScore[i][j] = AddValue;
-//            }
-//        }
-//        float score=0;
-//        float average;
-//        float bestScore=0;
-//
-//        for (int i = 0; i < preScore[0].length; i++) {//時間ごとに得点を出す
-//            for (int j = 0; j < 16; j++) {//パーツごと
-//                Score[i] = Score[i] + preScore[i][j];
-//            }
-//            if(Score[i]>bestScore) {//採点中の最高点ならばbestScore書き換え
-//                bestScore = Score[i];
-//                FinalScore[0] = i;//ベストスコアの時刻
-//                FinalScore[1] = bestScore * 25;//ベストスコアを代入
-//            }
-//        }for (int i= 0; i < Score.length; i++) {//合計点を出す
-//            score=score+Score[i];
-//        }
-//        average=score/(Score.length);//平均計算
-//        FinalScore[3]=average*25;//最終結果を代入
-//
-//        return FinalScore;
-//        }
 
 
 
