@@ -9,8 +9,8 @@ public class Score1 extends AppCompatActivity {
     //総合スコアを表示する場所。
     //ロード画面でTensorFlowのバッファーがかけられた後[0][0]に出てくる画面になる。
 
-    private Coodinate coordinate;
-    private scoreStorage scoreStorage;
+    Coodinate coordinate;
+    scoreStorage scoreStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,6 @@ public class Score1 extends AppCompatActivity {
         //double[][][t]は時間を示す。
 
         scoreStorage = scoreStorage.getInstance(this);
-
 
         //ベクトル計算
         //Vector[part][][][]は各パーツ
@@ -115,7 +114,6 @@ public class Score1 extends AppCompatActivity {
 
     //    ある基準点からのベクトル関数
     private void calculateVector(float coordinate[][][],int measurepoint, int basepoint,float Vector[][][][]) { //measurepointは測定したい点、basepointは基準点
-
         for (int j = 0; j < Vector[0][0][0].length; j++) {//時間ごとの繰り返し
             float x1 = coordinate[measurepoint][0][j] - coordinate[basepoint][0][j];//x方向ベクトル
             float y1 = coordinate[measurepoint][1][j] - coordinate[basepoint][1][j];//y方向ベクトル
