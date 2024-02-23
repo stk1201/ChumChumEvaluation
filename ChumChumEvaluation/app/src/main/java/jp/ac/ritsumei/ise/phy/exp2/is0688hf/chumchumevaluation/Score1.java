@@ -10,7 +10,7 @@ public class Score1 extends AppCompatActivity {
     private Coodinate coordinate;
     //各パーツの座標をCoodinateクラスから抽出する。
     //double[n][][]はパーツを示している。
-    //鼻は0、左目は1、右目は2、左耳は3、右耳は3、左肩は4、右肩は5、左肘は6、右肘は7、左手首は8、右手首は9、左腰は10、右腰は11、左膝は12、右膝は13、左足首は14、右足首は15
+    //鼻は0、左目は1、右目は2、左耳は3、右耳は4、左肩は5、右肩は6、左肘は7、右肘は8、左手首は9、右手首は10、左腰は11、右腰は12、左膝は13、右膝は14、左足首は15、右足首は16
     // double[][0][]にはそのパーツのx座標の配列が、double[][1][]にはそのパーツのy座標の配列が挿入されている。
     //double[][][t]は時間を示す。
     private double user_coordinate[][][];
@@ -36,6 +36,7 @@ public class Score1 extends AppCompatActivity {
         calculateVector(user_coordinate,4,userLeftVector);//ユーザー左肩からの方向ベクトル
         calculateVector(original_coordinate,5,originalRightVector);//オリジナル右肩からの方向ベクトル
         calculateVector(original_coordinate,4,originalLeftVector);//オリジナル左肩からの方向ベクトル
+
 
         //コサイン計算
         double [][]Cos1= new double[15][user_coordinate[0][0].length];//右肩
