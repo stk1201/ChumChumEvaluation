@@ -13,10 +13,7 @@ public class Score1 extends AppCompatActivity {
     //鼻は0、左目は1、右目は2、左耳は3、右耳は4、左肩は5、右肩は6、左肘は7、右肘は8、左手首は9、右手首は10、左腰は11、右腰は12、左膝は13、右膝は14、左足首は15、右足首は16
     // double[][0][]にはそのパーツのx座標の配列が、double[][1][]にはそのパーツのy座標の配列が挿入されている。
     //double[][][t]は時間を示す。
-    private double user_coordinate[][][];
-    private double original_coordinate[][][] ;
-//    private double user_coordinate[][][] = coordinate.outCoordinate(0);//ユーザの座標を入力する。
-//    private double original_coordinate[][][] = coordinate.outCoordinate(1);//オリジナルの座標を入力する。
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,58 +24,92 @@ public class Score1 extends AppCompatActivity {
         float original_coordinate[][][] = coordinate.outCoordinate(1);//オリジナルの座標を入力する。
 
         //ベクトル計算
-        double[][][][] userVector = new double[17][17][2][user_coordinate[0][0].length];//
-        double[][][][] originalVector = new double[17][17][2][user_coordinate[0][0].length];
+        float userVector[][][][] = new float[17][17][2][user_coordinate[0][0].length];//
+        float originalVector[][][][] = new float[17][17][2][user_coordinate[0][0].length];
+
+        //コサイン計算
+        float pregrade[][][] = new float[17][17][user_coordinate[0][0].length];//pregradeは100点変換前の点数
+
 
         int mp_label[] = {1,2,3,4,7,9,13,15,8,10,14,16};
-
-        /*
-        calculateVector(user_coordinate,1,5,userVector);//ユーザー右肩からの方向ベクトル
-        calculateVector(user_coordinate,1,userVector);//ユーザー左肩からの方向ベクトル
-        calculateVector(original_coordinate,5,originalVector);//オリジナル右肩からの方向ベクトル
-        calculateVector(original_coordinate,4,originalVector);//オリジナル左肩からの方向ベクトル
-         */
 
         for (int i=0; i<12; i++) {
             if (i<8) {
                 calculateVector(user_coordinate,mp_label[i],5,userVector);
                 calculateVector(original_coordinate,mp_label[i],5,originalVector);
+                calculateCosine(mp_label[i],5,userVector,originalVector,pregrade);
             }
             if (i<4 || 7<i) {
                 calculateVector(user_coordinate,mp_label[i],6,userVector);
                 calculateVector(original_coordinate,mp_label[i],6,originalVector);
+                calculateCosine(mp_label[i],6,userVector,originalVector,pregrade);
             }
             if (i>3 && i<8) {
                 calculateVector(user_coordinate,mp_label[i],11,userVector);
                 calculateVector(original_coordinate,mp_label[i],11,originalVector);
+                calculateCosine(mp_label[i],11,userVector,originalVector,pregrade);
             }
             if (i>7) {
                 calculateVector(user_coordinate,mp_label[i],12,userVector);
                 calculateVector(original_coordinate,mp_label[i],12,originalVector);
+                calculateCosine(mp_label[i],12,userVector,originalVector,pregrade);
             }
         }
 
+        float total_pregrade[]=new float[user_coordinate[0][0].length];
+        float upper_pregrade[]=new float[user_coordinate[0][0].length];
+        float lower_pregrade[]=new float[user_coordinate[0][0].length];
+        float head_pregrade[]=new float[user_coordinate[0][0].length];
+        float total_grade=0;
+        float upper_grade=0;
+        float lower_grade=0;
+        float head_grade=0;
 
-        //コサイン計算
-        double [][]Cos1= new double[15][user_coordinate[0][0].length];//右肩
-        double [][]Cos2= new double[15][user_coordinate[0][0].length];//左肩
-        calculateCosine(userRightVector,originalRightVector,Cos1);
-        calculateCosine(userLeftVector,originalLeftVector,Cos2);
+        for (int t=0; t<user_coordinate[0][0].length; t++) {
+            for (int j=0; j<17; j++) {
+                for (int i=0; i<5; i++) {
+                    head_pregrade[t] += pregrade[i][j][t];
+                    total_pregrade[t] += pregrade[i][j][t];
+                }
+                for (int i=7; i<11; i++) {
+                    upper_pregrade[t] += pregrade[i][j][t];
+                    total_pregrade[t] += pregrade[i][j][t];
+                }
+                for (int i=13; i<17; i++) {
+                    lower_pregrade[t] += pregrade[i][j][t];
+                    total_pregrade[t] += pregrade[i][j][t];
+                }
+            }
+        }
 
+        for (int t=0; t<user_coordinate[0][0].length; t++) {
+            total_grade += total_pregrade[t];
+            upper_grade += upper_pregrade[t];
+            lower_grade += lower_pregrade[t];
+            head_grade += head_pregrade[t];
+        }
+
+        total_grade = (100*total_grade)/(48*user_coordinate[0][0].length);
+        upper_grade = (100*upper_grade)/(16*user_coordinate[0][0].length);
+        lower_grade = (100*lower_grade)/(16*user_coordinate[0][0].length);
+        head_grade = (100*head_grade)/(16*user_coordinate[0][0].length);
+
+        /*
         //スコア付
-        double preScore[][]=new double[15][user_coordinate[0][0].length];
-        double Score[]=new double[preScore[0].length];
-        double FinalScore[]=new double[3];
+        float preScore[][]=new float[15][user_coordinate[0][0].length];
+        float Score[]=new float[preScore[0].length];
+        float FinalScore[]=new float[3];
         Scoring(Cos1, Cos2, preScore, Score, FinalScore);
+         */
     }
 
     //    ある基準点からのベクトル関数
-    private static double[][][][]calculateVector(double coordinate[][][],int measurepoint, int basepoint,double Vector[][][][]) { //measurepointは測定したい点、// basepointは基準点
+    private static float[][][][]calculateVector(float coordinate[][][],int measurepoint, int basepoint,float Vector[][][][]) { //measurepointは測定したい点、// basepointは基準点
 
         for (int j = 0; j < Vector[0][0][0].length; j++) {//時間ごとの繰り返し
-            double x1 = coordinate[measurepoint][0][j] - coordinate[basepoint][0][j];//x方向ベクトル
-            double y1 = coordinate[measurepoint][1][j] - coordinate[basepoint][1][j];//y方向ベクトル
-            double magnitude1 = Math.sqrt(x1 * x1 + y1 * y1);//正規化
+            float x1 = coordinate[measurepoint][0][j] - coordinate[basepoint][0][j];//x方向ベクトル
+            float y1 = coordinate[measurepoint][1][j] - coordinate[basepoint][1][j];//y方向ベクトル
+            float magnitude1 = (float) Math.sqrt(x1 * x1 + y1 * y1);//正規化
             Vector[measurepoint][basepoint][0][j]=x1/magnitude1;
             Vector[measurepoint][basepoint][1][j]=y1/magnitude1;
         }
@@ -87,34 +118,34 @@ public class Score1 extends AppCompatActivity {
     }
 
     // 三角形のコサイン計算
-    private static double[][]calculateCosine(double userVector[][][],double originalVector[][][], double Cosin1or2[][]) {
-        for (int i = 0; i < 16; i++) {//パーツごと
-            for (int j = 0; j < userVector[0][0].length; j++) {//時間ごと
-                double x1 = userVector[i][0][j];
-                double y1 =userVector[i][1][j];
-                double x2 = originalVector[i][0][j];
-                double y2 =originalVector[i][1][j];
-                double dotProduct = x1 * x2 + y1 * y2; //(-1<dotProduct<1)
-                dotProduct=dotProduct+1;//(1<dotProduct<2)
-                Cosin1or2[i][j]=dotProduct;
-            }
+    private static float[][][]calculateCosine(int measurepoint, int basepoint,float userVector[][][][],float originalVector[][][][], float Cosin[][][]) {
+
+        for (int j = 0; j < userVector[0][0][0].length; j++) {//時間ごと
+            float x1 = userVector[measurepoint][basepoint][0][j];
+            float y1 = userVector[measurepoint][basepoint][1][j];
+            float x2 = originalVector[measurepoint][basepoint][0][j];
+            float y2 = originalVector[measurepoint][basepoint][1][j];
+            float dotProduct = x1 * x2 + y1 * y2; //(-1<dotProduct<1)
+            dotProduct = dotProduct+1;//(0<dotProduct<2)
+            Cosin[measurepoint][basepoint][j] = dotProduct;
         }
-        return Cosin1or2;
+
+        return Cosin;
     }
     //スコア合算二つの基準点からプレスコアを導出(それぞれのパーツと時間)
 
-    private static double[] Scoring(double Cos1[][],double Cos2[][],double preScore[][],double Score[],double FinalScore[]) {
+    private static float[] Scoring(float Cos1[][],float Cos2[][],float preScore[][],float Score[],float FinalScore[]) {
         for (int i = 0; i < 16; i++) {//パーツごと
             for (int j = 0; j < Cos1[0].length; j++) {//時間ごと
-                double cos1 = Cos1[i][j];
-                double cos2 = Cos2[i][j];
-                double AddValue = cos1 + cos2;
+                float cos1 = Cos1[i][j];
+                float cos2 = Cos2[i][j];
+                float AddValue = cos1 + cos2;
                 preScore[i][j] = AddValue;
             }
         }
-        double score=0;
-        double average;
-        double bestScore=0;
+        float score=0;
+        float average;
+        float bestScore=0;
 
         for (int i = 0; i < preScore[0].length; i++) {//時間ごとに得点を出す
             for (int j = 0; j < 16; j++) {//パーツごと
