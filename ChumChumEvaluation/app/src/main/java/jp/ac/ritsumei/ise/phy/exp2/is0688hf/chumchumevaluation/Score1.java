@@ -2,26 +2,31 @@ package jp.ac.ritsumei.ise.phy.exp2.is0688hf.chumchumevaluation;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.TextView;
+
 import java.lang.Math;
 public class Score1 extends AppCompatActivity {
     //総合スコアを表示する場所。
     //ロード画面でTensorFlowのバッファーがかけられた後[0][0]に出てくる画面になる。
 
     private Coodinate coordinate;
-    //各パーツの座標をCoodinateクラスから抽出する。
-    //double[n][][]はパーツを示している。
-    //鼻は0、左目は1、右目は2、左耳は3、右耳は4、左肩は5、右肩は6、左肘は7、右肘は8、左手首は9、右手首は10、左腰は11、右腰は12、左膝は13、右膝は14、左足首は15、右足首は16
-    // double[][0][]にはそのパーツのx座標の配列が、double[][1][]にはそのパーツのy座標の配列が挿入されている。
-    //double[][][t]は時間を示す。
+    private scoreStorage scoreStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score1);
 
-        coordinate = coordinate.getInstance(this);//Coodinateクラスの作成
+        coordinate = coordinate.getInstance(this);//Coodinateインスランスの作成
         float user_coordinate[][][] = coordinate.outCoordinate(0);//ユーザの座標を入力する。
         float original_coordinate[][][] = coordinate.outCoordinate(1);//オリジナルの座標を入力する。
+        //double[n][][]はパーツを示している。
+        //鼻は0、左目は1、右目は2、左耳は3、右耳は4、左肩は5、右肩は6、左肘は7、右肘は8、左手首は9、右手首は10、左腰は11、右腰は12、左膝は13、右膝は14、左足首は15、右足首は16
+        // double[][0][]にはそのパーツのx座標の配列が、double[][1][]にはそのパーツのy座標の配列が挿入されている。
+        //double[][][t]は時間を示す。
+
+        scoreStorage = scoreStorage.getInstance(this);
+
 
         //ベクトル計算
         //Vector[part][][][]は各パーツ
@@ -99,6 +104,14 @@ public class Score1 extends AppCompatActivity {
         upper_grade = (100*upper_grade)/(16*user_coordinate[0][0].length);
         lower_grade = (100*lower_grade)/(16*user_coordinate[0][0].length);
         head_grade = (100*head_grade)/(16*user_coordinate[0][0].length);
+
+        //scoreStorageに保管する
+        scoreStorage.addScore(total_grade,upper_grade,lower_grade,head_grade);
+
+        //総合スコアを表示する
+        TextView score = (TextView)findViewById(R.id.totalScore);
+        score.setText((int) total_grade);
+
 
     }
 
