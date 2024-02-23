@@ -19,6 +19,18 @@ public class Score1 extends AppCompatActivity {
 
         coordinate = coordinate.getInstance(this);//Coodinateインスランスの作成
         float user_coordinate[][][] = coordinate.outCoordinate(0);//ユーザの座標を入力する。
+
+//        System.out.println(user_coordinate.length);
+//        for(int i=0; i<user_coordinate.length; i++){
+//            System.out.print("i:");
+//            System.out.println(user_coordinate[i].length);
+//            for(int m=0; m<user_coordinate[i].length; m++){
+//                System.out.print("m:");
+//                System.out.println(user_coordinate[i][m].length);
+//            }
+//        }
+//        System.out.println();
+
         float original_coordinate[][][] = coordinate.outCoordinate(1);//オリジナルの座標を入力する。
         //double[n][][]はパーツを示している。
         //鼻は0、左目は1、右目は2、左耳は3、右耳は4、左肩は5、右肩は6、左肘は7、右肘は8、左手首は9、右手首は10、左腰は11、右腰は12、左膝は13、右膝は14、左足首は15、右足首は16
@@ -115,11 +127,14 @@ public class Score1 extends AppCompatActivity {
     //    ある基準点からのベクトル関数
     private void calculateVector(float coordinate[][][],int measurepoint, int basepoint,float Vector[][][][]) { //measurepointは測定したい点、basepointは基準点
         for (int j = 0; j < Vector[0][0][0].length; j++) {//時間ごとの繰り返し
+
             float x1 = coordinate[measurepoint][0][j] - coordinate[basepoint][0][j];//x方向ベクトル
             float y1 = coordinate[measurepoint][1][j] - coordinate[basepoint][1][j];//y方向ベクトル
             float magnitude1 = (float) Math.sqrt(x1 * x1 + y1 * y1);//正規化
             Vector[measurepoint][basepoint][0][j]=x1/magnitude1;
             Vector[measurepoint][basepoint][1][j]=y1/magnitude1;
+
+
         }
 
     }
