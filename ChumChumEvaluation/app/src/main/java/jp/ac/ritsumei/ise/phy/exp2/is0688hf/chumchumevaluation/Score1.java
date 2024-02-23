@@ -30,10 +30,33 @@ public class Score1 extends AppCompatActivity {
         double[][][][] userVector = new double[17][17][2][user_coordinate[0][0].length];//
         double[][][][] originalVector = new double[17][17][2][user_coordinate[0][0].length];
 
+        int mp_label[] = {1,2,3,4,7,9,13,15,8,10,14,16};
+
+        /*
         calculateVector(user_coordinate,1,5,userVector);//ユーザー右肩からの方向ベクトル
         calculateVector(user_coordinate,1,userVector);//ユーザー左肩からの方向ベクトル
         calculateVector(original_coordinate,5,originalVector);//オリジナル右肩からの方向ベクトル
         calculateVector(original_coordinate,4,originalVector);//オリジナル左肩からの方向ベクトル
+         */
+
+        for (int i=0; i<12; i++) {
+            if (i<8) {
+                calculateVector(user_coordinate,mp_label[i],5,userVector);
+                calculateVector(original_coordinate,mp_label[i],5,originalVector);
+            }
+            if (i<4 || 7<i) {
+                calculateVector(user_coordinate,mp_label[i],6,userVector);
+                calculateVector(original_coordinate,mp_label[i],6,originalVector);
+            }
+            if (i>3 && i<8) {
+                calculateVector(user_coordinate,mp_label[i],11,userVector);
+                calculateVector(original_coordinate,mp_label[i],11,originalVector);
+            }
+            if (i>7) {
+                calculateVector(user_coordinate,mp_label[i],12,userVector);
+                calculateVector(original_coordinate,mp_label[i],12,originalVector);
+            }
+        }
 
 
         //コサイン計算
