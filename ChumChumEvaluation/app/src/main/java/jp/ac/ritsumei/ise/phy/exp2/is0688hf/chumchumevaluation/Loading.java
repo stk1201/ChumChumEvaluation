@@ -2,6 +2,7 @@ package jp.ac.ritsumei.ise.phy.exp2.is0688hf.chumchumevaluation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
@@ -66,6 +67,9 @@ public class Loading extends AppCompatActivity {
                 executorService.shutdown();
             }
         }
+
+        Intent intent = new Intent(this, Score1.class);
+        startActivity(intent);
     }
 
     double frameRate = 5;//1秒間に何フレームか
@@ -80,7 +84,8 @@ public class Loading extends AppCompatActivity {
         mediaMetadataRetriever.setDataSource(this, video);
 
         String durationString = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-        int duration = Integer.parseInt(durationString) * 1000; // 動画の長さ。単位はマイクロ秒
+        int duration = Integer.parseInt(durationString); // 動画の長さ。単位はミリ秒
+        int totalFrame = (int) (duration * frameRate / 1000); // 総フレーム数
 
         try{
             model = AutoModel4.newInstance(this);//モデルのインスタンス作成
@@ -93,10 +98,10 @@ public class Loading extends AppCompatActivity {
         //総フレーム数を計算して配列を用意する。listにして後で配列に変換するという方法もある。
         //51の内訳は17(各パーツのx座標)+17(各パーツのy座標)+17(各パーツのスコア)
         //配列には各フレームにパーツごとにx座標、y座標、スコアで並ぶ。
-        float data[][] = new float[(int) ((duration - 0)*1000000 / frameRate)][51];
+        float data[][] = new float[totalFrame][51];
 
         //フレームごとに推定を行う。
-        for (int i = 0; i < duration; i += 1000000 / frameRate) {
+        for (int i = 0; i < totalFrame; i+= 1000/frameRate) {
             Bitmap frameBitmap = mediaMetadataRetriever.getFrameAtTime(i, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);//1フレームのBitmap
             Bitmap argbBitmap = frameBitmap.copy(Bitmap.Config.ARGB_8888, true);
 
