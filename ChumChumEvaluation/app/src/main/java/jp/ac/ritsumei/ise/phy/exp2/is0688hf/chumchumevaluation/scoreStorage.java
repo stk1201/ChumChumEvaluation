@@ -23,8 +23,9 @@ public class scoreStorage {
     public void addScore(float score[]){
         if(scoreArray[5][9] == 1){
             for(int n=2; n<6; n++){
-
+                scoreArray[n-1] = scoreArray[n];
             }
+            scoreArray[5] = score;
         }
         for(int n=1; n<6; n++){
             if(scoreArray[n][9] == 0){

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="#000b24"
     tools:context=".Uploading">
 
     <androidx.constraintlayout.widget.Group
@@ -41,8 +41,8 @@
         android:id="@+id/originalFileName"
         android:layout_width="270dp"
         android:layout_height="63dp"
-        android:background="@color/black"
-        android:backgroundTint="@color/black"
+        android:background="#000b24"
+        android:backgroundTint="#000b24"
         android:text="file Name"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/evaluate"
@@ -103,7 +103,7 @@
         android:id="@+id/userFileName"
         android:layout_width="270dp"
         android:layout_height="63dp"
-        android:background="@android:color/black"
+        android:background="#000b24"
         android:text="file Name"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@+id/squre2"
