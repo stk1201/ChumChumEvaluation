@@ -4,6 +4,7 @@ import static java.lang.Float.NaN;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.lang.Math;
@@ -22,16 +23,6 @@ public class Score1 extends AppCompatActivity {
         coordinate = coordinate.getInstance(this);//Coodinateインスランスの作成
         float user_coordinate[][][] = coordinate.outCoordinate(0);//ユーザの座標を入力する。
 
-//        System.out.println(user_coordinate.length);
-//        for(int i=0; i<user_coordinate.length; i++){
-//            System.out.print("i:");
-//            System.out.println(user_coordinate[i].length);
-//            for(int m=0; m<user_coordinate[i].length; m++){
-//                System.out.print("m:");
-//                System.out.println(user_coordinate[i][m].length);
-//            }
-//        }
-//        System.out.println();
 
         float original_coordinate[][][] = coordinate.outCoordinate(1);//オリジナルの座標を入力する。
         //double[n][][]はパーツを示している。
@@ -134,6 +125,24 @@ public class Score1 extends AppCompatActivity {
         //総合スコアを表示する
         TextView score = (TextView)findViewById(R.id.totalScore);
         score.setText(String.valueOf((int) total_grade));
+
+        //称号を表示する
+        ImageView imageView = findViewById(R.id.rank);
+        if(0 <= total_grade &&  total_grade <= 20){
+            imageView.setImageResource(R.drawable.normal);
+        }
+        else if (total_grade <= 40) {
+            imageView.setImageResource(R.drawable.practice);
+        }
+        else if (total_grade <= 60) {
+            imageView.setImageResource(R.drawable.back);
+        }
+        else if (total_grade <= 80) {
+            imageView.setImageResource(R.drawable.center);
+        }
+        else {
+            imageView.setImageResource(R.drawable.god);
+        }
     }
 
     //    ある基準点からのベクトル関数

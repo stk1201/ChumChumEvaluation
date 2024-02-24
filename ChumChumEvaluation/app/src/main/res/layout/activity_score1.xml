@@ -38,6 +38,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.13" />
 
+
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
@@ -48,11 +49,10 @@
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.811"
+        app:layout_constraintHorizontal_bias="0.869"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.915" />
-
+        app:layout_constraintVertical_bias="0.949" />
 
     <TextView
         android:id="@+id/textView5"
@@ -84,18 +84,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.286" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="312dp"
-        android:layout_height="59dp"
-        android:background="#b5b5b5"
-        android:text="dancer"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/rank"
+        android:layout_width="293dp"
+        android:layout_height="205dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.696" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintVertical_bias="0.52"
+        app:srcCompat="@android:drawable/divider_horizontal_bright" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
