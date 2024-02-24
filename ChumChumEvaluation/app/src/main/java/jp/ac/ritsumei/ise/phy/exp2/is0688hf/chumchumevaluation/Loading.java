@@ -70,7 +70,7 @@ public class Loading extends AppCompatActivity {
 
     }
 
-    double frameRate = 5;//1秒間に何フレームか
+    double frameRate = 10;//1秒間に何フレームか
     ImageProcessor imageProcessor = new ImageProcessor.Builder()
             .add(new ResizeOp(192, 192, ResizeOp.ResizeMethod.BILINEAR))
             .build();

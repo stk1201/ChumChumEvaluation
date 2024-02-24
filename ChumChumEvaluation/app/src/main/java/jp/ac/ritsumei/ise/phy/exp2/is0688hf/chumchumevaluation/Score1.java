@@ -162,8 +162,6 @@ public class Score1 extends AppCompatActivity {
             float y2 = originalVector[measurepoint][basepoint][1][j];
             float dotProduct = x1 * x2 + y1 * y2; //(-1<dotProduct<1)
             dotProduct = dotProduct+1;//(0<dotProduct<2)
-            System.out.print("dot:");
-            System.out.println(dotProduct);
             if(Float.isNaN(dotProduct)){
                 Cosin[measurepoint][basepoint][j] = 1;
             }
