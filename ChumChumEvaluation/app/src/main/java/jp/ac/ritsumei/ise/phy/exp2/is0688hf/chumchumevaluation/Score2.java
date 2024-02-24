@@ -10,18 +10,19 @@ import android.widget.TextView;
 public class Score2 extends AppCompatActivity {
 
     scoreStorage scoreStorage;
-    float upper_score = scoreStorage.getScore(1);
-    float lower_score = scoreStorage.getScore(2);
-    float head_score = scoreStorage.getScore(3);
+    float upper_score;
+    float lower_score;
+    float head_score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score2);
 
-        System.out.println("Hi");
-
         scoreStorage = scoreStorage.getInstance(this);
+        upper_score = scoreStorage.getScore(1);
+        lower_score = scoreStorage.getScore(2);
+        head_score = scoreStorage.getScore(3);
 
         display();//スコア表示する
     }
