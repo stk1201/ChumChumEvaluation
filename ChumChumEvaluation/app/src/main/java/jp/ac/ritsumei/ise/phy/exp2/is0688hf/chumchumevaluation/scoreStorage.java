@@ -27,6 +27,11 @@ public class scoreStorage {
         scoreArray[0][3] = headScore;
         scoreArray[0][9]= 1;
     }
+
+    public float getScore(int flag){//0が総合スコア、1が上半身スコア、2が下半身、3が顔スコア
+        return scoreArray[0][flag];
+    }
+
     public void addRecordScore(){
         if(scoreArray[5][9] == 1){
             for(int n=2; n<6; n++){

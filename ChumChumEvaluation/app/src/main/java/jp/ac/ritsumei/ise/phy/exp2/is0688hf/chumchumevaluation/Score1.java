@@ -3,7 +3,9 @@ import static java.lang.Float.NaN;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -181,18 +183,12 @@ public class Score1 extends AppCompatActivity {
         }
 
     }
-    //スコア合算二つの基準点からプレスコアを導出(それぞれのパーツと時間)
 
+    public void onDetailButtonTapped(View view) {
+        Intent intent = new Intent(this, Score2.class);
+        startActivity(intent);
+    }
 
-
-
-    // プログレスバー
-
-
-
-
-
-
-
+    // プログレスバー作成予定
 
 }
