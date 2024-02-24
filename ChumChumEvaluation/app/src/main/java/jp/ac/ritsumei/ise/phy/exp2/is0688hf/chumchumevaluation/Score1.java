@@ -184,8 +184,14 @@ public class Score1 extends AppCompatActivity {
 
     }
 
-    public void onDetailButtonTapped(View view) {
+    public void onNextButtonTapped(View view) {
         Intent intent = new Intent(this, Score2.class);
+        startActivity(intent);
+    }
+
+    //ホームボタン
+    public void onHomeButtonTapped(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
