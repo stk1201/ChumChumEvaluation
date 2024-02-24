@@ -98,6 +98,12 @@ public class Uploading extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //ホームボタン
+    public void onHomeButtonTapped(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
     //動画アップロードされたときにその動画のファイル名を枠内に表示し、アップロードしたことを表す予定。
 
 }

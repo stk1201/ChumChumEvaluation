@@ -13,32 +13,18 @@
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="user1, user2, evaluate" />
 
-    <Button
-        android:id="@+id/evaluate"
-        android:layout_width="224dp"
-        android:layout_height="69dp"
-        android:backgroundTint="#ffffff"
-        android:onClick="onEvaluateButtonTapped"
-        android:text="EVALUATE"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.794" />
-
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="280dp"
         android:layout_height="251dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginEnd="64dp"
+        android:onClick="onEvaluateButtonTapped"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/squre1"
-        app:layout_constraintVertical_bias="0.417"
+        app:layout_constraintVertical_bias="0.468"
         app:srcCompat="@drawable/evaluate" />
 
     <View
@@ -65,22 +51,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.293" />
 
+
     <TextView
         android:id="@+id/originalFileName"
         android:layout_width="166dp"
         android:layout_height="61dp"
+        android:layout_marginTop="4dp"
         android:background="#000b24"
         android:backgroundTint="#000b24"
         android:text="file Name"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/evaluate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.285"
+        app:layout_constraintHorizontal_bias="0.273"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/squre1"
-        app:layout_constraintVertical_bias="0.037" />
-
-
+        app:layout_constraintTop_toTopOf="@+id/squre1" />
 
     <TextView
         android:id="@+id/MyDance"
@@ -143,8 +127,9 @@
         android:id="@+id/user1"
         android:layout_width="97dp"
         android:layout_height="76dp"
-        android:scaleType="fitCenter"
         android:contentDescription="User profile picture"
+        android:onClick="onUploadButtonTapped"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/squre1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.779"
@@ -158,8 +143,9 @@
         android:id="@+id/user2"
         android:layout_width="98dp"
         android:layout_height="75dp"
-        android:scaleType="fitCenter"
         android:contentDescription="Profile picture for user 2"
+        android:onClick="onUploadButtonTapped"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.782"
@@ -168,6 +154,21 @@
         app:layout_constraintVertical_bias="0.158"
         app:srcCompat="@drawable/ref2" />
 
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="164dp"
+        android:layout_height="84dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="247dp"
+        android:layout_marginBottom="48dp"
+        android:backgroundTint="#000b24"
+        android:onClick="onHomeButtonTapped"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/MyDance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/home" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
