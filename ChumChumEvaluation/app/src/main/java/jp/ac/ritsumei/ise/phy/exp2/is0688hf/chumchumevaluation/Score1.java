@@ -1,4 +1,6 @@
 package jp.ac.ritsumei.ise.phy.exp2.is0688hf.chumchumevaluation;
+import static java.lang.Float.NaN;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -89,6 +91,7 @@ public class Score1 extends AppCompatActivity {
         for (int t=0; t<user_coordinate[0][0].length; t++) {
             for (int j=0; j<17; j++) {
                 for (int i=0; i<5; i++) {
+
                     head_pregrade[t] += pregrade[i][j][t];
                     total_pregrade[t] += pregrade[i][j][t];
                 }
@@ -104,6 +107,7 @@ public class Score1 extends AppCompatActivity {
         }
 
         for (int t=0; t<user_coordinate[0][0].length; t++) {
+
             total_grade += total_pregrade[t];
             upper_grade += upper_pregrade[t];
             lower_grade += lower_pregrade[t];
@@ -112,9 +116,17 @@ public class Score1 extends AppCompatActivity {
 
         //100点換算
         total_grade = (100*total_grade)/(48*user_coordinate[0][0].length);
+        System.out.print("total:");
+        System.out.println(total_grade);
         upper_grade = (100*upper_grade)/(16*user_coordinate[0][0].length);
+        System.out.print("upper:");
+        System.out.println(upper_grade);
         lower_grade = (100*lower_grade)/(16*user_coordinate[0][0].length);
+        System.out.print("lower:");
+        System.out.println(lower_grade);
         head_grade = (100*head_grade)/(16*user_coordinate[0][0].length);
+        System.out.print("head:");
+        System.out.println(head_grade);
 
         //scoreStorageに保管する
         scoreStorage.addScore(total_grade,upper_grade,lower_grade,head_grade);
@@ -144,12 +156,21 @@ public class Score1 extends AppCompatActivity {
 
         for (int j = 0; j < userVector[0][0][0].length; j++) {//時間ごと
             float x1 = userVector[measurepoint][basepoint][0][j];
+
             float y1 = userVector[measurepoint][basepoint][1][j];
             float x2 = originalVector[measurepoint][basepoint][0][j];
             float y2 = originalVector[measurepoint][basepoint][1][j];
             float dotProduct = x1 * x2 + y1 * y2; //(-1<dotProduct<1)
             dotProduct = dotProduct+1;//(0<dotProduct<2)
-            Cosin[measurepoint][basepoint][j] = dotProduct;
+            System.out.print("dot:");
+            System.out.println(dotProduct);
+            if(Float.isNaN(dotProduct)){
+                Cosin[measurepoint][basepoint][j] = 1;
+            }
+            else {
+                Cosin[measurepoint][basepoint][j] = dotProduct;
+            }
+
         }
 
     }
