@@ -2,7 +2,9 @@ package jp.ac.ritsumei.ise.phy.exp2.is0688hf.chumchumevaluation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class Score2 extends AppCompatActivity {
@@ -34,5 +36,11 @@ public class Score2 extends AppCompatActivity {
         //head scoreの表示
         TextView headscore = (TextView)findViewById(R.id.headScore);
         headscore.setText(String.valueOf((int) head_score));
+    }
+
+    //ホームボタン
+    public void onHomeButtonTapped(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

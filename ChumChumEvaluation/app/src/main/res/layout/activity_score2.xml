@@ -8,112 +8,130 @@
     android:foregroundGravity="center"
     tools:context=".Score2">
 
-    <TextView
-        android:id="@+id/upper"
-        android:layout_width="223dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="176dp"
-        android:layout_marginBottom="84dp"
-        android:foregroundGravity="center"
-        android:gravity="center_horizontal|center_vertical"
-        android:lineSpacingExtra="20sp"
-        android:text="Upper Score:"
-        android:textColor="#FFFFFF"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/lowerScore"
-        app:layout_constraintEnd_toStartOf="@+id/upperScore"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/headScore"
-        android:layout_width="184dp"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="406dp"
         android:layout_height="71dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="280dp"
-        android:foregroundGravity="center"
-        android:gravity="center_horizontal|center_vertical"
-        android:lineSpacingExtra="20sp"
-        android:text="0"
-        android:textColor="#FFFFFF"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="91dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/head"
-        app:layout_constraintTop_toBottomOf="@+id/lowerScore" />
-
-    <TextView
-        android:id="@+id/upperScore"
-        android:layout_width="185dp"
-        android:layout_height="69dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="84dp"
-        android:foregroundGravity="center"
-        android:gravity="center_horizontal|center_vertical"
-        android:lineSpacingExtra="20sp"
-        android:text="0"
-        android:textColor="#FFFFFF"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/lowerScore"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/upper"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/lowerScore"
-        android:layout_width="187dp"
-        android:layout_height="67dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="70dp"
-        android:foregroundGravity="center"
-        android:gravity="center_horizontal|center_vertical"
-        android:lineSpacingExtra="20sp"
-        android:text="0"
-        android:textColor="#FFFFFF"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/headScore"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/lower"
-        app:layout_constraintTop_toBottomOf="@+id/upper" />
-
-    <TextView
-        android:id="@+id/head"
-        android:layout_width="219dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="200dp"
-        android:foregroundGravity="center"
-        android:gravity="center_horizontal|center_vertical"
-        android:lineSpacingExtra="20sp"
-        android:text="Head Score:"
-        android:textColor="#FFFFFF"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/headScore"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lower" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/lower"
-        android:layout_width="223dp"
+        <TextView
+            android:id="@+id/upper"
+            android:layout_width="223dp"
+            android:layout_height="70dp"
+            android:foregroundGravity="center"
+            android:gravity="center_horizontal|center_vertical"
+            android:lineSpacingExtra="20sp"
+            android:text="Upper Score:"
+            android:textColor="#FFFFFF"
+            android:textSize="34sp" />
+
+        <TextView
+            android:id="@+id/upperScore"
+            android:layout_width="185dp"
+            android:layout_height="69dp"
+            android:foregroundGravity="center"
+            android:gravity="center_horizontal|center_vertical"
+            android:lineSpacingExtra="20sp"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            android:textSize="34sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="399dp"
         android:layout_height="70dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginBottom="50dp"
-        android:foregroundGravity="center"
-        android:gravity="center_horizontal|center_vertical"
-        android:lineSpacingExtra="20sp"
-        android:text="Lower Score:"
-        android:textColor="#FFFFFF"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/head"
-        app:layout_constraintEnd_toStartOf="@+id/lowerScore"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="74dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/upper" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <TextView
+            android:id="@+id/lower"
+            android:layout_width="223dp"
+            android:layout_height="70dp"
+            android:foregroundGravity="center"
+            android:gravity="center_horizontal|center_vertical"
+            android:lineSpacingExtra="20sp"
+            android:text="Lower Score:"
+            android:textColor="#FFFFFF"
+            android:textSize="34sp" />
+
+        <TextView
+            android:id="@+id/lowerScore"
+            android:layout_width="178dp"
+            android:layout_height="71dp"
+            android:foregroundGravity="center"
+            android:gravity="center_horizontal|center_vertical"
+            android:lineSpacingExtra="20sp"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            android:textSize="34sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="416dp"
+        android:layout_height="78dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="150dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <TextView
+            android:id="@+id/head"
+            android:layout_width="236dp"
+            android:layout_height="68dp"
+            android:foregroundGravity="center"
+            android:gravity="center_horizontal|center_vertical"
+            android:lineSpacingExtra="20sp"
+            android:text="Head Score:"
+            android:textColor="#FFFFFF"
+            android:textSize="34sp" />
+
+        <TextView
+            android:id="@+id/headScore"
+            android:layout_width="176dp"
+            android:layout_height="64dp"
+            android:foregroundGravity="center"
+            android:gravity="center_horizontal|center_vertical"
+            android:lineSpacingExtra="20sp"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            android:textSize="34sp" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/homeButton"
+        android:layout_width="183dp"
+        android:layout_height="85dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="227dp"
+        android:layout_marginBottom="52dp"
+        android:backgroundTint="#000b24"
+        android:onClick="onHomeButtonTapped"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/home" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
