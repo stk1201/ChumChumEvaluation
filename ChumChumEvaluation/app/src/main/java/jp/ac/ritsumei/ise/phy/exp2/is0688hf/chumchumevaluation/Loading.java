@@ -19,13 +19,20 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import android.os.Handler;
+import android.widget.ImageView;
 
 import jp.ac.ritsumei.ise.phy.exp2.is0688hf.chumchumevaluation.ml.AutoModel4;
 
 public class Loading extends AppCompatActivity {
     //アップロード画面で動画をアップロードしてスタートボタンを押したときにこの画面に遷移する。
     //ここではユーザからはロード画面が見えてるが裏ではTensorFlowを導入する。
-
+    private ImageView imageView;
+    private int[] imageResources = {R.drawable.loading1, R.drawable.loading2, R.drawable.loading3, R.drawable.loading4}; // 画像のリソースID配列
+    private int currentIndex = 0; // 現在の画像のインデックス
+    private Handler handler;
+    private Runnable runnable;
+    private static final long INTERVAL = 1000; // 1秒ごとに画像を変更する
     private static AutoModel4 model;
     videoStorage storage;
     Coodinate coordinate;
@@ -67,6 +74,23 @@ public class Loading extends AppCompatActivity {
                 executorService.shutdown();
             }
         }
+
+
+        imageView = findViewById(R.id.imageView); // ImageViewの取得
+
+        handler = new Handler();
+
+        // 1秒ごとに画像を更新するRunnableを作成
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                updateImage(); // 画像を更新
+                handler.postDelayed(this, INTERVAL); // 1秒後に再び実行
+            }
+        };
+
+        // 最初の画像を表示
+        updateImage();
 
     }
 
@@ -128,6 +152,22 @@ public class Loading extends AppCompatActivity {
             Intent intent = new Intent(this, Score1.class);
             startActivity(intent);
         }
+    }    @Override
+    protected void onResume() {
+        super.onResume();
+        // Activityがフォアグラウンドになったら、1秒ごとに画像を変更するRunnableを開始
+        handler.postDelayed(runnable, INTERVAL);
+    }    @Override
+    protected void onPause() {
+        super.onPause();
+        // Activityがバックグラウンドに移ったら、Runnableを停止
+        handler.removeCallbacks(runnable);
+    }
+
+    private void updateImage() {
+        // 現在のインデックスに基づいて画像を設定し、次の画像のインデックスに進める
+        imageView.setImageResource(imageResources[currentIndex]);
+        currentIndex = (currentIndex + 1) % imageResources.length; // 次のインデックス（ループする）
     }
 
 }
