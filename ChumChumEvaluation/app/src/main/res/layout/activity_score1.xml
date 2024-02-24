@@ -71,11 +71,12 @@
 
     <ImageView
         android:id="@+id/rank"
-        android:layout_width="293dp"
-        android:layout_height="205dp"
-        android:layout_marginTop="-20dp"
+        android:layout_width="297dp"
+        android:layout_height="182dp"
         android:layout_marginEnd="56dp"
         android:layout_marginBottom="-20dp"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/imageButton2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

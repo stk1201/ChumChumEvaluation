@@ -19,6 +19,8 @@ public class Score2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score2);
 
+        System.out.println("Hi");
+
         scoreStorage = scoreStorage.getInstance(this);
 
         display();//スコア表示する
