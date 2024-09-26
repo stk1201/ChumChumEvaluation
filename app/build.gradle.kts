@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 

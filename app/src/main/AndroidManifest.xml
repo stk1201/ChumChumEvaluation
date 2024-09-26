@@ -13,6 +13,24 @@
         android:theme="@style/Theme.DanceEvaluation"
         tools:targetApi="31">
         <activity
+            android:name=".Result2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Result1Activity"
+            android:exported="false" />
+        <activity
+            android:name=".LoadingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UploadingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

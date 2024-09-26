@@ -4,22 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+public class Result1Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_result1);
     }
 
-    //ホーム画面に遷移
-    public void onHomeButtonTapped(View view) {
-        Log.d("MainActivity", "Home button tapped");
-        Intent intent = new Intent(this, HomeActivity.class);
+    //結果2画面に遷移
+    public void onNextButtonTapped(View view) {
+        Intent intent = new Intent(this, Result2Activity.class);
         startActivity(intent);
     }
-
 }
