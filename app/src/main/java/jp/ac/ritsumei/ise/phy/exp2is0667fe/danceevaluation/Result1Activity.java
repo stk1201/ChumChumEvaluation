@@ -6,17 +6,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class UploadingActivity extends AppCompatActivity {
+public class Result1Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_uploading);
+        setContentView(R.layout.activity_result1);
     }
 
-    //ローディング画面に遷移
-    public void onResultButtonTapped(View view) {
-        Intent intent = new Intent(this, LoadingActivity.class);
+    //結果2画面に遷移
+    public void onNextButtonTapped(View view) {
+        Intent intent = new Intent(this, Result2Activity.class);
         startActivity(intent);
     }
 }
