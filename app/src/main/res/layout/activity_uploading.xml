@@ -7,7 +7,7 @@
     tools:context=".UploadingActivity">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/userFileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="121dp"
@@ -15,13 +15,13 @@
         android:layout_marginEnd="34dp"
         android:layout_marginBottom="50dp"
         android:text="FileURL"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
-        app:layout_constraintEnd_toStartOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/originalFileName"
+        app:layout_constraintEnd_toStartOf="@+id/userUploading"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/originalFileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="104dp"
@@ -30,36 +30,38 @@
         android:layout_marginBottom="464dp"
         android:text="FileURL"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button5"
+        app:layout_constraintEnd_toStartOf="@+id/originalUploading"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/userUploading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="34dp"
         android:layout_marginTop="167dp"
         android:layout_marginEnd="120dp"
         android:layout_marginBottom="16dp"
+        android:onClick="onUploadButtonTapped"
         android:text="REF"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintBottom_toTopOf="@+id/originalUploading"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintStart_toEndOf="@+id/userFileName"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/originalUploading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="94dp"
+        android:onClick="onUploadButtonTapped"
         android:text="REF"
         app:layout_constraintBottom_toTopOf="@+id/button6"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintStart_toEndOf="@+id/originalFileName"
+        app:layout_constraintTop_toBottomOf="@+id/userUploading" />
 
     <Button
         android:id="@+id/button6"
