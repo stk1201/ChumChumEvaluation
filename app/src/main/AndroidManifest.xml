@@ -14,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DanceEvaluation"
         tools:targetApi="31">
-        <profileable android:shell="true" />
         <activity
             android:name=".Result2Activity"
             android:exported="false" />
