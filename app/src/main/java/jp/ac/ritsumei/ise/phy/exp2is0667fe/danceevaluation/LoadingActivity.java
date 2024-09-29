@@ -50,10 +50,6 @@ public class LoadingActivity extends AppCompatActivity {
 
         if(userVideo != null && originalVideo != null){
             poseEstimation();
-
-            if (userVideoResult != null && !userVideoResult.isEmpty()) {
-                runOnUiThread(() -> processResults(userVideoResult));
-            }
         }
 
         //何もなかったら結果1画面に遷移
@@ -70,11 +66,6 @@ public class LoadingActivity extends AppCompatActivity {
         executor.execute(() -> {
             try {
                 userVideoResult = detection(userVideo);
-                handler.post(() -> {
-                    if (userVideoResult != null && !userVideoResult.isEmpty()) {
-                        processResults(userVideoResult);
-                    }
-                });
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -86,11 +77,6 @@ public class LoadingActivity extends AppCompatActivity {
         executor.execute(() -> {
             try {
                 originalVideoResult = detection(originalVideo);
-                handler.post(() -> {
-                    if (originalVideoResult != null && !originalVideoResult.isEmpty()) {
-                        processResults(originalVideoResult);
-                    }
-                });
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -103,8 +89,8 @@ public class LoadingActivity extends AppCompatActivity {
             try {
                 latch.await();
                 handler.post(() -> {
-                    // 両方の処理が完了後に実行したい処理
-                    afterBothVideosProcessed();
+                    // 両方の処理が完了後の処理
+
                 });
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -172,23 +158,5 @@ public class LoadingActivity extends AppCompatActivity {
         retriever.release();
 
         return results;
-    }
-
-    private void processResults(List<PoseLandmarkerResult> results) {
-        if (results != null && !results.isEmpty()) {
-            List<NormalizedLandmark> normalizedLandmarksLists = results.get(0).landmarks().get(0);
-            for (int i = 0; i < normalizedLandmarksLists.size(); i++) {
-                NormalizedLandmark normalizedLandmark = normalizedLandmarksLists.get(i);
-                float x = normalizedLandmark.x();
-                float y = normalizedLandmark.y();
-                float z = normalizedLandmark.z();
-                Log.d("PoseLandmarker", "Normalized Landmark " + i + ": (" + x + ", " + y + ", " + z + ")");
-            }
-        }
-    }
-
-    private void afterBothVideosProcessed() {
-        // userVideoResultとoriginalVideoResultが両方完了後に行う処理をここに書く
-        Log.d("PoseLandmarker", "Both videos processed!");
     }
 }
