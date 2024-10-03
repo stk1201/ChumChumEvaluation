@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.util.Log;
 
 import com.google.mediapipe.framework.image.BitmapImageBuilder;
 import com.google.mediapipe.framework.image.MPImage;
-import com.google.mediapipe.tasks.components.containers.NormalizedLandmark;
 import com.google.mediapipe.tasks.core.BaseOptions;
 import com.google.mediapipe.tasks.vision.core.RunningMode;
 import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarker;
@@ -24,6 +24,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.ImageView;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,7 +36,6 @@ public class LoadingActivity extends AppCompatActivity {
 
     private Uri userVideo;
     private Uri originalVideo;
-
     /*
     座標リスト。
     List<PoseLandmarkerResult>はフレームごとのPoseLandmarkerResultのリストである。
@@ -55,7 +55,7 @@ public class LoadingActivity extends AppCompatActivity {
 
     //テスト時のみpublic
     //時間ごとのスコア配列
-    public float[] eachTimeScores;
+    private float[] eachTimeScores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +110,11 @@ public class LoadingActivity extends AppCompatActivity {
                 latch.await();
                 handler.post(() -> {
                     // 両方の処理が完了後の処理
-                    scoring();
+                    //スコア計算
+                    Scoring();
+
+                    //マーカー
+                    Marker();
                 });
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -171,7 +175,7 @@ public class LoadingActivity extends AppCompatActivity {
     }
 
     //スコアリング
-    private void scoring(){
+    private void Scoring(){
         //ベクトル
         float[][][][] userVector = new float[userVideoResult.size()][basePoints.length][measurePoints.length][2];
         float[][][][] originalVector = new float[originalVideoResult.size()][basePoints.length][measurePoints.length][2];
@@ -282,5 +286,59 @@ public class LoadingActivity extends AppCompatActivity {
         }
 
         return eachTimeResult;
+    }
+
+    //マーカー
+    private void Marker(){
+        if(userVideoResult != null && originalVideoResult != null && eachTimeScores != null){
+            int maxScoreTime = 0;
+            int minScoreTime = 0;
+            
+            for(int t=1; t < eachTimeScores.length; t++){
+                if(eachTimeScores[maxScoreTime] < eachTimeScores[t]){
+                    maxScoreTime = t;
+                } else if ( eachTimeScores[minScoreTime] > eachTimeScores[t] ) {
+                    minScoreTime = t;
+                }
+            }
+
+            Bitmap userBestShot = DrawVideoFrame(userVideo, maxScoreTime, 1);
+            Bitmap originalBestShot = DrawVideoFrame(originalVideo, maxScoreTime, 2);
+            Bitmap userWorstShot = DrawVideoFrame(userVideo, minScoreTime, 1);
+            Bitmap originalWorstShot = DrawVideoFrame(originalVideo, minScoreTime, 2);
+
+            ImageView userImageView = findViewById(R.id.userImageView);
+            ImageView originalImageView = findViewById(R.id.originalImageView);
+
+            userImageView.setImageBitmap(userBestShot);
+            originalImageView.setImageBitmap(originalBestShot);
+        }
+    }
+
+    private Bitmap DrawVideoFrame(Uri video, int time, int resultType){
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(this, video);
+
+        Bitmap videoFrame = retriever.getFrameAtTime(time);
+
+        int frameHeight = videoFrame.getHeight();
+        int frameWidth = videoFrame.getWidth();
+
+        MarkEachFrame markEachFrame = new MarkEachFrame(this, null);
+        markEachFrame.setBitmap(videoFrame);
+        switch (resultType){
+            case 1:
+                markEachFrame.setResults(userVideoResult.get(time), frameHeight, frameWidth);
+                break;
+            case 2:
+                markEachFrame.setResults(originalVideoResult.get(time), frameHeight, frameWidth);
+                break;
+        }
+
+        Bitmap drawBitmap = Bitmap.createBitmap(frameWidth, frameHeight, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(drawBitmap);
+        markEachFrame.draw(canvas);
+
+        return drawBitmap;
     }
 }
