@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +19,8 @@ import com.google.mediapipe.tasks.vision.core.RunningMode;
 import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarker;
 import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
@@ -25,6 +29,7 @@ import java.util.concurrent.Executors;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.ImageView;
+import android.widget.VideoView;
 
 import java.io.IOException;
 import java.util.List;
@@ -56,11 +61,14 @@ public class LoadingActivity extends AppCompatActivity {
     //テスト時のみpublic
     //時間ごとのスコア配列
     private float[] eachTimeScores;
+    ResultStocker resultStocker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+
+        resultStocker = resultStocker.getInstance(this);
 
         Intent preIntent = getIntent();
 
@@ -70,10 +78,6 @@ public class LoadingActivity extends AppCompatActivity {
         if(userVideo != null && originalVideo != null){
             poseEstimation();
         }
-
-        //何もなかったら結果1画面に遷移
-//        Intent intent = new Intent(this, Result1Activity.class);
-//        startActivity(intent);
     }
 
     //座標抽出
@@ -113,8 +117,20 @@ public class LoadingActivity extends AppCompatActivity {
                     //スコア計算
                     Scoring();
 
+                    resultStocker.setReachTimeScore(eachTimeScores);
+
                     //マーカー
-                    Marker();
+                    try {
+                        Marker();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    //結果1画面に遷移
+                    if(eachTimeScores != null && eachTimeScores.length != 0){
+                        Intent intent = new Intent(this, Result1Activity.class);
+                        startActivity(intent);
+                    }
                 });
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -151,12 +167,12 @@ public class LoadingActivity extends AppCompatActivity {
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         retriever.setDataSource(this, video);
 
-        int duration = Integer.parseInt(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
-        int interval = 1000;//1 sec
+        int duration = Integer.parseInt(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));//ms
+        int interval = 1000;//ms
         List<PoseLandmarkerResult> results = new ArrayList<>();
 
         for(int t = 0; t <= duration; t += interval){
-            Bitmap frameAtTime = retriever.getFrameAtTime(t);//ms
+            Bitmap frameAtTime = retriever.getFrameAtTime(t*1000);//microSec
 
             if (frameAtTime != null) {
                 // ARGB_8888形式に変換
@@ -276,7 +292,6 @@ public class LoadingActivity extends AppCompatActivity {
 
             for(int b=0; b < cosin[0].length; b++){
                 for(int m=0; m < cosin[0][0].length; m++){
-                    Log.d("PoseLandmarker", "コサイン：" +  cosin[t][b][m]);
                     total = total + cosin[t][b][m];
                 }
             }
@@ -289,7 +304,7 @@ public class LoadingActivity extends AppCompatActivity {
     }
 
     //マーカー
-    private void Marker(){
+    private void Marker() throws IOException {
         if(userVideoResult != null && originalVideoResult != null && eachTimeScores != null){
             int maxScoreTime = 0;
             int minScoreTime = 0;
@@ -302,36 +317,43 @@ public class LoadingActivity extends AppCompatActivity {
                 }
             }
 
+
             Bitmap userBestShot = DrawVideoFrame(userVideo, maxScoreTime, 1);
+
             Bitmap originalBestShot = DrawVideoFrame(originalVideo, maxScoreTime, 2);
+
+            resultStocker.setBestShot(userBestShot, originalBestShot);
+
             Bitmap userWorstShot = DrawVideoFrame(userVideo, minScoreTime, 1);
             Bitmap originalWorstShot = DrawVideoFrame(originalVideo, minScoreTime, 2);
 
-            ImageView userImageView = findViewById(R.id.userImageView);
-            ImageView originalImageView = findViewById(R.id.originalImageView);
-
-            userImageView.setImageBitmap(userBestShot);
-            originalImageView.setImageBitmap(originalBestShot);
+            resultStocker.setWorstShot(userWorstShot, originalWorstShot);
         }
     }
 
-    private Bitmap DrawVideoFrame(Uri video, int time, int resultType){
+
+    private Bitmap DrawVideoFrame(Uri video, int time, int resultType) throws IOException {
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         retriever.setDataSource(this, video);
 
-        Bitmap videoFrame = retriever.getFrameAtTime(time);
+        Bitmap videoFrame = retriever.getFrameAtTime(time * 1000000, MediaMetadataRetriever.OPTION_CLOSEST);
+        retriever.release();
 
         int frameHeight = videoFrame.getHeight();
         int frameWidth = videoFrame.getWidth();
 
         MarkEachFrame markEachFrame = new MarkEachFrame(this, null);
+        markEachFrame.clear();
         markEachFrame.setBitmap(videoFrame);
+
+
         switch (resultType){
             case 1:
                 markEachFrame.setResults(userVideoResult.get(time), frameHeight, frameWidth);
                 break;
             case 2:
                 markEachFrame.setResults(originalVideoResult.get(time), frameHeight, frameWidth);
+
                 break;
         }
 
@@ -341,4 +363,5 @@ public class LoadingActivity extends AppCompatActivity {
 
         return drawBitmap;
     }
+
 }

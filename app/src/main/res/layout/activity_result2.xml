@@ -6,4 +6,55 @@
     android:layout_height="match_parent"
     tools:context=".Result2Activity">
 
+    <ImageView
+        android:id="@+id/userbest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="168dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="103dp"
+        android:maxWidth="300dp"
+        app:layout_constraintBottom_toTopOf="@+id/userworst"
+        app:layout_constraintEnd_toStartOf="@+id/originalbest"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/userworst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="49dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginBottom="204dp"
+        android:maxWidth="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/originalworst"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/originalbest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="168dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginBottom="103dp"
+        android:maxWidth="300dp"
+        app:layout_constraintBottom_toTopOf="@+id/originalworst"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/originalworst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="41dp"
+        android:layout_marginBottom="204dp"
+        android:maxWidth="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>

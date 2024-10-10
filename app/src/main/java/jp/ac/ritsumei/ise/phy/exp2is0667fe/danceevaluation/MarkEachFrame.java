@@ -5,9 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.os.Environment;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.google.mediapipe.tasks.components.containers.Connection;
 import com.google.mediapipe.tasks.components.containers.NormalizedLandmark;
@@ -32,10 +35,18 @@ public class MarkEachFrame extends View {
         initPaints();
     }
 
+    public void clear(){
+        videoResultPerFrame = null;
+        pointPaint.reset();
+        linePaint.reset();
+        invalidate();
+        initPaints();
+    }
+
     private void initPaints() {
         linePaint = new Paint();
         linePaint.setColor(Color.BLUE);
-        linePaint.setStrokeWidth(12f);
+        linePaint.setStrokeWidth(6f);
         linePaint.setStyle(Paint.Style.STROKE);
 
         pointPaint = new Paint();
@@ -53,6 +64,8 @@ public class MarkEachFrame extends View {
         this.videoResultPerFrame = poseLandmarkerResultsPerFrame;
         this.imageHeight = imageHeight;
         this.imageWidth = imageWidth;
+
+
         invalidate();
     }
 
@@ -60,21 +73,15 @@ public class MarkEachFrame extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        this.scaleFactor = Math.min(canvas.getWidth() / (float) imageWidth, canvas.getHeight() / (float) imageHeight);
+
         if(resultBitmap != null){
             canvas.drawBitmap(resultBitmap, 0, 0, null);
         }
 
         if (videoResultPerFrame != null) {
             for (List<NormalizedLandmark> landmarks : videoResultPerFrame.landmarks()) {
-                // ランドマークの点の描画
-                for (NormalizedLandmark landmark : landmarks) {
-                    canvas.drawPoint(
-                        landmark.x() * imageWidth * scaleFactor,
-                        landmark.y() * imageHeight * scaleFactor,
-                        pointPaint
-                    );
-                }
-
                 // ランドマーク間の線の描画
                 for (Connection connection : PoseLandmarker.POSE_LANDMARKS) {
                     canvas.drawLine(
@@ -83,6 +90,15 @@ public class MarkEachFrame extends View {
                             videoResultPerFrame.landmarks().get(0).get(connection.end()).x() * imageWidth * scaleFactor,
                             videoResultPerFrame.landmarks().get(0).get(connection.end()).y() * imageHeight * scaleFactor,
                             linePaint
+                    );
+                }
+
+                // ランドマークの点の描画
+                for (NormalizedLandmark landmark : landmarks) {
+                    canvas.drawPoint(
+                        landmark.x() * imageWidth * scaleFactor,
+                        landmark.y() * imageHeight * scaleFactor,
+                        pointPaint
                     );
                 }
             }
