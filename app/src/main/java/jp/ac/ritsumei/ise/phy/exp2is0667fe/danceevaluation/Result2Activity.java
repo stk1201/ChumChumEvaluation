@@ -2,9 +2,11 @@ package jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
@@ -51,5 +53,11 @@ public class Result2Activity extends AppCompatActivity {
         else{
             Log.e("showImage",view + ": no image");
         }
+    }
+
+    //結果3画面に遷移
+    public void onNextButtonTapped(View view) {
+        Intent intent = new Intent(this, Result3Activity.class);
+        startActivity(intent);
     }
 }
