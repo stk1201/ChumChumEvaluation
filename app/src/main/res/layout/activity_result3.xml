@@ -9,6 +9,8 @@
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChartExample"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
