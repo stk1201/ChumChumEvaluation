@@ -8,9 +8,55 @@
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChartExample"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="46dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:layout_width="279dp"
+        android:layout_height="179dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="66dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="78dp"
+        android:layout_marginTop="225dp"
+        android:layout_marginEnd="78dp"
+        android:layout_marginBottom="119dp"
+        android:text="保存"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lineChartExample" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="225dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginBottom="119dp"
+        android:text="削除"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lineChartExample" />
+
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="102dp"
+        android:layout_marginEnd="101dp"
+        android:layout_marginBottom="79dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Music Name"
+        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lineChartExample" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
