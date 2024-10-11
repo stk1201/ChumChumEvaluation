@@ -4,7 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000b24"
     tools:context=".Result3Activity">
+
+    <Button
+        android:id="@+id/home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="304dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#b0e0e6"
+        android:text="HOME"
+        android:textColor="#000b24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button5"
@@ -14,7 +31,9 @@
         android:layout_marginTop="225dp"
         android:layout_marginEnd="78dp"
         android:layout_marginBottom="119dp"
-        android:text="保存"
+        android:backgroundTint="#FFC0CB "
+        android:text="SAVE"
+        android:textColor="#000b24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button8"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +46,9 @@
         android:layout_marginTop="225dp"
         android:layout_marginEnd="79dp"
         android:layout_marginBottom="119dp"
-        android:text="削除"
+        android:backgroundTint="#FFC0CB"
+        android:text="DELETE"
+        android:textColor="#000b24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lineChartExample" />
@@ -39,9 +60,12 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="106dp"
         android:layout_marginEnd="101dp"
+        android:textColorHint = "#808080"
+        android:background="@color/white"
         android:ems="10"
         android:inputType="text"
-        android:text="Music Name"
+        android:hint="Music Name"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -66,7 +90,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="時間別スコア" />
+            android:text="Score in Each Time"
+            android:textColor="@color/white"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,7 +104,8 @@
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="スコア" />
+                android:text="Score"
+                android:textColor="@color/white"/>
 
             <LinearLayout
                 android:layout_width="297dp"
@@ -103,7 +129,8 @@
                     android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="時間(秒)" />
+                    android:text="Time(sec)"
+                    android:textColor="@color/white"/>
             </LinearLayout>
         </LinearLayout>
 

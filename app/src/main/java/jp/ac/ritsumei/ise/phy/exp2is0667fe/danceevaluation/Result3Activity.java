@@ -36,15 +36,15 @@ public class Result3Activity extends AppCompatActivity {
 
         //X軸の設定
         XAxis xAxis = lineChart.getXAxis();
-        lineChart.getXAxis().setEnabled(true);
-        lineChart.getXAxis().setTextColor(Color.BLACK);
+        xAxis.setEnabled(true);
+        xAxis.setTextColor(Color.WHITE);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
         //Y軸の設定
         YAxis rightAxis = lineChart.getAxisRight();
         rightAxis.setEnabled(false);
-
         YAxis leftAxis = lineChart.getAxisLeft();
+        leftAxis.setTextColor(Color.WHITE);
         leftAxis.setAxisMinimum(0f);
         leftAxis.setAxisMaximum(100f);
 

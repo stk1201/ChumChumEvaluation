@@ -4,22 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000b24"
     tools:context=".Result2Activity">
+
+    <Button
+        android:id="@+id/home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="304dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#b0e0e6"
+        android:text="HOME"
+        android:textColor="#000b24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="158dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="59dp"
         android:layout_marginEnd="165dp"
-        android:layout_marginBottom="92dp"
+        android:layout_marginBottom="42dp"
+        android:backgroundTint="#FFC0CB "
         android:onClick="onNextButtonTapped"
-        android:text="Next"
+        android:text="NEXT"
+        android:textColor="#000b24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userworst" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="319dp"
+        android:layout_height="67dp"
+        android:text="Your Best Shot"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.358"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.126" />
 
     <ImageView
         android:id="@+id/userbest"
@@ -32,9 +67,26 @@
         android:maxWidth="300dp"
         app:layout_constraintBottom_toTopOf="@+id/userworst"
         app:layout_constraintEnd_toStartOf="@+id/originalbest"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.142"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="319dp"
+        android:layout_height="67dp"
+        android:text="Your Worst Shot"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.358"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.513" />
 
     <ImageView
         android:id="@+id/userworst"
@@ -42,10 +94,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="49dp"
         android:layout_marginEnd="65dp"
-        android:layout_marginBottom="204dp"
+        android:layout_marginBottom="148dp"
         android:maxWidth="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/originalworst"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -53,11 +106,9 @@
         android:id="@+id/originalbest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="168dp"
-        android:layout_marginEnd="41dp"
-        android:layout_marginBottom="103dp"
+        android:layout_marginTop="176dp"
+        android:layout_marginEnd="40dp"
         android:maxWidth="300dp"
-        app:layout_constraintBottom_toTopOf="@+id/originalworst"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
@@ -66,10 +117,12 @@
         android:id="@+id/originalworst"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="41dp"
-        android:layout_marginBottom="204dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="58dp"
         android:maxWidth="300dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
         tools:srcCompat="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>
