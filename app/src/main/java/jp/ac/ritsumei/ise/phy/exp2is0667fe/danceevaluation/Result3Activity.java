@@ -7,6 +7,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.LineData;
 
 public class Result3Activity extends AppCompatActivity {
@@ -31,9 +34,26 @@ public class Result3Activity extends AppCompatActivity {
         LineChart lineChart = findViewById(R.id.lineChartExample);
         lineChart.setData(lineData);
 
-        // X軸の設定
+        //X軸の設定
+        XAxis xAxis = lineChart.getXAxis();
         lineChart.getXAxis().setEnabled(true);
         lineChart.getXAxis().setTextColor(Color.BLACK);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        //Y軸の設定
+        YAxis rightAxis = lineChart.getAxisRight();
+        rightAxis.setEnabled(false);
+
+        YAxis leftAxis = lineChart.getAxisLeft();
+        leftAxis.setAxisMinimum(0f);
+        leftAxis.setAxisMaximum(100f);
+
+        //凡例の設定
+        Legend legend = lineChart.getLegend();
+        legend.setEnabled(false);
+
+        //説明ラベルの設定
+        lineChart.getDescription().setEnabled(false);
 
         lineChart.invalidate();
     }
