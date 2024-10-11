@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                         // 次の画面に遷移
-                        Intent intent = new Intent(LoginActivity.this, UploadingActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);
                     });
                 } else {
