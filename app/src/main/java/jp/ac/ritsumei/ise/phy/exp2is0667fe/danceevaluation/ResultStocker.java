@@ -74,16 +74,16 @@ public class ResultStocker {
 
     public void showRank(ImageView imageView){
         switch (this.rank){
-//            case "god":
-//                imageView.setImageResource(R.drawable.god);
-//            case "center":
-//                imageView.setImageResource(R.drawable.center);
-//            case "back":
-//                imageView.setImageResource(R.drawable.back);
-//            case "practice":
-//                imageView.setImageResource(R.drawable.practice);
-//            case "normal":
-//                imageView.setImageResource(R.drawable.normal);
+            case "god":
+                imageView.setImageResource(R.drawable.god);
+            case "center":
+                imageView.setImageResource(R.drawable.center);
+            case "back":
+                imageView.setImageResource(R.drawable.back);
+            case "practice":
+                imageView.setImageResource(R.drawable.practice);
+            case "normal":
+                imageView.setImageResource(R.drawable.normal);
         }
     }
 
