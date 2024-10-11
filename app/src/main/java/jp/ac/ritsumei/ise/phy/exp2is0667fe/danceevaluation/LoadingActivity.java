@@ -4,9 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,8 +17,6 @@ import com.google.mediapipe.tasks.vision.core.RunningMode;
 import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarker;
 import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
@@ -29,7 +25,6 @@ import java.util.concurrent.Executors;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.ImageView;
-import android.widget.VideoView;
 
 import java.io.IOException;
 import java.util.List;
@@ -39,6 +34,15 @@ public class LoadingActivity extends AppCompatActivity {
     //スコアはインスタンス作成してそこに保存
     //エラーハンドリング必要！！！
 
+    //画像表示
+    private ImageView imageView;
+    private int[] imageResources = {R.drawable.loading1, R.drawable.loading2, R.drawable.loading3, R.drawable.loading4}; // 画像のリソースID配列
+    private int currentIndex = 0; // 現在の画像のインデックス
+    private Handler handler;
+    private Runnable runnable;
+    private static final long INTERVAL = 1000; // 1秒ごとに画像を変更する
+
+    //ポーズ推定材料
     private Uri userVideo;
     private Uri originalVideo;
     /*
@@ -68,6 +72,23 @@ public class LoadingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
+//        imageView = findViewById(R.id.loadingview); // ImageViewの取得
+//
+//        handler = new Handler();
+//
+//        // 1秒ごとに画像を更新するRunnableを作成
+//        runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                updateImage(); // 画像を更新
+//                handler.postDelayed(this, INTERVAL); // 1秒後に再び実行
+//            }
+//        };
+//
+//        // 最初の画像を表示
+//        updateImage();
+
+
         resultStocker = resultStocker.getInstance(this);
 
         Intent preIntent = getIntent();
@@ -78,6 +99,7 @@ public class LoadingActivity extends AppCompatActivity {
         if(userVideo != null && originalVideo != null){
             poseEstimation();
         }
+
     }
 
     //座標抽出
@@ -364,4 +386,9 @@ public class LoadingActivity extends AppCompatActivity {
         return drawBitmap;
     }
 
+//    private void updateImage() {
+//        // 現在のインデックスに基づいて画像を設定し、次の画像のインデックスに進める
+//        imageView.setImageResource(imageResources[currentIndex]);
+//        currentIndex = (currentIndex + 1) % imageResources.length; // 次のインデックス（ループする）
+//    }
 }
