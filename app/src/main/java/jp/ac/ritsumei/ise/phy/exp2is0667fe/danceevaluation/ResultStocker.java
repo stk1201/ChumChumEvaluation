@@ -3,8 +3,15 @@ package jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.widget.ImageView;
 
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResultStocker {
@@ -98,8 +105,30 @@ public class ResultStocker {
         this.originalWorstShot = originalImage;
     }
 
-    public void showGraph(){
-        List<Float> x;
-        List<Float> y;
+    public LineData showGraph(){
+        List<Float> x = new ArrayList<>();
+        List<Float> y = new ArrayList<>();
+
+        for(float t=0; t < this.eachTimeScore.length; t++){
+            x.add(t);
+            y.add(eachTimeScore[(int)t]);
+        }
+
+        List<Entry> entryList = new ArrayList<>();
+        for (int i = 0; i < x.size(); i++) {
+            entryList.add(new Entry(x.get(i), y.get(i)));
+        }
+
+        List<ILineDataSet> lineDataSets = new ArrayList<>();
+
+        LineDataSet lineDataSet = new LineDataSet(entryList, "square");
+
+        lineDataSet.setColor(Color.BLUE);
+
+        lineDataSets.add(lineDataSet);
+
+        LineData lineData = new LineData(lineDataSets);
+
+        return lineData;
     }
 }

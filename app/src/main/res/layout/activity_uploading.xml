@@ -4,64 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000b24"
     tools:context=".UploadingActivity">
 
-    <TextView
-        android:id="@+id/userFileName"
+    <Button
+        android:id="@+id/home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="121dp"
-        android:layout_marginTop="179dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginBottom="50dp"
-        android:text="FileURL"
-        app:layout_constraintBottom_toTopOf="@+id/originalFileName"
-        app:layout_constraintEnd_toStartOf="@+id/userUploading"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="304dp"
+        android:layout_marginBottom="38dp"
+        android:backgroundTint="#b0e0e6"
+        android:text="HOME"
+        android:textColor="#000b24"
+        app:layout_constraintBottom_toTopOf="@+id/MyDance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/originalFileName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="248dp"
-        android:layout_marginEnd="68dp"
-        android:layout_marginBottom="464dp"
-        android:text="FileURL"
+        android:id="@+id/MyDance"
+        android:layout_width="149dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="36dp"
+        android:text="My Dance"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/originalUploading"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.155" />
 
-    <Button
-        android:id="@+id/userUploading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="167dp"
-        android:layout_marginEnd="120dp"
-        android:layout_marginBottom="16dp"
-        android:onClick="onUploadButtonTapped"
-        android:text="REF"
-        app:layout_constraintBottom_toTopOf="@+id/originalUploading"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/userFileName"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/originalUploading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="94dp"
-        android:onClick="onUploadButtonTapped"
-        android:text="REF"
-        app:layout_constraintBottom_toTopOf="@+id/button6"
-        app:layout_constraintStart_toEndOf="@+id/originalFileName"
-        app:layout_constraintTop_toBottomOf="@+id/userUploading" />
+    <TextView
+        android:id="@+id/originalDance"
+        android:layout_width="149dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="32dp"
+        android:text="Original Dance"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.456" />
 
     <Button
         android:id="@+id/button6"
@@ -69,10 +58,78 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="153dp"
         android:layout_marginEnd="170dp"
-        android:layout_marginBottom="311dp"
+        android:layout_marginBottom="132dp"
+        android:backgroundTint="#FFC0CB "
         android:onClick="onResultButtonTapped"
-        android:text="Result"
+        android:text="RESULT"
+        android:textColor="#000b24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:layout_width="327dp"
+        android:layout_height="104dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="54dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/originalDance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MyDance">
+
+        <TextView
+            android:id="@+id/userFileName"
+            android:layout_width="163dp"
+            android:layout_height="62dp"
+            android:text="FileURL"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/userUploading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFC0CB "
+            android:onClick="onUploadButtonTapped"
+            android:text="REF"
+            android:textColor="#000b24" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="327dp"
+        android:layout_height="104dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="78dp"
+        android:layout_marginBottom="68dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/button6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/originalDance">
+
+        <TextView
+            android:id="@+id/originalFileName"
+            android:layout_width="163dp"
+            android:layout_height="62dp"
+            android:layout_marginStart="52dp"
+            android:text="FileURL"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/originalUploading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFC0CB "
+            android:onClick="onUploadButtonTapped"
+            android:text="REF"
+            android:textColor="#000b24" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
