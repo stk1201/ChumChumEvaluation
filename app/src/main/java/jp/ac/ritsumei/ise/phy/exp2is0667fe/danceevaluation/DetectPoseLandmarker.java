@@ -28,36 +28,6 @@ public class DetectPoseLandmarker {
         this.context = context.getApplicationContext();
     }
 
-    private void createModel(){
-        final String modelName = "pose_landmarker_heavy.task";
-        final BaseOptions.Builder baseOptionBuilder = BaseOptions.builder();
-        baseOptionBuilder.setModelAssetPath(modelName);
-        final BaseOptions baseOptions = baseOptionBuilder.build();
-        final float minPoseDetectionConfidence = 0.5f;//姿勢検出に必要な最小信頼スコア
-        final float minPoseTrackingConfidence = 0.5f;//ポーズの有無に関する最小信頼スコア
-        final float minPosePresenceConfidence = 0.5f;//ポーズ トラッキングの最小信頼スコア
-        final int maxNumPoses = 1;//最大ポーズ数
-
-        final PoseLandmarker.PoseLandmarkerOptions.Builder optionsBuilder =
-                PoseLandmarker.PoseLandmarkerOptions.builder()
-                        .setBaseOptions(baseOptions)
-                        .setMinPoseDetectionConfidence(minPoseDetectionConfidence)
-                        .setMinTrackingConfidence(minPoseTrackingConfidence)
-                        .setMinPosePresenceConfidence(minPosePresenceConfidence)
-                        .setNumPoses(maxNumPoses)
-                        .setRunningMode(RunningMode.VIDEO);
-
-        final PoseLandmarker.PoseLandmarkerOptions options = optionsBuilder.build();
-        PoseLandmarker poseLandmarker = PoseLandmarker.createFromOptions(context, options);
-
-        this.poseLandmarker = poseLandmarker;
-    }
-
-    private void clearModel(){
-        this.poseLandmarker.close();
-        this.poseLandmarker = null;
-    }
-
     public List<PoseLandmarkerResult> detection(Uri video) throws IOException {
         this.video = video;
         createModel();
@@ -96,5 +66,35 @@ public class DetectPoseLandmarker {
 
         clearModel();
         return results;
+    }
+
+    private void createModel(){
+        final String modelName = "pose_landmarker_heavy.task";
+        final BaseOptions.Builder baseOptionBuilder = BaseOptions.builder();
+        baseOptionBuilder.setModelAssetPath(modelName);
+        final BaseOptions baseOptions = baseOptionBuilder.build();
+        final float minPoseDetectionConfidence = 0.5f;//姿勢検出に必要な最小信頼スコア
+        final float minPoseTrackingConfidence = 0.5f;//ポーズの有無に関する最小信頼スコア
+        final float minPosePresenceConfidence = 0.5f;//ポーズ トラッキングの最小信頼スコア
+        final int maxNumPoses = 1;//最大ポーズ数
+
+        final PoseLandmarker.PoseLandmarkerOptions.Builder optionsBuilder =
+                PoseLandmarker.PoseLandmarkerOptions.builder()
+                        .setBaseOptions(baseOptions)
+                        .setMinPoseDetectionConfidence(minPoseDetectionConfidence)
+                        .setMinTrackingConfidence(minPoseTrackingConfidence)
+                        .setMinPosePresenceConfidence(minPosePresenceConfidence)
+                        .setNumPoses(maxNumPoses)
+                        .setRunningMode(RunningMode.VIDEO);
+
+        final PoseLandmarker.PoseLandmarkerOptions options = optionsBuilder.build();
+        PoseLandmarker poseLandmarker = PoseLandmarker.createFromOptions(context, options);
+
+        this.poseLandmarker = poseLandmarker;
+    }
+
+    private void clearModel(){
+        this.poseLandmarker.close();
+        this.poseLandmarker = null;
     }
 }

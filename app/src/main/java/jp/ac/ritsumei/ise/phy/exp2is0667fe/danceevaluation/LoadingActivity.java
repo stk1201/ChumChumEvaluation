@@ -65,6 +65,8 @@ public class LoadingActivity extends AppCompatActivity {
     //テスト時のみpublic
     //時間ごとのスコア配列
     private float[] eachTimeScores;
+    //インスタンス
+    ScoreCalculating scoreCalculating;
     ResultStocker resultStocker;
 
     @Override
@@ -89,6 +91,7 @@ public class LoadingActivity extends AppCompatActivity {
 //        updateImage();
 
         //インスタンス作成
+        scoreCalculating = new ScoreCalculating(this);
         resultStocker = resultStocker.getInstance(this);
 
         Intent preIntent = getIntent();
@@ -139,9 +142,10 @@ public class LoadingActivity extends AppCompatActivity {
                 handler.post(() -> {
                     // 両方の処理が完了後の処理
                     //スコア計算
-                    Scoring();
+                    scoreCalculating.setPoseLandmarkerResultList(userVideoResult, originalVideoResult);
+                    eachTimeScores = scoreCalculating.Scoring();
 
-                    resultStocker.setReachTimeScore(eachTimeScores);
+                    resultStocker.setReachTimeScore(eachTimeScores);//結果保存
 
                     //マーカー
                     try {
@@ -335,10 +339,4 @@ public class LoadingActivity extends AppCompatActivity {
 
         return drawBitmap;
     }
-
-//    private void updateImage() {
-//        // 現在のインデックスに基づいて画像を設定し、次の画像のインデックスに進める
-//        imageView.setImageResource(imageResources[currentIndex]);
-//        currentIndex = (currentIndex + 1) % imageResources.length; // 次のインデックス（ループする）
-//    }
 }
