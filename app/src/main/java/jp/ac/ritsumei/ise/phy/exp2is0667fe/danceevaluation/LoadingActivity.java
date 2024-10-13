@@ -88,7 +88,7 @@ public class LoadingActivity extends AppCompatActivity {
 //        // 最初の画像を表示
 //        updateImage();
 
-
+        //インスタンス作成
         resultStocker = resultStocker.getInstance(this);
 
         Intent preIntent = getIntent();
@@ -111,7 +111,8 @@ public class LoadingActivity extends AppCompatActivity {
         // ユーザ動画のポーズ推定
         executor.execute(() -> {
             try {
-                userVideoResult = detection(userVideo);
+                DetectPoseLandmarker detectPoseLandmarker = new DetectPoseLandmarker(this);
+                userVideoResult = detectPoseLandmarker.detection(userVideo);
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -122,7 +123,8 @@ public class LoadingActivity extends AppCompatActivity {
         // オリジナル動画のポーズ推定
         executor.execute(() -> {
             try {
-                originalVideoResult = detection(originalVideo);
+                DetectPoseLandmarker detectPoseLandmarker = new DetectPoseLandmarker(this);
+                originalVideoResult = detectPoseLandmarker.detection(originalVideo);
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -158,58 +160,6 @@ public class LoadingActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }).start();
-    }
-
-    private PoseLandmarker createModel(){
-        final String modelName = "pose_landmarker_heavy.task";
-        final BaseOptions.Builder baseOptionsBuilder = BaseOptions.builder().setModelAssetPath(modelName);
-        final BaseOptions baseOptions = baseOptionsBuilder.build();
-        final float minPoseDetectionConfidence = 0.5f;//姿勢検出に必要な最小信頼スコア
-        final float minPoseTrackingConfidence = 0.5f;//ポーズの有無に関する最小信頼スコア
-        final float minPosePresenceConfidence = 0.5f;//ポーズ トラッキングの最小信頼スコア
-        final int maxNumPoses = 1;//最大ポーズ数
-
-        final PoseLandmarker.PoseLandmarkerOptions.Builder optionsBuilder =
-                PoseLandmarker.PoseLandmarkerOptions.builder()
-                        .setBaseOptions(baseOptions)
-                        .setMinPoseDetectionConfidence(minPoseDetectionConfidence)
-                        .setMinTrackingConfidence(minPoseTrackingConfidence)
-                        .setMinPosePresenceConfidence(minPosePresenceConfidence)
-                        .setNumPoses(maxNumPoses)
-                        .setRunningMode(RunningMode.VIDEO);
-
-        final PoseLandmarker.PoseLandmarkerOptions options = optionsBuilder.build();
-        PoseLandmarker poseLandmarker = PoseLandmarker.createFromOptions(this, options);
-        return poseLandmarker;
-    }
-
-    private List<PoseLandmarkerResult> detection(Uri video) throws IOException {
-        PoseLandmarker poseLandmarker = createModel();
-
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(this, video);
-
-        int duration = Integer.parseInt(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));//ms
-        int interval = 1000;//ms
-        List<PoseLandmarkerResult> results = new ArrayList<>();
-
-        for(int t = 0; t <= duration; t += interval){
-            Bitmap frameAtTime = retriever.getFrameAtTime(t*1000);//microSec
-
-            if (frameAtTime != null) {
-                // ARGB_8888形式に変換
-                Bitmap argb8888Frame = frameAtTime.copy(Bitmap.Config.ARGB_8888, false);
-                // MPImageに変換
-                MPImage mpImage = new BitmapImageBuilder(argb8888Frame).build();
-
-                PoseLandmarkerResult result = poseLandmarker.detectForVideo(mpImage, t);
-                results.add(result);
-            }
-        }
-
-        retriever.release();
-
-        return results;
     }
 
     //スコアリング
