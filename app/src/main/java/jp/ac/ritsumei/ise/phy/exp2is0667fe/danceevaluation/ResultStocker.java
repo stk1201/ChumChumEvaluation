@@ -4,12 +4,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.net.Uri;
+import android.util.Pair;
 import android.widget.ImageView;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,10 @@ public class ResultStocker {
 
     private Context context;
     private static ResultStocker resultStocker;
+    private Uri userVideo;
+    private Uri originalVideo;
+    private List<PoseLandmarkerResult> userResult;
+    private List<PoseLandmarkerResult> originalResult;
     private float totalScore;
     private float[] eachTimeScore;
     private String rank;
@@ -35,6 +42,32 @@ public class ResultStocker {
             resultStocker = new ResultStocker(context);
         }
         return resultStocker;
+    }
+
+    public void setVideos(Uri userVideo, Uri originalVideo){
+        this.userVideo = userVideo;
+        this.originalVideo = originalVideo;
+    }
+
+    public Uri getUserVideos(){
+        return this.userVideo;
+    }
+
+    public Uri getOriginalVideos(){
+        return this.originalVideo;
+    }
+
+    public void setPoseLandmarkerResultList(List<PoseLandmarkerResult> userResult, List<PoseLandmarkerResult> originalResult){
+        this.userResult = userResult;
+        this.originalResult = originalResult;
+    }
+
+    public List<PoseLandmarkerResult> getUserResult(){
+        return this.userResult;
+    }
+
+    public List<PoseLandmarkerResult> getOriginalResult(){
+        return this.originalResult;
     }
 
     public void setReachTimeScore(float[] eachTimeScore){
