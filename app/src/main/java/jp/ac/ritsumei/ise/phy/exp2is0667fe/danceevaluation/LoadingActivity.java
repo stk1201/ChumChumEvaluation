@@ -60,6 +60,7 @@ public class LoadingActivity extends AppCompatActivity {
     //時間ごとのスコア配列
     private float[] eachTimeScores;
     //インスタンス
+    MarkEachFrame markEachFrame;
     ScoreCalculating scoreCalculating;
     ResultStocker resultStocker;
 
@@ -86,6 +87,7 @@ public class LoadingActivity extends AppCompatActivity {
 
         //インスタンス作成
         scoreCalculating = new ScoreCalculating(this);
+        markEachFrame = new MarkEachFrame(this, null);
         resultStocker = resultStocker.getInstance(this);
 
         Intent preIntent = getIntent();
@@ -94,9 +96,11 @@ public class LoadingActivity extends AppCompatActivity {
         originalVideo = Uri.parse(preIntent.getStringExtra("ORIGINAL_VIDEO_KEY"));
 
         if(userVideo != null && originalVideo != null){
+            //動画保存
+            resultStocker.setVideos(userVideo, originalVideo);
+            //ポーズ推定
             poseEstimation();
         }
-
     }
 
     //座標抽出
@@ -135,6 +139,8 @@ public class LoadingActivity extends AppCompatActivity {
                 latch.await();
                 handler.post(() -> {
                     // 両方の処理が完了後の処理
+                    //結果保存
+                    resultStocker.setPoseLandmarkerResultList(userVideoResult, originalVideoResult);
                     //スコア計算
                     scoreCalculating.setPoseLandmarkerResultList(userVideoResult, originalVideoResult);
                     eachTimeScores = scoreCalculating.Scoring();
@@ -145,81 +151,22 @@ public class LoadingActivity extends AppCompatActivity {
 
                     //マーカー
                     try {
-                        Marker();
+                        Bitmap[] shots = markEachFrame.Marker();
+                        if(shots != null){
+                            resultStocker.setBestShot(shots[0], shots[1]);
+                            resultStocker.setWorstShot(shots[2], shots[3]);
+                        }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
 
                     //結果1画面に遷移
-                    if(eachTimeScores != null && eachTimeScores.length != 0){
-                        Intent intent = new Intent(this, Result1Activity.class);
-                        startActivity(intent);
-                    }
+                    Intent intent = new Intent(this, Result1Activity.class);
+                    startActivity(intent);
                 });
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }).start();
-    }
-
-    //マーカー
-    private void Marker() throws IOException {
-        if(userVideoResult != null && originalVideoResult != null && eachTimeScores != null){
-            int maxScoreTime = 0;
-            int minScoreTime = 0;
-            
-            for(int t=1; t < eachTimeScores.length; t++){
-                if(eachTimeScores[maxScoreTime] < eachTimeScores[t]){
-                    maxScoreTime = t;
-                } else if ( eachTimeScores[minScoreTime] > eachTimeScores[t] ) {
-                    minScoreTime = t;
-                }
-            }
-
-
-            Bitmap userBestShot = DrawVideoFrame(userVideo, maxScoreTime, 1);
-
-            Bitmap originalBestShot = DrawVideoFrame(originalVideo, maxScoreTime, 2);
-
-            resultStocker.setBestShot(userBestShot, originalBestShot);
-
-            Bitmap userWorstShot = DrawVideoFrame(userVideo, minScoreTime, 1);
-            Bitmap originalWorstShot = DrawVideoFrame(originalVideo, minScoreTime, 2);
-
-            resultStocker.setWorstShot(userWorstShot, originalWorstShot);
-        }
-    }
-
-
-    private Bitmap DrawVideoFrame(Uri video, int time, int resultType) throws IOException {
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(this, video);
-
-        Bitmap videoFrame = retriever.getFrameAtTime(time * 1000000, MediaMetadataRetriever.OPTION_CLOSEST);
-        retriever.release();
-
-        int frameHeight = videoFrame.getHeight();
-        int frameWidth = videoFrame.getWidth();
-
-        MarkEachFrame markEachFrame = new MarkEachFrame(this, null);
-        markEachFrame.clear();
-        markEachFrame.setBitmap(videoFrame);
-
-
-        switch (resultType){
-            case 1:
-                markEachFrame.setResults(userVideoResult.get(time), frameHeight, frameWidth);
-                break;
-            case 2:
-                markEachFrame.setResults(originalVideoResult.get(time), frameHeight, frameWidth);
-
-                break;
-        }
-
-        Bitmap drawBitmap = Bitmap.createBitmap(frameWidth, frameHeight, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(drawBitmap);
-        markEachFrame.draw(canvas);
-
-        return drawBitmap;
     }
 }

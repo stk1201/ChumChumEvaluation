@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -19,9 +21,12 @@ import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class MarkEachFrame extends View {
+    private Context context;
+    private ResultStocker resultStocker;
     private Bitmap resultBitmap;
     private PoseLandmarkerResult videoResultPerFrame;
     private Paint pointPaint = new Paint();
@@ -32,6 +37,8 @@ public class MarkEachFrame extends View {
 
     public MarkEachFrame(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
+        resultStocker = resultStocker.getInstance(this.context);
         initPaints();
     }
 
@@ -55,12 +62,69 @@ public class MarkEachFrame extends View {
         pointPaint.setStyle(Paint.Style.FILL);
     }
 
-    public void setBitmap(Bitmap bitmap) {
+    public Bitmap[] Marker() throws IOException {
+        Uri userVideo = resultStocker.getUserVideos();
+        Uri originalVideo = resultStocker.getOriginalVideos();
+
+        List<PoseLandmarkerResult> userResult = resultStocker.getUserResult();
+        List<PoseLandmarkerResult> originalResult = resultStocker.getOriginalResult();
+
+        float[] eachTimeScores = resultStocker.getEachTimeScore();
+
+        if(userResult != null && originalResult != null && eachTimeScores != null){
+            int maxScoreTime = 0;
+            int minScoreTime = 0;
+
+            for(int t=1; t < eachTimeScores.length; t++){
+                if(eachTimeScores[maxScoreTime] < eachTimeScores[t]){
+                    maxScoreTime = t;
+                } else if ( eachTimeScores[minScoreTime] > eachTimeScores[t] ) {
+                    minScoreTime = t;
+                }
+            }
+
+            Bitmap userBestShot = DrawVideoFrame(userVideo, maxScoreTime, userResult);
+            Bitmap originalBestShot = DrawVideoFrame(originalVideo, maxScoreTime, originalResult);
+            Bitmap userWorstShot = DrawVideoFrame(userVideo, minScoreTime, userResult);
+            Bitmap originalWorstShot = DrawVideoFrame(originalVideo, minScoreTime, originalResult);
+
+            Bitmap[] shots = {userBestShot, originalBestShot, userWorstShot, originalWorstShot};
+
+           return shots;
+        }else{
+            return null;
+        }
+    }
+
+    private Bitmap DrawVideoFrame(Uri video, int time, List<PoseLandmarkerResult> result) throws IOException {
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(context, video);
+
+        Bitmap videoFrame = retriever.getFrameAtTime(time * 1000000, MediaMetadataRetriever.OPTION_CLOSEST);
+        retriever.release();
+
+        int frameHeight = videoFrame.getHeight();
+        int frameWidth = videoFrame.getWidth();
+
+        MarkEachFrame markEachFrame = new MarkEachFrame(context, null);
+        markEachFrame.clear();
+        markEachFrame.setBitmap(videoFrame);
+
+        markEachFrame.setResults(result.get(time), frameHeight, frameWidth);
+
+        Bitmap drawBitmap = Bitmap.createBitmap(frameWidth, frameHeight, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(drawBitmap);
+        markEachFrame.draw(canvas);
+
+        return drawBitmap;
+    }
+
+    private void setBitmap(Bitmap bitmap) {
         this.resultBitmap = bitmap;
         invalidate();
     }
 
-    public void setResults(PoseLandmarkerResult poseLandmarkerResultsPerFrame, int imageHeight, int imageWidth) {
+    private void setResults(PoseLandmarkerResult poseLandmarkerResultsPerFrame, int imageHeight, int imageWidth) {
         this.videoResultPerFrame = poseLandmarkerResultsPerFrame;
         this.imageHeight = imageHeight;
         this.imageWidth = imageWidth;
