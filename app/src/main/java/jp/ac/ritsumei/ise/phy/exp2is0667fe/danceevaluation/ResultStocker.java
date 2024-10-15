@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.Uri;
+import android.util.Log;
 import android.util.Pair;
 import android.widget.ImageView;
 
@@ -80,11 +81,12 @@ public class ResultStocker {
         for(int t=0; t < eachTimeScore.length; t++){
             total = total + eachTimeScore[t];
         }
+        Log.d("Posemaker", "totalScore:"+total);
 
-        this.totalScore = total/(maxScore * eachTimeScore.length);
+        this.totalScore = total/eachTimeScore.length;
 
         //ランク付け
-        if(this.totalScore > 80 && this.totalScore <= 100){
+        if(this.totalScore > 80){
             this.rank = "god";
         } else if (this.totalScore > 60) {
             this.rank = "center";
@@ -95,6 +97,7 @@ public class ResultStocker {
         } else {
             this.rank = "normal";
         }
+        Log.d("Posemaker","rank:" + this.rank);
     }
 
     public float getTotalScore(){
@@ -109,14 +112,19 @@ public class ResultStocker {
         switch (this.rank){
             case "god":
                 imageView.setImageResource(R.drawable.god);
+                break;
             case "center":
                 imageView.setImageResource(R.drawable.center);
+                break;
             case "back":
                 imageView.setImageResource(R.drawable.back);
+                break;
             case "practice":
                 imageView.setImageResource(R.drawable.practice);
+                break;
             case "normal":
                 imageView.setImageResource(R.drawable.normal);
+                break;
         }
     }
 
