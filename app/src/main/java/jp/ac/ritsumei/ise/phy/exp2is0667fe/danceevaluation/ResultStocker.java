@@ -29,6 +29,8 @@ public class ResultStocker {
     private float totalScore;
     private float[] eachTimeScore;
     private String rank;
+    private List<Bitmap> userBitmaps;
+    private List<Bitmap> originalBitmaps;
     private Bitmap userBestShot;
     private Bitmap originalBestShot;
     private Bitmap userWorstShot;
@@ -75,7 +77,6 @@ public class ResultStocker {
         this.eachTimeScore = eachTimeScore;
 
         float total = 0;
-        int maxScore = 2;
 
         //合計スコア
         for(int t=0; t < eachTimeScore.length; t++){
@@ -97,7 +98,9 @@ public class ResultStocker {
         } else {
             this.rank = "normal";
         }
-        Log.d("Posemaker","rank:" + this.rank);
+
+        //ベストショットとワーストショットの設定
+        setBestAndWorst();
     }
 
     public float getTotalScore(){
@@ -128,9 +131,28 @@ public class ResultStocker {
         }
     }
 
-    public void setBestShot(Bitmap userImage, Bitmap originalImage){
-       this.userBestShot = userImage;
-       this.originalBestShot = originalImage;
+    public void setDrawBitmaps(List<Bitmap> userBitmaps, List<Bitmap> originalBitmaps){
+        this.userBitmaps = userBitmaps;
+        this.originalBitmaps = originalBitmaps;
+    }
+
+    private void setBestAndWorst(){
+        int maxScoreTime = 0;
+        int minScoreTime = 0;
+
+        for(int t=1; t < this.eachTimeScore.length; t++){
+            if(this.eachTimeScore[maxScoreTime] < this.eachTimeScore[t]){
+                maxScoreTime = t;
+            } else if ( this.eachTimeScore[minScoreTime] > this.eachTimeScore[t] ) {
+                minScoreTime = t;
+            }
+        }
+
+        this.userBestShot = userBitmaps.get(maxScoreTime);
+        this.originalBestShot = originalBitmaps.get(maxScoreTime);
+
+        this.userWorstShot = userBitmaps.get(minScoreTime);
+        this.originalWorstShot = originalBitmaps.get(minScoreTime);
     }
 
     public Bitmap[] getBestShot(){
@@ -139,11 +161,6 @@ public class ResultStocker {
 
     public Bitmap[] getWorstShot(){
         return new Bitmap[]{userWorstShot, originalWorstShot};
-    }
-
-    public void setWorstShot(Bitmap userImage, Bitmap originalImage){
-        this.userWorstShot = userImage;
-        this.originalWorstShot = originalImage;
     }
 
     public LineData showGraph(){
