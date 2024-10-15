@@ -4,26 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.google.mediapipe.framework.image.BitmapImageBuilder;
-import com.google.mediapipe.framework.image.MPImage;
-import com.google.mediapipe.tasks.core.BaseOptions;
-import com.google.mediapipe.tasks.vision.core.RunningMode;
-import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarker;
 import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Pair;
 import android.widget.ImageView;
 
 import java.io.IOException;
@@ -56,6 +47,8 @@ public class LoadingActivity extends AppCompatActivity {
 
     private List<PoseLandmarkerResult> userVideoResult;
     private List<PoseLandmarkerResult> originalVideoResult;
+    private List<Bitmap> userDrawBitmaps;
+    private List<Bitmap> originalDrawBitmaps;
 
     //時間ごとのスコア配列
     private float[] eachTimeScores;
@@ -113,7 +106,9 @@ public class LoadingActivity extends AppCompatActivity {
         executor.execute(() -> {
             try {
                 DetectPoseLandmarker detectPoseLandmarker = new DetectPoseLandmarker(this);
-                userVideoResult = detectPoseLandmarker.detection(userVideo);
+                Pair<List<PoseLandmarkerResult>, List<Bitmap>> userResults = detectPoseLandmarker.detection(userVideo);
+                userVideoResult = userResults.first;
+                userDrawBitmaps = userResults.second;
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -125,7 +120,9 @@ public class LoadingActivity extends AppCompatActivity {
         executor.execute(() -> {
             try {
                 DetectPoseLandmarker detectPoseLandmarker = new DetectPoseLandmarker(this);
-                originalVideoResult = detectPoseLandmarker.detection(originalVideo);
+                Pair<List<PoseLandmarkerResult>, List<Bitmap>> originalResults = detectPoseLandmarker.detection(originalVideo);
+                originalVideoResult = originalResults.first;
+                originalDrawBitmaps = originalResults.second;
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -141,23 +138,13 @@ public class LoadingActivity extends AppCompatActivity {
                     // 両方の処理が完了後の処理
                     //結果保存
                     resultStocker.setPoseLandmarkerResultList(userVideoResult, originalVideoResult);
+                    resultStocker.setDrawBitmaps(userDrawBitmaps, originalDrawBitmaps);
                     //スコア計算
                     scoreCalculating.setPoseLandmarkerResultList(userVideoResult, originalVideoResult);
                     eachTimeScores = scoreCalculating.Scoring();
                     //結果保存
                     if(eachTimeScores != null){
                         resultStocker.setReachTimeScore(eachTimeScores);
-                    }
-
-                    //マーカー
-                    try {
-                        Bitmap[] shots = markEachFrame.Marker();
-                        if(shots != null){
-                            resultStocker.setBestShot(shots[0], shots[1]);
-                            resultStocker.setWorstShot(shots[2], shots[3]);
-                        }
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
                     }
 
                     //結果1画面に遷移

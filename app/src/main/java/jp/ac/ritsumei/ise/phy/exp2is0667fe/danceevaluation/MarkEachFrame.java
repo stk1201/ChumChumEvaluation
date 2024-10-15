@@ -62,59 +62,18 @@ public class MarkEachFrame extends View {
         pointPaint.setStyle(Paint.Style.FILL);
     }
 
-    public Bitmap[] Marker() throws IOException {
-        Uri userVideo = resultStocker.getUserVideos();
-        Uri originalVideo = resultStocker.getOriginalVideos();
+    public Bitmap Marker(Bitmap frame, PoseLandmarkerResult result) throws IOException {
+        int frameHeight = frame.getHeight();
+        int frameWidth = frame.getWidth();
 
-        List<PoseLandmarkerResult> userResult = resultStocker.getUserResult();
-        List<PoseLandmarkerResult> originalResult = resultStocker.getOriginalResult();
+        clear();
 
-        float[] eachTimeScores = resultStocker.getEachTimeScore();
-
-        if(userResult != null && originalResult != null && eachTimeScores != null){
-            int maxScoreTime = 0;
-            int minScoreTime = 0;
-
-            for(int t=1; t < eachTimeScores.length; t++){
-                if(eachTimeScores[maxScoreTime] < eachTimeScores[t]){
-                    maxScoreTime = t;
-                } else if ( eachTimeScores[minScoreTime] > eachTimeScores[t] ) {
-                    minScoreTime = t;
-                }
-            }
-
-            Bitmap userBestShot = DrawVideoFrame(userVideo, maxScoreTime, userResult);
-            Bitmap originalBestShot = DrawVideoFrame(originalVideo, maxScoreTime, originalResult);
-            Bitmap userWorstShot = DrawVideoFrame(userVideo, minScoreTime, userResult);
-            Bitmap originalWorstShot = DrawVideoFrame(originalVideo, minScoreTime, originalResult);
-
-            Bitmap[] shots = {userBestShot, originalBestShot, userWorstShot, originalWorstShot};
-
-           return shots;
-        }else{
-            return null;
-        }
-    }
-
-    private Bitmap DrawVideoFrame(Uri video, int time, List<PoseLandmarkerResult> result) throws IOException {
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(context, video);
-
-        Bitmap videoFrame = retriever.getFrameAtTime(time * 1000000, MediaMetadataRetriever.OPTION_CLOSEST);
-        retriever.release();
-
-        int frameHeight = videoFrame.getHeight();
-        int frameWidth = videoFrame.getWidth();
-
-        MarkEachFrame markEachFrame = new MarkEachFrame(context, null);
-        markEachFrame.clear();
-        markEachFrame.setBitmap(videoFrame);
-
-        markEachFrame.setResults(result.get(time), frameHeight, frameWidth);
+        setBitmap(frame);
+        setResults(result,frameHeight,frameWidth);
 
         Bitmap drawBitmap = Bitmap.createBitmap(frameWidth, frameHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(drawBitmap);
-        markEachFrame.draw(canvas);
+        draw(canvas);
 
         return drawBitmap;
     }
@@ -128,7 +87,6 @@ public class MarkEachFrame extends View {
         this.videoResultPerFrame = poseLandmarkerResultsPerFrame;
         this.imageHeight = imageHeight;
         this.imageWidth = imageWidth;
-
 
         invalidate();
     }

@@ -6,6 +6,7 @@ import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.Pair;
 
 import com.google.mediapipe.framework.image.BitmapImageBuilder;
 import com.google.mediapipe.framework.image.MPImage;
@@ -23,12 +24,13 @@ public class DetectPoseLandmarker {
     private Context context;
     private Uri video;
     private PoseLandmarker poseLandmarker;
+    private ResultStocker resultStocker;
 
     public DetectPoseLandmarker(Context context) {
         this.context = context.getApplicationContext();
     }
 
-    public List<PoseLandmarkerResult> detection(Uri video) throws IOException {
+    public Pair<List<PoseLandmarkerResult>, List<Bitmap>> detection(Uri video) throws IOException {
         this.video = video;
         createModel();
 
@@ -40,13 +42,13 @@ public class DetectPoseLandmarker {
             throw new IllegalStateException("PoseLandmarker is not initialized.");
         }
 
-
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         retriever.setDataSource(context, this.video);
 
         int duration = Integer.parseInt(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));//ms
         int interval = 1000;//ms
         List<PoseLandmarkerResult> results = new ArrayList<>();
+        List<Bitmap> drawBitmaps = new ArrayList<>();
 
         for(int t = 0; t <= duration; t += interval){
             Bitmap frameAtTime = retriever.getFrameAtTime(t*1000);//microSec
@@ -59,13 +61,18 @@ public class DetectPoseLandmarker {
 
                 PoseLandmarkerResult result = poseLandmarker.detectForVideo(mpImage, t);
                 results.add(result);
+
+                //描画
+                MarkEachFrame markEachFrame = new MarkEachFrame(context, null);
+                Bitmap drawBitmap = markEachFrame.Marker(frameAtTime, result);
+                drawBitmaps.add(drawBitmap);
             }
         }
 
         retriever.release();
 
         clearModel();
-        return results;
+        return new Pair<>(results,drawBitmaps);
     }
 
     private void createModel(){
