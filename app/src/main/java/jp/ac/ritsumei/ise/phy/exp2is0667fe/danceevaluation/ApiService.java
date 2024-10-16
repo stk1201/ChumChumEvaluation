@@ -5,5 +5,5 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 public interface ApiService {
     @POST("results/sort")
-    Call<List<History_ApiResponseItem>> sortResults(@Body History_RequestBody body);
+    Call<List<HistoryApiResponseItem>> sortResults(@Body HistoryRequestBody body);
 }

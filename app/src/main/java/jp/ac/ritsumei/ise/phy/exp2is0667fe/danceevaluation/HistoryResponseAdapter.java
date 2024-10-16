@@ -8,11 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
-public class History_ResponseAdapter extends RecyclerView.Adapter<History_ResponseAdapter.ResponseViewHolder> {
-    private final List<History_ApiResponseItem> responseList;
+public class HistoryResponseAdapter extends RecyclerView.Adapter<HistoryResponseAdapter.ResponseViewHolder> {
+    private final List<HistoryApiResponseItem> responseList;
 
     // コンストラクタでデータのリストを受け取ります
-    public History_ResponseAdapter(List<History_ApiResponseItem> responseList) {
+    public HistoryResponseAdapter(List<HistoryApiResponseItem> responseList) {
         this.responseList = responseList;
     }
 
@@ -27,7 +27,7 @@ public class History_ResponseAdapter extends RecyclerView.Adapter<History_Respon
     @Override
     public void onBindViewHolder(@NonNull ResponseViewHolder holder, int position) {
         // 各アイテムのデータを設定します
-        History_ApiResponseItem item = responseList.get(position);
+        HistoryApiResponseItem item = responseList.get(position);
         holder.textViewDate.setText(item.getDate());
         holder.textViewScore.setText("Score: " + item.getScore());
         holder.textViewMusicName.setText("Music: " + item.getMusicName());

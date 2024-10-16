@@ -1,12 +1,12 @@
 package jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation;
 
-public class History_ApiResponseItem {
+public class HistoryApiResponseItem {
     private String date;
     private int score;
     private String musicName;
 
     // コンストラクタ
-    public History_ApiResponseItem(String date, int score, String musicName) {
+    public HistoryApiResponseItem(String date, int score, String musicName) {
         this.date = date;
         this.score = score;
         this.musicName = musicName;

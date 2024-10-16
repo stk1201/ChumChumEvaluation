@@ -1,11 +1,11 @@
 package jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation;
 
-public class History_RequestBody {
+public class HistoryRequestBody {
     private String UserID;
     private String MusicName;
     private String SortBy;
 
-    public History_RequestBody(String userID, String musicName, String sortBy) {
+    public HistoryRequestBody(String userID, String musicName, String sortBy) {
         this.UserID = userID;
         this.MusicName = musicName;
         this.SortBy = sortBy;

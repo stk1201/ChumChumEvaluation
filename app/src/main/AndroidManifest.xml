@@ -27,9 +27,6 @@
             android:name=".LoadingActivity"
             android:exported="false" />
         <activity
-            android:name=".HistoryActivity"
-            android:exported="false" />
-        <activity
             android:name=".UploadingActivity"
             android:exported="false" />
         <activity
@@ -39,7 +36,7 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".History_Activity"
+            android:name=".HistoryActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
