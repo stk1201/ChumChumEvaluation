@@ -3,8 +3,10 @@ package jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -25,6 +27,9 @@ public class Result3Activity extends AppCompatActivity {
 
         if(resultStocker != null){
             showingGraph();
+
+            View graphParent = findViewById(R.id.graphParent);
+            resultStocker.setGraph(getGraph(graphParent));
         }
     }
 
@@ -56,5 +61,13 @@ public class Result3Activity extends AppCompatActivity {
         lineChart.getDescription().setEnabled(false);
 
         lineChart.invalidate();
+    }
+
+    private Bitmap getGraph(View view){
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+        view.setDrawingCacheEnabled(false);
+        return bitmap;
     }
 }

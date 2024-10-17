@@ -35,6 +35,7 @@ public class ResultStocker {
     private Bitmap originalBestShot;
     private Bitmap userWorstShot;
     private Bitmap originalWorstShot;
+    private Bitmap graph;
 
     public ResultStocker(Context context){
         this.context = context.getApplicationContext();
@@ -188,5 +189,9 @@ public class ResultStocker {
         LineData lineData = new LineData(lineDataSets);
 
         return lineData;
+    }
+
+    public void setGraph(Bitmap graph){
+        this.graph = graph;
     }
 }
