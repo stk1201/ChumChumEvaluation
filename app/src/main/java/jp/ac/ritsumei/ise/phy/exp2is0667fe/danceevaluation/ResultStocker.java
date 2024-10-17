@@ -36,6 +36,7 @@ public class ResultStocker {
     private Bitmap userWorstShot;
     private Bitmap originalWorstShot;
     private Bitmap graph;
+    private String musicName;
 
     public ResultStocker(Context context){
         this.context = context.getApplicationContext();
@@ -112,6 +113,9 @@ public class ResultStocker {
         return this.eachTimeScore;
     }
 
+    public String getRank(){
+        return this.rank;
+    }
     public void showRank(ImageView imageView){
         switch (this.rank){
             case "god":
@@ -194,4 +198,14 @@ public class ResultStocker {
     public void setGraph(Bitmap graph){
         this.graph = graph;
     }
+
+    public Bitmap getGraph(){
+        return this.graph;
+    }
+
+    public void setMusicName(String musicName){
+        this.musicName = musicName;
+    }
+
+    public String getMusicName(){return this.musicName;}
 }

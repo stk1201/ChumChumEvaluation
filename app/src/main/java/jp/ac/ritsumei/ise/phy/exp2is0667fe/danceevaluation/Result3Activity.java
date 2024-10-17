@@ -3,10 +3,13 @@ package jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -69,5 +72,15 @@ public class Result3Activity extends AppCompatActivity {
         Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
         view.setDrawingCacheEnabled(false);
         return bitmap;
+    }
+    //結果をサーバに保存
+    public void onSaveButtonTapped(View view) {
+        EditText musicNameText = findViewById(R.id.musicNameText);
+        String musicName = musicNameText.getText().toString();
+
+        if(!musicName.isEmpty()){
+            SaveResult saveResult = new SaveResult(this);
+            saveResult.saving();
+        }
     }
 }
