@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -99,6 +100,7 @@ public class SaveResult {
 
     private File bitmapToPng(Bitmap bitmap, String filename){
         File file = new File(this.context.getExternalFilesDir(null) + "/" + filename + ".png");
+        Log.d("posemaker", "url:" + file);
 
         try {
             FileOutputStream fos = new FileOutputStream(file);

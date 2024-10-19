@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -32,7 +35,11 @@ public class Result3Activity extends AppCompatActivity {
             showingGraph();
 
             View graphParent = findViewById(R.id.graphParent);
-            resultStocker.setGraph(getGraph(graphParent));
+            //viewの描画待機
+            graphParent.post(() -> {
+                Bitmap graphBitmap = changeToGraphBitmap(graphParent);
+                resultStocker.setGraph(graphBitmap);
+            });
         }
     }
 
@@ -66,11 +73,10 @@ public class Result3Activity extends AppCompatActivity {
         lineChart.invalidate();
     }
 
-    private Bitmap getGraph(View view){
-        view.setDrawingCacheEnabled(true);
-        view.buildDrawingCache();
-        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
-        view.setDrawingCacheEnabled(false);
+    private Bitmap changeToGraphBitmap(View view){
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
         return bitmap;
     }
     //結果をサーバに保存
