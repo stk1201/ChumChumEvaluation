@@ -55,9 +55,10 @@ public class HistoryActivity extends AppCompatActivity {
         buttonSubmit.setOnClickListener(v -> sendApiRequest());
     }
 
+
     // APIリクエストを送信するメソッド
     private void sendApiRequest() {
-        String url ="https://admgumzyeb.execute-api.ap-northeast-1.amazonaws.com/test/results/sort";
+        String url ="https://tb78lilb8f.execute-api.ap-northeast-1.amazonaws.com/chum/result/score";
         String userID = editUserID.getText().toString().trim();
         String musicName = editMusicName.getText().toString().trim();
         String sortBy = spinnerSortBy.getSelectedItem() != null ? spinnerSortBy.getSelectedItem().toString() : "";
@@ -103,6 +104,10 @@ public class HistoryActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String responseData = response.body().string();
+
+                    ArrayList<ArrayList<String>> resultList = new ArrayList<>();
+
+
                     try {
                         // レスポンスデータをJSONObjectとしてパース
                         JSONObject parsedData = new JSONObject(responseData);
@@ -115,10 +120,26 @@ public class HistoryActivity extends AppCompatActivity {
                         // 各オブジェクトを{}ごとに区切って表示
                         for (int i = 0; i < bodyArray.length(); i++) {
                             JSONObject item = bodyArray.getJSONObject(i);
-                            Log.d("History_Activity", "{" + "\n" + item.toString(4) + "\n" + "}");
+
+                            // 1つの計算結果から,曲名・得点・日時を抽出
+                            String MusicName = item.getString("music_name");
+                            String Score = item.getString("score");
+                            String Date = item.getString("date");
+
+                            // リストに一時保存
+                            ArrayList<String> data = new ArrayList<>();
+                            data.add(MusicName);
+                            data.add(Score);
+                            data.add(Date);
+
+                            //おおもとのリストに1つの計算結果の曲名・得点・日時を記録
+                            resultList.add(data);
+
+                            //ここを書き換える
+                            //Log.d("History_Activity", "{" + "\n" + item.toString(4) + "\n" + "}");
 
                             // 区切り線を表示
-                            Log.d("History_Activity", "---");
+                            //Log.d("History_Activity", "---");
 
                         }
                     } catch (org.json.JSONException e) {
