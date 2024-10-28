@@ -9,6 +9,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,7 +38,7 @@ public class SaveResult {
     public void saving(){
         userStocker = userStocker.getInstance(context);
         resultStocker = resultStocker.getInstance(context);
-        String url = "https://admgumzyeb.execute-api.ap-northeast-1.amazonaws.com/test/result_create";
+        String url = "https://tb78lilb8f.execute-api.ap-northeast-1.amazonaws.com/chum/result/register";
 
         String resultJson = getJson(userStocker, resultStocker);
         RequestBody body = RequestBody.create(
@@ -62,13 +65,28 @@ public class SaveResult {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String responseData = response.body().string();
-                    // ログイン成功時の処理
-                    ((Activity) context).runOnUiThread(() -> {
-                        Toast.makeText(context, "Save successful", Toast.LENGTH_SHORT).show();
 
-                        //画像の削除
-                        deleteImages();
-                    });
+                    try {
+                        JSONObject jsonResponse = new JSONObject(responseData);
+                        String resultId = jsonResponse.getString("id");
+
+                        // result_list作成に成功した時の処理
+                        ((Activity) context).runOnUiThread(() -> {
+                            Toast.makeText(context, "Save successful", Toast.LENGTH_SHORT).show();
+
+                            //画像をS3へ保存
+                            saveImages(resultId);
+
+                            //画像の削除
+                            deleteImages();
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        ((Activity) context).runOnUiThread(() ->
+                                Toast.makeText(context, "Failed to parse response", Toast.LENGTH_SHORT).show()
+                        );
+                    }
+
                 } else {
                     ((Activity) context).runOnUiThread(() ->
                             Toast.makeText(context, "Save failed: " + response.code(), Toast.LENGTH_SHORT).show()
@@ -79,19 +97,9 @@ public class SaveResult {
     }
 
     private String getJson(UserStocker userStocker, ResultStocker resultStocker){
-        filePaths[0] = bitmapToPng(resultStocker.getBestShot()[0], "userBestShot");
-        filePaths[1] = bitmapToPng(resultStocker.getBestShot()[1], "originalBestShot");
-        filePaths[2] = bitmapToPng(resultStocker.getWorstShot()[0], "userWorstShot");
-        filePaths[3] = bitmapToPng(resultStocker.getWorstShot()[1], "originalWorstShot");
-        filePaths[4] = bitmapToPng(resultStocker.getGraph(), "scoreGraph");
-
         String jsonData = "{\"user_id\": " + userStocker.getUserId()
                 + ", \"music_name\": \"" + resultStocker.getMusicName()
                 + ", \"score\": \"" + resultStocker.getTotalScore()
-                + ", \"user_best_shot\": \"" + filePaths[0].toString()
-                + ", \"original_best_shot\": \"" + filePaths[1].toString()
-                + ", \"user_worst_shot\": \"" + filePaths[2].toString()
-                + ", \"original_worst_shot\": \"" + filePaths[3].toString()
                 + ", \"rank\": \"" + resultStocker.getRank()
                 + ", \"graph\": \"" + filePaths[4].toString()
                 + "\"}";
@@ -113,6 +121,80 @@ public class SaveResult {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private void saveImages(String resultId){
+        String url = "https://tb78lilb8f.execute-api.ap-northeast-1.amazonaws.com/chum/upload/image_binary";
+
+        for (int i = 0; i < filePaths.length; i++) {
+            String imageJson = getImageJson(i, resultId);
+            RequestBody body = RequestBody.create(
+                    imageJson, MediaType.get("application/json; charset=utf-8")
+            );
+
+            //HTTP POSTリクエストの作成
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();
+
+            //リクエスト送信
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    e.printStackTrace();
+                    ((Activity) context).runOnUiThread(() ->
+                            Toast.makeText(context, "Save failed", Toast.LENGTH_SHORT).show()
+                    );
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (! response.isSuccessful()) {
+                        ((Activity) context).runOnUiThread(() ->
+                                Toast.makeText(context, "Save failed: " + response.code(), Toast.LENGTH_SHORT).show()
+                        );
+                    }
+                }
+            });
+        }
+
+    }
+
+    private String getImageJson(int i, String resultId){
+        String imageType = null;
+        Bitmap image = null;
+        switch (i){
+            case 0:
+                imageType = "userBestShot";
+                image = resultStocker.getBestShot()[0];
+                break;
+            case 1:
+                imageType = "originalBestShot";
+                image = resultStocker.getBestShot()[1];
+                break;
+            case 2:
+                imageType = "userWorstShot";
+                image = resultStocker.getWorstShot()[0];
+                break;
+            case 3:
+                imageType = "originalWorstShot";
+                image = resultStocker.getWorstShot()[1];
+                break;
+            case 4:
+                imageType = "scoreGraph";
+                image = resultStocker.getGraph();
+                break;
+        }
+
+        File filePath = bitmapToPng(image, imageType + "_" + resultId);
+        filePaths[i] = filePath;
+
+        String jsonData = "{\"local_image_path\": " + filePath
+                + ", \"s3_upload_name\": \"" + imageType + "_" + resultId
+                + "\"}";
+        return jsonData;
+
     }
 
     private void deleteImages(){
