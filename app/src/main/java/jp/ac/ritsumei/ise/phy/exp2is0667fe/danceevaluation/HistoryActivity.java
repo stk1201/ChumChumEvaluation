@@ -3,6 +3,8 @@ package jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +18,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -30,8 +34,10 @@ public class HistoryActivity extends AppCompatActivity {
     private EditText editUserID, editMusicName;
     private OkHttpClient client = new OkHttpClient();
     private Spinner spinnerSortBy;
-    private RecyclerView recyclerView;
+    private ListView listView;
     private HistoryResponseAdapter adapter;
+
+    private List<Map<String,String>> resultList=new ArrayList<>();
     private List<HistoryApiResponseItem> responseList = new ArrayList<>();
 
     @Override
@@ -43,16 +49,29 @@ public class HistoryActivity extends AppCompatActivity {
         editUserID = findViewById(R.id.editUserID);
         editMusicName = findViewById(R.id.editMusicName);
         spinnerSortBy = findViewById(R.id.spinnerSortBy);
-        recyclerView = findViewById(R.id.recyclerView);
+        listView = findViewById(R.id.android_version_list);
         Button buttonSubmit = findViewById(R.id.buttonSubmit);
 
-        // RecyclerViewの設定
-        adapter = new HistoryResponseAdapter(responseList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        // RecyclerViewの設定→ListViewに変える
+        //adapter = new HistoryResponseAdapter(responseList);
+        //listView.setLayoutManager(new LinearLayoutManager(this));
+
+
 
         // ボタンのクリックリスナーを設定
         buttonSubmit.setOnClickListener(v -> sendApiRequest());
+
+        Log.d("history",resultList.toString());
+
+//        SimpleAdapter adapter = new SimpleAdapter(
+//                getApplicationContext(),
+//                resultList,
+//                R.layout.listview_layout_history,
+//                new String[]{"platformVersion", "apiLevel", "versionCode"},
+//                new int[]{R.id.platform_version, R.id.api_level, R.id.version_code}
+//        );
+//
+//        listView.setAdapter(adapter);
     }
 
 
@@ -105,8 +124,7 @@ public class HistoryActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     String responseData = response.body().string();
 
-                    ArrayList<ArrayList<String>> resultList = new ArrayList<>();
-
+                    //List<Map<String,String>> resultList = new ArrayList<>();
 
                     try {
                         // レスポンスデータをJSONObjectとしてパース
@@ -127,10 +145,10 @@ public class HistoryActivity extends AppCompatActivity {
                             String Date = item.getString("date");
 
                             // リストに一時保存
-                            ArrayList<String> data = new ArrayList<>();
-                            data.add(MusicName);
-                            data.add(Score);
-                            data.add(Date);
+                            Map<String,String> data = new HashMap<>();
+                            data.put("MusicName",MusicName);
+                            data.put("Score",Score);
+                            data.put("Date",Date);
 
                             //おおもとのリストに1つの計算結果の曲名・得点・日時を記録
                             resultList.add(data);
@@ -159,6 +177,19 @@ public class HistoryActivity extends AppCompatActivity {
                     );
                 }
             }
+
+            //ListView listView = findViewById(R.id.android_version_list);
+
+            //RecyclerView.setAdapter(androidVersionListAdapter);
+            SimpleAdapter adapter = new SimpleAdapter(
+                    getApplicationContext(),
+                    resultList,
+                    R.layout.listview_layout_history,
+                    new String[]{"platformVersion", "apiLevel", "versionCode"},
+                    new int[]{R.id.platform_version, R.id.api_level, R.id.version_code}
+            );
+
+            listView.setAdapter(adapter);
         });
 
     }
