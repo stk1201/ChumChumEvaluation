@@ -25,75 +25,79 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class SaveResult {
-    private Context context;
+    private Activity activity;
     private UserStocker userStocker;
     private ResultStocker resultStocker;
     private File[] filePaths = new File[5];
     private OkHttpClient client = new OkHttpClient();
 
-    public SaveResult(Context context) {
-        this.context = context.getApplicationContext();
+    public SaveResult(Activity activity) {
+        this.activity = activity;
     }
 
     public void saving(){
-        userStocker = userStocker.getInstance(context);
-        resultStocker = resultStocker.getInstance(context);
-        String url = "https://tb78lilb8f.execute-api.ap-northeast-1.amazonaws.com/chum/result/register";
+        userStocker = userStocker.getInstance(activity);
+        resultStocker = resultStocker.getInstance(activity);
 
-        String resultJson = getJson(userStocker, resultStocker);
-        RequestBody body = RequestBody.create(
-                resultJson, MediaType.get("application/json; charset=utf-8")
-        );
+        //画像をS3へ保存
+        saveImages("9");
 
-        //HTTP POSTリクエストの作成
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-
-        //リクエスト送信
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
-                ((Activity) context).runOnUiThread(() ->
-                        Toast.makeText(context, "Save failed", Toast.LENGTH_SHORT).show()
-                );
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String responseData = response.body().string();
-
-                    try {
-                        JSONObject jsonResponse = new JSONObject(responseData);
-                        String resultId = jsonResponse.getString("id");
-
-                        // result_list作成に成功した時の処理
-                        ((Activity) context).runOnUiThread(() -> {
-                            Toast.makeText(context, "Save successful", Toast.LENGTH_SHORT).show();
-
-                            //画像をS3へ保存
-                            saveImages(resultId);
-
-                            //画像の削除
-                            deleteImages();
-                        });
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        ((Activity) context).runOnUiThread(() ->
-                                Toast.makeText(context, "Failed to parse response", Toast.LENGTH_SHORT).show()
-                        );
-                    }
-
-                } else {
-                    ((Activity) context).runOnUiThread(() ->
-                            Toast.makeText(context, "Save failed: " + response.code(), Toast.LENGTH_SHORT).show()
-                    );
-                }
-            }
-        });
+//        String url = "https://tb78lilb8f.execute-api.ap-northeast-1.amazonaws.com/chum/result/register";
+//
+//        String resultJson = getJson(userStocker, resultStocker);
+//        RequestBody body = RequestBody.create(
+//                resultJson, MediaType.get("application/json; charset=utf-8")
+//        );
+//
+//        //HTTP POSTリクエストの作成
+//        Request request = new Request.Builder()
+//                .url(url)
+//                .post(body)
+//                .build();
+//
+//        //リクエスト送信
+//        client.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+//                e.printStackTrace();
+//                activity.runOnUiThread(() ->
+//                        Toast.makeText(activity, "Save failed", Toast.LENGTH_SHORT).show()
+//                );
+//            }
+//
+//            @Override
+//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+//                if (response.isSuccessful()) {
+//                    String responseData = response.body().string();
+//
+////                    try {
+////                        JSONObject jsonResponse = new JSONObject(responseData);
+////                        String resultId = jsonResponse.getString("id");
+//
+//                        // result_list作成に成功した時の処理
+//                        activity.runOnUiThread(() -> {
+//                            Toast.makeText(activity, "Save successful", Toast.LENGTH_SHORT).show();
+//
+//                            //画像をS3へ保存
+//                            saveImages("9");
+//
+//                            //画像の削除
+//                            deleteImages();
+//                        });
+////                    } catch (JSONException e) {
+////                        e.printStackTrace();
+////                        ((Activity) context).runOnUiThread(() ->
+////                                Toast.makeText(context, "Failed to parse response", Toast.LENGTH_SHORT).show()
+////                        );
+////                    }
+//
+//                } else {
+//                    activity.runOnUiThread(() ->
+//                            Toast.makeText(activity, "Save failed: " + response.code(), Toast.LENGTH_SHORT).show()
+//                    );
+//                }
+//            }
+//        });
     }
 
     private String getJson(UserStocker userStocker, ResultStocker resultStocker){
@@ -101,13 +105,13 @@ public class SaveResult {
                 + ", \"music_name\": \"" + resultStocker.getMusicName()
                 + ", \"score\": \"" + resultStocker.getTotalScore()
                 + ", \"rank\": \"" + resultStocker.getRank()
-                + ", \"graph\": \"" + filePaths[4].toString()
+//                + ", \"graph\": \"" + filePaths[4].toString()
                 + "\"}";
         return jsonData;
     }
 
     private File bitmapToPng(Bitmap bitmap, String filename){
-        File file = new File(this.context.getExternalFilesDir(null) + "/" + filename + ".png");
+        File file = new File(activity.getExternalFilesDir(null) + "/" + filename + ".png");
         Log.d("posemaker", "url:" + file);
 
         try {
@@ -143,16 +147,16 @@ public class SaveResult {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     e.printStackTrace();
-                    ((Activity) context).runOnUiThread(() ->
-                            Toast.makeText(context, "Save failed", Toast.LENGTH_SHORT).show()
+                    activity.runOnUiThread(() ->
+                            Toast.makeText(activity, "Save failed", Toast.LENGTH_SHORT).show()
                     );
                 }
 
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (! response.isSuccessful()) {
-                        ((Activity) context).runOnUiThread(() ->
-                                Toast.makeText(context, "Save failed: " + response.code(), Toast.LENGTH_SHORT).show()
+                        activity.runOnUiThread(() ->
+                                Toast.makeText(activity, "Save failed: " + response.code(), Toast.LENGTH_SHORT).show()
                         );
                     }
                 }
@@ -182,8 +186,9 @@ public class SaveResult {
                 image = resultStocker.getWorstShot()[1];
                 break;
             case 4:
-                imageType = "scoreGraph";
+                imageType = "graph";
                 image = resultStocker.getGraph();
+                Log.d("grapgh:",String.valueOf(image != null));
                 break;
         }
 

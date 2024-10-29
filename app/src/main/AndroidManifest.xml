@@ -30,7 +30,7 @@
             android:name=".HistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".UploadingActivity"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
@@ -39,7 +39,7 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".UploadingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
