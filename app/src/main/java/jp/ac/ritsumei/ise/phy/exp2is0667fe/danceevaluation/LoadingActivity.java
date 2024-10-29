@@ -57,10 +57,24 @@ public class LoadingActivity extends AppCompatActivity {
     ScoreCalculating scoreCalculating;
     ResultStocker resultStocker;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+//
+//        // TextViewの取得
+//        loadingText = findViewById(R.id.loadingText);
+//        handler = new Handler(Looper.getMainLooper());
+//
+//        // 0.5秒ごとに「採点中・・・」をアニメーションさせる
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                updateLoadingText();
+//                handler.postDelayed(this, 500);
+//            }
+//        }, 500);
 
 //        imageView = findViewById(R.id.loadingview); // ImageViewの取得
 //
@@ -156,4 +170,6 @@ public class LoadingActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+
 }

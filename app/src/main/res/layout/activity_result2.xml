@@ -4,125 +4,153 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000b24"
+    android:background="#FFFFFF"
     tools:context=".Result2Activity">
 
-    <Button
+    <ImageButton
         android:id="@+id/home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="304dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#b0e0e6"
-        android:text="HOME"
-        android:textColor="#000b24"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#FFFFFF"
+        android:contentDescription="Home button"
+        android:scaleType="fitCenter"
+        android:src="@drawable/home_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.107" />
 
-    <Button
+<!--    <Button-->
+<!--        android:id="@+id/home"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        android:layout_marginEnd="304dp"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        android:backgroundTint="#b0e0e6"-->
+<!--        android:text="HOME"-->
+<!--        android:textColor="#000b24"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/button4"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="158dp"-->
+<!--        android:layout_marginTop="59dp"-->
+<!--        android:layout_marginEnd="165dp"-->
+<!--        android:layout_marginBottom="42dp"-->
+<!--        android:backgroundTint="#FFC0CB "-->
+<!--        android:onClick="onNextButtonTapped"-->
+<!--        android:text="NEXT"-->
+<!--        android:textColor="#000b24"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/userworst" />-->
+
+    <ImageButton
         android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="158dp"
-        android:layout_marginTop="59dp"
-        android:layout_marginEnd="165dp"
-        android:layout_marginBottom="42dp"
-        android:backgroundTint="#FFC0CB "
+        android:layout_width="98dp"
+        android:layout_height="82dp"
+        android:backgroundTint="#FFFFFF"
+        android:contentDescription="Next button"
         android:onClick="onNextButtonTapped"
-        android:text="NEXT"
-        android:textColor="#000b24"
+        android:scaleType="fitCenter"
+        android:src="@drawable/next"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userworst" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="319dp"
         android:layout_height="67dp"
-        android:text="Your Best Shot"
-        android:textColor="@color/white"
+        android:text="ベストショット"
+        android:textColor="#000000"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.358"
+        app:layout_constraintHorizontal_bias="0.402"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.126" />
+        app:layout_constraintVertical_bias="0.128" />
 
     <ImageView
         android:id="@+id/userbest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="178dp"
         android:layout_marginStart="59dp"
         android:layout_marginTop="168dp"
         android:layout_marginEnd="55dp"
         android:layout_marginBottom="103dp"
-        android:maxWidth="300dp"
         app:layout_constraintBottom_toTopOf="@+id/userworst"
         app:layout_constraintEnd_toStartOf="@+id/originalbest"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.142"
+        app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="319dp"
         android:layout_height="67dp"
-        android:text="Your Worst Shot"
-        android:textColor="@color/white"
+        android:text="伸びしろショット"
+        android:textColor="#000000"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.358"
+        app:layout_constraintHorizontal_bias="0.402"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.513" />
+        app:layout_constraintVertical_bias="0.548" />
 
     <ImageView
         android:id="@+id/userworst"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="178dp"
         android:layout_marginStart="49dp"
         android:layout_marginEnd="65dp"
-        android:layout_marginBottom="148dp"
+        android:layout_marginBottom="104dp"
         android:maxWidth="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="9:16"
         app:layout_constraintEnd_toStartOf="@+id/originalworst"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.175"
         app:layout_constraintStart_toStartOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
         android:id="@+id/originalbest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="176dp"
-        android:layout_marginEnd="40dp"
+        android:layout_width="100dp"
+        android:layout_height="178dp"
+        android:layout_marginTop="168dp"
+        android:layout_marginEnd="52dp"
         android:maxWidth="300dp"
+        app:layout_constraintDimensionRatio="9:16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
         android:id="@+id/originalworst"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="178dp"
         android:layout_marginTop="47dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="52dp"
         android:layout_marginBottom="58dp"
         android:maxWidth="300dp"
         app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.437"
         tools:srcCompat="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>

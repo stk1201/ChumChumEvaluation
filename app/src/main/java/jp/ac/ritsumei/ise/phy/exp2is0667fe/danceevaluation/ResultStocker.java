@@ -181,7 +181,7 @@ public class ResultStocker {
 
         LineDataSet lineDataSet = new LineDataSet(entryList, "square");
 
-        lineDataSet.setColor(Color.BLUE);
+        lineDataSet.setColor(Color.BLACK);
 
         lineDataSets.add(lineDataSet);
 
