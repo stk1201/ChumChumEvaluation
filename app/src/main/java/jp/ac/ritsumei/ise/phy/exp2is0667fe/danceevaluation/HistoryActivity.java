@@ -49,29 +49,13 @@ public class HistoryActivity extends AppCompatActivity {
         editUserID = findViewById(R.id.editUserID);
         editMusicName = findViewById(R.id.editMusicName);
         spinnerSortBy = findViewById(R.id.spinnerSortBy);
-        listView = findViewById(R.id.android_version_list);
+        listView = findViewById(R.id.result_list);
         Button buttonSubmit = findViewById(R.id.buttonSubmit);
-
-        // RecyclerViewの設定→ListViewに変える
-        //adapter = new HistoryResponseAdapter(responseList);
-        //listView.setLayoutManager(new LinearLayoutManager(this));
-
-
 
         // ボタンのクリックリスナーを設定
         buttonSubmit.setOnClickListener(v -> sendApiRequest());
 
         Log.d("history",resultList.toString());
-
-//        SimpleAdapter adapter = new SimpleAdapter(
-//                getApplicationContext(),
-//                resultList,
-//                R.layout.listview_layout_history,
-//                new String[]{"platformVersion", "apiLevel", "versionCode"},
-//                new int[]{R.id.platform_version, R.id.api_level, R.id.version_code}
-//        );
-//
-//        listView.setAdapter(adapter);
     }
 
 
@@ -124,8 +108,6 @@ public class HistoryActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     String responseData = response.body().string();
 
-                    //List<Map<String,String>> resultList = new ArrayList<>();
-
                     try {
                         // レスポンスデータをJSONObjectとしてパース
                         JSONObject parsedData = new JSONObject(responseData);
@@ -153,13 +135,19 @@ public class HistoryActivity extends AppCompatActivity {
                             //おおもとのリストに1つの計算結果の曲名・得点・日時を記録
                             resultList.add(data);
 
-                            //ここを書き換える
-                            //Log.d("History_Activity", "{" + "\n" + item.toString(4) + "\n" + "}");
-
-                            // 区切り線を表示
-                            //Log.d("History_Activity", "---");
-
                         }
+
+                        runOnUiThread(() -> {
+                            SimpleAdapter adapter = new SimpleAdapter(
+                                    HistoryActivity.this, // ここをgetApplicationContext()からHistoryActivity.thisに変更
+                                    resultList,
+                                    R.layout.listview_layout_history,
+                                    new String[]{"MusicName", "Score", "Date"}, // ここもデータのキー名を適切に設定
+                                    new int[]{R.id.song_name, R.id.score, R.id.date}
+                            );
+                            listView.setAdapter(adapter);
+                        });
+
                     } catch (org.json.JSONException e) {
                         e.printStackTrace();
                         // JSONExceptionが発生した場合の処理
@@ -178,18 +166,6 @@ public class HistoryActivity extends AppCompatActivity {
                 }
             }
 
-            //ListView listView = findViewById(R.id.android_version_list);
-
-            //RecyclerView.setAdapter(androidVersionListAdapter);
-            SimpleAdapter adapter = new SimpleAdapter(
-                    getApplicationContext(),
-                    resultList,
-                    R.layout.listview_layout_history,
-                    new String[]{"platformVersion", "apiLevel", "versionCode"},
-                    new int[]{R.id.platform_version, R.id.api_level, R.id.version_code}
-            );
-
-            listView.setAdapter(adapter);
         });
 
     }
