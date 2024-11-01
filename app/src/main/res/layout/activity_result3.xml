@@ -30,6 +30,7 @@
         android:layout_marginEnd="78dp"
         android:layout_marginBottom="119dp"
         android:backgroundTint="#000000 "
+        android:onClick="onSaveButtonTapped"
         android:text="保存"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/lineChartExample" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/musicNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -68,10 +69,10 @@
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/graphParentImageView" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/graphParentImageView"
         android:layout_width="409dp"
         android:layout_height="273dp"
         android:layout_marginStart="1dp"
@@ -80,7 +81,7 @@
         android:layout_marginBottom="106dp"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText"
+        app:layout_constraintBottom_toTopOf="@+id/musicNameText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
