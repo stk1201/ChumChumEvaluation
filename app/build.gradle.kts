@@ -37,10 +37,14 @@ android {
             )
 
             buildConfigField("String", "SAVE_RESULT_API", "\"${properties["SAVE_RESULT_API"]}\"")
+            buildConfigField("String", "S3_BUCKET_NAME", "\"${properties["S3_BUCKET_NAME"]}\"")
+            buildConfigField("String", "S3_IDENTITY_POOL_ID", "\"${properties["S3_IDENTITY_POOL_ID"]}\"")
         }
 
         debug{
             buildConfigField("String", "SAVE_RESULT_API", "\"${properties["SAVE_RESULT_API"]}\"")
+            buildConfigField("String", "S3_BUCKET_NAME", "\"${properties["S3_BUCKET_NAME"]}\"")
+            buildConfigField("String", "S3_IDENTITY_POOL_ID", "\"${properties["S3_IDENTITY_POOL_ID"]}\"")
         }
     }
     compileOptions {
@@ -68,5 +72,12 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     implementation("com.google.mediapipe:tasks-vision:latest.release")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    implementation ("com.amazonaws:aws-android-sdk-core:2.57.0")
+    implementation ("com.amazonaws:aws-android-sdk-s3:2.57.0")
+    implementation ("com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.57.0")
+
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 }
 
