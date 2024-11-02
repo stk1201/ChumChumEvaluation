@@ -133,6 +133,10 @@ public class ResultStocker {
         }
     }
 
+    public String getRank(){
+        return this.rank;
+    }
+
     public void setDrawBitmaps(List<Bitmap> userBitmaps, List<Bitmap> originalBitmaps){
         this.userBitmaps = userBitmaps;
         this.originalBitmaps = originalBitmaps;
