@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // ログインリクエストを送信するメソッド
     private void sendLoginRequest(Integer userId, String password) {
-        String url = "https://admgumzyeb.execute-api.ap-northeast-1.amazonaws.com/test/new_login";
+        String url = BuildConfig.LOGIN_API;
         // JSON データを作成
 //        String json = "{\"user_id\": \"" + userId + "\", \"password\": \"" + password + "\"}";
         String json = "{\"user_id\": " + userId + ", \"password\": \"" + password + "\"}";

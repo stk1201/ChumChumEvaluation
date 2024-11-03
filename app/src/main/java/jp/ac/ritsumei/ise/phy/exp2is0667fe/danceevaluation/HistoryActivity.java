@@ -61,7 +61,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     // APIリクエストを送信するメソッド
     private void sendApiRequest() {
-        String url ="https://tb78lilb8f.execute-api.ap-northeast-1.amazonaws.com/chum/result/score";
+        String url =BuildConfig.GET_HISTORYLIST_API;
         String userID = editUserID.getText().toString().trim();
         String musicName = editMusicName.getText().toString().trim();
         String sortBy = spinnerSortBy.getSelectedItem() != null ? spinnerSortBy.getSelectedItem().toString() : "";

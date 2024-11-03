@@ -36,12 +36,18 @@ android {
                 "proguard-rules.pro"
             )
 
+            buildConfigField("String", "CREATE_ACCOUNT_API", "\"${properties["CREATE_ACCOUNT_API"]}\"")
+            buildConfigField("String", "LOGIN_API", "\"${properties["LOGIN_API"]}\"")
+            buildConfigField("String", "GET_HISTORYLIST_API", "\"${properties["GET_HISTORYLIST_API"]}\"")
             buildConfigField("String", "SAVE_RESULT_API", "\"${properties["SAVE_RESULT_API"]}\"")
             buildConfigField("String", "S3_BUCKET_NAME", "\"${properties["S3_BUCKET_NAME"]}\"")
             buildConfigField("String", "S3_IDENTITY_POOL_ID", "\"${properties["S3_IDENTITY_POOL_ID"]}\"")
         }
 
         debug{
+            buildConfigField("String", "CREATE_ACCOUNT_API", "\"${properties["CREATE_ACCOUNT_API"]}\"")
+            buildConfigField("String", "LOGIN_API", "\"${properties["LOGIN_API"]}\"")
+            buildConfigField("String", "GET_HISTORYLIST_API", "\"${properties["GET_HISTORYLIST_API"]}\"")
             buildConfigField("String", "SAVE_RESULT_API", "\"${properties["SAVE_RESULT_API"]}\"")
             buildConfigField("String", "S3_BUCKET_NAME", "\"${properties["S3_BUCKET_NAME"]}\"")
             buildConfigField("String", "S3_IDENTITY_POOL_ID", "\"${properties["S3_IDENTITY_POOL_ID"]}\"")
