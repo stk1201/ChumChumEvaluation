@@ -64,6 +64,8 @@ public class SaveResult {
                 .post(body)
                 .build();
 
+        Log.d("api", resultJson.toString());
+
         //リクエスト送信
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -79,9 +81,18 @@ public class SaveResult {
                 if (response.isSuccessful()) {
                     String responseData = response.body().string();
 
+                    Log.d("api", responseData);
+
                     try {
-                        JSONObject jsonResponse = new JSONObject(responseData);
-                        resultId = jsonResponse.getString("resultId");
+                        JSONObject outerJson = new JSONObject(responseData);
+                        String body = outerJson.getString("body");
+
+                        JSONObject innerJson = new JSONObject(body);
+                        String message = innerJson.getString("message");
+                        int resultIdInt = innerJson.getInt("ResultID");
+                        String date = innerJson.getString("Date");
+
+                        resultId = Integer.toString(resultIdInt);
 
                         // result_list作成に成功した時の処理
                         activity.runOnUiThread(() -> {
@@ -111,10 +122,15 @@ public class SaveResult {
     }
 
     private String getJson(UserStocker userStocker, ResultStocker resultStocker){
-        String jsonData = "{\"user_id\": " + userStocker.getUserId()
-                + ", \"music_name\": \"" + resultStocker.getMusicName()
-                + ", \"score\": \"" + resultStocker.getTotalScore()
-                + ", \"rank\": \"" + resultStocker.getRank()
+        String jsonData = "{\"UserID\": \"" + String.valueOf(userStocker.getUserId()) + "\""
+                + ", \"MusicName\": \"" + resultStocker.getMusicName() + "\""
+                + ", \"Score\":" + (int)resultStocker.getTotalScore()
+                + ", \"UserBestShot\": \"" +"userbestshot_url" + "\""
+                + ", \"OriginalBestShot\": \"" + "originalbestshot_url" + "\""
+                + ", \"UserWorstShot\": \"" + "userworstshot_url" + "\""
+                + ", \"OriginalWorstShot\": \"" + "originalworstshot" + "\""
+                + ", \"Rank\": \"" + resultStocker.getRank() + "\""
+                + ", \"Graph\": \"" + "graph_url"
                 + "\"}";
         return jsonData;
     }
