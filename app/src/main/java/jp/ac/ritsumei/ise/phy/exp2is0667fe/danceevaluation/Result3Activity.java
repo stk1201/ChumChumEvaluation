@@ -3,8 +3,12 @@ package jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -25,6 +29,13 @@ public class Result3Activity extends AppCompatActivity {
 
         if(resultStocker != null){
             showingGraph();
+
+            View graphParent = findViewById(R.id.graphParentImageView);
+            //viewの描画待機
+            graphParent.post(() -> {
+                Bitmap graphBitmap = changeToGraphBitmap(graphParent);
+                resultStocker.setGraph(graphBitmap);
+            });
         }
     }
 
@@ -56,5 +67,25 @@ public class Result3Activity extends AppCompatActivity {
         lineChart.getDescription().setEnabled(false);
 
         lineChart.invalidate();
+    }
+
+    private Bitmap changeToGraphBitmap(View view){
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        return bitmap;
+    }
+
+    //結果をサーバに保存
+    public void onSaveButtonTapped(View view){
+        EditText musicNameText = findViewById(R.id.musicNameText);
+        String musicName = musicNameText.getText().toString();
+
+        if(!musicName.isEmpty()){
+            resultStocker.setMusicName(musicName);
+
+            SaveResult saveResult = new SaveResult(this);
+            saveResult.saving();
+        }
     }
 }

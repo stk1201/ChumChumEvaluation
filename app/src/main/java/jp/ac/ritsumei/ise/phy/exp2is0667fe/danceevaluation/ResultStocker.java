@@ -35,6 +35,8 @@ public class ResultStocker {
     private Bitmap originalBestShot;
     private Bitmap userWorstShot;
     private Bitmap originalWorstShot;
+    private Bitmap graph;
+    private String musicName;
 
     public ResultStocker(Context context){
         this.context = context.getApplicationContext();
@@ -131,6 +133,10 @@ public class ResultStocker {
         }
     }
 
+    public String getRank(){
+        return this.rank;
+    }
+
     public void setDrawBitmaps(List<Bitmap> userBitmaps, List<Bitmap> originalBitmaps){
         this.userBitmaps = userBitmaps;
         this.originalBitmaps = originalBitmaps;
@@ -189,4 +195,18 @@ public class ResultStocker {
 
         return lineData;
     }
+
+    public void setGraph(Bitmap graph){
+        this.graph = graph;
+    }
+
+    public Bitmap getGraph(){
+        return this.graph;
+    }
+
+    public void setMusicName(String musicName){
+        this.musicName = musicName;
+    }
+
+    public String getMusicName(){return this.musicName;}
 }

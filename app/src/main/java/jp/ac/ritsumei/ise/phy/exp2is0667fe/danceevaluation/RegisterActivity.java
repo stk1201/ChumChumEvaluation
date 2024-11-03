@@ -66,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... voids) {
-            String apiUrl = "https://admgumzyeb.execute-api.ap-northeast-1.amazonaws.com/test/user_create";
+            String apiUrl = BuildConfig.CREATE_ACCOUNT_API;
             HttpURLConnection connection = null;
             try {
                 URL url = new URL(apiUrl);
