@@ -50,4 +50,13 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     implementation("com.google.mediapipe:tasks-vision:latest.release")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    implementation ("com.amazonaws:aws-android-sdk-core:2.57.0")
+    implementation ("com.amazonaws:aws-android-sdk-s3:2.57.0")
+    implementation ("com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.57.0")
+
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+
+
 }
