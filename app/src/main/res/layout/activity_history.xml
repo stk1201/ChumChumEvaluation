@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".HistoryActivity">
@@ -12,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="UserID"
+
         android:inputType="number" />
 
     <EditText
@@ -29,12 +31,14 @@
         android:id="@+id/buttonSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Submit" />
+        android:backgroundTint="#b0e0e6"
+        android:text="Submit"
+        android:textColor="#191970" />
 
     <ListView
         android:id="@+id/result_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="0dp"
+        android:layout_weight="1" /> <!-- 残りのスペースを占める -->
 
 </LinearLayout>

@@ -1,9 +1,12 @@
 package jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.widget.ListView;
+import android.view.View;
+import android.view.ViewGroup;
+
 import android.widget.SimpleAdapter;
 
 import android.os.Bundle;
@@ -68,10 +71,12 @@ public class HistoryActivity extends AppCompatActivity {
 
         // デフォルト値の設定
         if (userID.isEmpty()) {
-            userID = "7"; // デフォルト値として1を設定
+            Toast.makeText(HistoryActivity.this, "ユーザーIDを入力してください", Toast.LENGTH_SHORT).show();
+//            userID = "7"; // デフォルト値として1を設定
         }
         if (musicName.isEmpty()) {
-            musicName = "Symphony No.5"; // 必要に応じてデフォルトの音楽名を設定
+//            musicName = "Symphony No.5"; // 必要に応じてデフォルトの音楽名を設定
+//            Toast.makeText(HistoryActivity.this, "ユーザーIDを入力してください", Toast.LENGTH_SHORT).show();
         }
         if (sortBy.isEmpty()) {
             sortBy = "Score"; // デフォルトのソート基準を設定
@@ -121,16 +126,20 @@ public class HistoryActivity extends AppCompatActivity {
                         for (int i = 0; i < bodyArray.length(); i++) {
                             JSONObject item = bodyArray.getJSONObject(i);
 
-                            // 1つの計算結果から,曲名・得点・日時を抽出
+                            // 1つの計算結果から,曲名・得点・日時,result_isを抽出
                             String MusicName = item.getString("music_name");
                             String Score = item.getString("score");
                             String Date = item.getString("date");
+                            String Result_id=item.getString("result_id");
+                            String UserRank=item.getString("user_rank");
 
                             // リストに一時保存
                             Map<String,String> data = new HashMap<>();
                             data.put("MusicName",MusicName);
                             data.put("Score",Score);
                             data.put("Date",Date);
+                            data.put("Result_id",Result_id);
+                            data.put("UserRank",UserRank);
 
                             //おおもとのリストに1つの計算結果の曲名・得点・日時を記録
                             resultList.add(data);
@@ -144,7 +153,35 @@ public class HistoryActivity extends AppCompatActivity {
                                     R.layout.listview_layout_history,
                                     new String[]{"MusicName", "Score", "Date"}, // ここもデータのキー名を適切に設定
                                     new int[]{R.id.song_name, R.id.score, R.id.date}
-                            );
+                            ){
+                                @Override
+                                public View getView(int position, View convertView, ViewGroup parent) {
+                                    View view = super.getView(position, convertView, parent);
+
+                                    Button detailButton = view.findViewById(R.id.buttonDetail);
+                                    if ( detailButton != null) {
+                                        detailButton.setOnClickListener(v -> {
+                                            // アクションをここに記述
+                                            String musicName = resultList.get(position).get("MusicName");
+                                            String score=resultList.get(position).get("Score");
+                                            String date=resultList.get(position).get("Date");
+                                            String result_id=resultList.get(position).get("Result_id");
+                                            String UserRank=resultList.get(position).get("UserRank");
+                                            Toast.makeText(HistoryActivity.this, "詳細を表示: " + musicName, Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(HistoryActivity.this, DetailResultActivity.class);
+                                            intent.putExtra("MusicName", musicName);
+                                            intent.putExtra("Score", score);
+                                            intent.putExtra("Date", date);
+                                            intent.putExtra("Result_id", result_id);
+                                            intent.putExtra("UserRank", UserRank);
+                                            startActivity(intent);
+                                        });
+                                    } else {
+                                        Log.e("HistoryActivity", "actionButton is null");
+                                    }
+                                    return view;
+                                }
+                            };
                             listView.setAdapter(adapter);
                         });
 

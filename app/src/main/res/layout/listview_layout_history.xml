@@ -39,7 +39,16 @@
             android:gravity="start|center"
             android:minHeight="?android:attr/listPreferredItemHeightSmall"
             android:textColor="#DD000000"
-            android:textSize="12sp" />
+            android:textSize="15sp" />
+        <Button
+            android:id="@+id/buttonDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFC0CB "
+            android:textColor="#191970"
+            android:textSize="12sp"
+            android:text="Detail" />
+
 
     </LinearLayout>
 
