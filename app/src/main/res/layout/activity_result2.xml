@@ -21,39 +21,39 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.107" />
 
-<!--    <Button-->
-<!--        android:id="@+id/home"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginTop="24dp"-->
-<!--        android:layout_marginEnd="304dp"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        android:backgroundTint="#b0e0e6"-->
-<!--        android:text="HOME"-->
-<!--        android:textColor="#000b24"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    <Button-->
+    <!--        android:id="@+id/home"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginTop="24dp"-->
+    <!--        android:layout_marginEnd="304dp"-->
+    <!--        android:layout_marginBottom="16dp"-->
+    <!--        android:backgroundTint="#b0e0e6"-->
+    <!--        android:text="HOME"-->
+    <!--        android:textColor="#000b24"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.0"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-<!--    <Button-->
-<!--        android:id="@+id/button4"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="158dp"-->
-<!--        android:layout_marginTop="59dp"-->
-<!--        android:layout_marginEnd="165dp"-->
-<!--        android:layout_marginBottom="42dp"-->
-<!--        android:backgroundTint="#FFC0CB "-->
-<!--        android:onClick="onNextButtonTapped"-->
-<!--        android:text="NEXT"-->
-<!--        android:textColor="#000b24"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="1.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/userworst" />-->
+    <!--    <Button-->
+    <!--        android:id="@+id/button4"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="158dp"-->
+    <!--        android:layout_marginTop="59dp"-->
+    <!--        android:layout_marginEnd="165dp"-->
+    <!--        android:layout_marginBottom="42dp"-->
+    <!--        android:backgroundTint="#FFC0CB "-->
+    <!--        android:onClick="onNextButtonTapped"-->
+    <!--        android:text="NEXT"-->
+    <!--        android:textColor="#000b24"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="1.0"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/userworst" />-->
 
     <ImageButton
         android:id="@+id/button4"
@@ -117,8 +117,7 @@
         android:id="@+id/userworst"
         android:layout_width="100dp"
         android:layout_height="178dp"
-        android:layout_marginStart="49dp"
-        android:layout_marginTop="19dp"
+        android:layout_marginStart="59dp"
         android:layout_marginEnd="65dp"
         android:layout_marginBottom="104dp"
         android:maxWidth="300dp"
@@ -127,7 +126,6 @@
         app:layout_constraintEnd_toStartOf="@+id/originalworst"
         app:layout_constraintHorizontal_bias="0.175"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
