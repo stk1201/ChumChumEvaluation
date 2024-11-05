@@ -107,24 +107,35 @@ public class RegisterActivity extends AppCompatActivity {
                     Log.d("loginrespomse",response.toString());
 
                     int userId;
+                    String mail_address;
 
                     //userIdの取得
                     try {
                         JSONObject jsonResponse = new JSONObject(response.toString());
-                        userId = jsonResponse.getInt("user_id");
-                        Log.d("userid", "UserID: " + userId);
+                        String body = jsonResponse.optString("body");
+                        if (!body.isEmpty()) {
+                            JSONObject innerJson = new JSONObject(body);
+                            userId = innerJson.getInt("user_id");
+                        } else {
+//                            userId = jsonResponse.getInt("user_id");
+////                            mail_address = jsonResponse.getString("mail_address");
+//                            Log.d("userid", "UserID: " + userId);
+//                            System.out.println("UserID: " + userId);
+//                            System.out.println("mail_address: " + mail_address);
+                            return "Error: No user_id found in response";
+                        }
+                        System.out.println( "UserID: " + userId);
+                        userStocker = UserStocker.getInstance(RegisterActivity.this);
+                        if (userStocker != null) {
+                            userStocker.setUserInfo(userId, email);
+                        }
+                        return response.toString();
+
                     } catch (JSONException e) {
-                        Log.e("JSONError", "Failed to parse JSON", e);
+                        System.out.println( "Failed to parse JSON"+ e);
                         return "Error: JSON parsing failed";
                     }
 
-                    //UserStockerに保存
-                    userStocker = userStocker.getInstance(RegisterActivity.this);
-                    if(userStocker != null){
-                        userStocker.setUserInfo(userId, null);
-                    }
-
-                    return response.toString();
                 } else {
                     return "Error: " + responseCode;
                 }
@@ -142,7 +153,16 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             // レスポンスの結果を表示
-            runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "Response: " + result, Toast.LENGTH_LONG).show());
+            runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "登録完了", Toast.LENGTH_SHORT).show());
+            Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); // 遷移先のアクティビティをスタックのトップに配置し、不要なアクティビティを削除
+            startActivity(intent);
+            String userInfo = userStocker.getUserInfo();
+            System.out.println(userInfo);
+
+            // RegisterActivity を終了して、戻るボタンでこのアクティビティに戻れないようにする
+            finish();
+
         }
     }
 }

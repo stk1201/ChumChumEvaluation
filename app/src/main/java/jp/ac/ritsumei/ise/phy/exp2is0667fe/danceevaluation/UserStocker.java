@@ -27,4 +27,6 @@ public class UserStocker {
     public int getUserId(){
         return this.userId;
     }
+    public String getEmailAddress() {return this.emailAddress;}
+    public String getUserInfo() {return "User ID: " + userId + ", Email Address: " + emailAddress;}
 }
