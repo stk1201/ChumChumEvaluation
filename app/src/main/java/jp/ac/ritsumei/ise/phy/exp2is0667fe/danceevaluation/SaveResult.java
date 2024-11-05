@@ -81,8 +81,6 @@ public class SaveResult {
                 if (response.isSuccessful()) {
                     String responseData = response.body().string();
 
-                    Log.d("api", responseData);
-
                     try {
                         JSONObject outerJson = new JSONObject(responseData);
                         String body = outerJson.getString("body");
