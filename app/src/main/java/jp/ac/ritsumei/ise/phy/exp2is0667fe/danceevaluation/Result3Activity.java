@@ -50,6 +50,8 @@ public class Result3Activity extends AppCompatActivity {
         xAxis.setEnabled(true);
         xAxis.setTextColor(Color.BLACK);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setGranularity(0.5f);
+        xAxis.setLabelCount(15, true);
 
         //Y軸の設定
         YAxis rightAxis = lineChart.getAxisRight();

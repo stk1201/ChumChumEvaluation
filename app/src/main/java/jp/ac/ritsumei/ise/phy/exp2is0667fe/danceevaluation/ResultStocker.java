@@ -154,6 +154,9 @@ public class ResultStocker {
             }
         }
 
+        Log.d("Best", Float.toString(maxScoreTime));
+        Log.d("Worst", Float.toString(minScoreTime));
+
         this.userBestShot = userBitmaps.get(maxScoreTime);
         this.originalBestShot = originalBitmaps.get(maxScoreTime);
 
