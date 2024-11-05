@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">DanceEvaluation</string>
+
+    <string-array name="sort_history">
+        <item>スコア順</item>
+        <item>日付順</item>
+    </string-array>
 </resources>

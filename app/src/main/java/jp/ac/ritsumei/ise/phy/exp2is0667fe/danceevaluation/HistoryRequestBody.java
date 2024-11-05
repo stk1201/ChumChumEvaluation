@@ -1,5 +1,7 @@
 package jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation;
 
+import android.widget.Switch;
+
 public class HistoryRequestBody {
     private String UserID;
     private String MusicName;
@@ -8,7 +10,15 @@ public class HistoryRequestBody {
     public HistoryRequestBody(String userID, String musicName, String sortBy) {
         this.UserID = userID;
         this.MusicName = musicName;
-        this.SortBy = sortBy;
+
+        switch(sortBy){
+            case "日付順":
+                this.SortBy = "Date";
+                break;
+            default:
+                this.SortBy = "Score";
+                break;
+        }
     }
 
     public String getUserID() {
