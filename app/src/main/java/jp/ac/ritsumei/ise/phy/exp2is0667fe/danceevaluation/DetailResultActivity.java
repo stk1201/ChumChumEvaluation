@@ -72,7 +72,6 @@ public class DetailResultActivity extends AppCompatActivity {
                     .listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                Log.d("image","Failed to load image: "+ e);
                 return false; // デフォルトのエラー処理も実行する
             }
 
@@ -85,7 +84,6 @@ public class DetailResultActivity extends AppCompatActivity {
     }
     }
     private void setText(String MusicName, String Score, String Date){
-        Log.d("text",MusicName + Score + Date);
         TextView musicNameView = findViewById(R.id.musicNameView);
         musicNameView.setText(MusicName);
 
