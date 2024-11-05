@@ -33,7 +33,7 @@ public class DetailResultActivity extends AppCompatActivity {
 
     private String[] file_names=new String[5];
     private String[] file_URL=new String[5];
-    private int url_index=0;
+    private int url_index = 0;
     private int imagesLoaded = 0;
 
     @Override
@@ -48,19 +48,22 @@ public class DetailResultActivity extends AppCompatActivity {
         String Rank=intent.getStringExtra("UserRank");
         String Date=intent.getStringExtra("Date");
 
-        setImageFileName(Result_id);//ファイル名を設定
-        Log.d("upload", Result_id);
-        setFileURL(file_names);//ファイルURLを設定
-        setText(MusicName, Score);
+        //テキスト表示
+        setText(MusicName, Score, Date);
+        //ランク表示
         setRank(Rank);
+
+        //画像表示
+        setImageFileName(Result_id);
+        setFileURL(file_names);
     }
     private void displayImages(){
         ImageView[] imageViews = {//id設定
                 findViewById(R.id.graph),
-                findViewById(R.id.userbest),
-                findViewById(R.id.originalbest),
-                findViewById(R.id.userworst),
-                findViewById(R.id.originalworst)
+                findViewById(R.id.userbestView),
+                findViewById(R.id.originalbestView),
+                findViewById(R.id.userworstView),
+                findViewById(R.id.originalworstView)
         };
 
         for (int i = 0; i < imageViews.length; i++) {//画面表示
@@ -69,7 +72,7 @@ public class DetailResultActivity extends AppCompatActivity {
                     .listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                System.out.println("Failed to load image: "+ e);
+                Log.d("image","Failed to load image: "+ e);
                 return false; // デフォルトのエラー処理も実行する
             }
 
@@ -81,15 +84,20 @@ public class DetailResultActivity extends AppCompatActivity {
                 .into(imageViews[i]);
     }
     }
-    private void setText(String MusicName, String Score){
+    private void setText(String MusicName, String Score, String Date){
+        Log.d("text",MusicName + Score + Date);
         TextView musicNameView = findViewById(R.id.musicNameView);
         musicNameView.setText(MusicName);
+
+        TextView dateView = findViewById(R.id.dateView);
+        dateView.setText(Date);
 
         TextView scoreView = findViewById(R.id.totalScoreView);
         scoreView.setText(Score);
     }
 
     private void setRank(String Rank){
+        Log.d("rank", Rank);
         ImageView rankView = findViewById(R.id.rank);
         switch (Rank){
             case "god":
@@ -119,34 +127,42 @@ public class DetailResultActivity extends AppCompatActivity {
         file_names[3]=Result_id+"_user_worst_shot.png";
         file_names[4]=Result_id+"_original_worst_shot.png";
     }
+
     private void setFileURL(String file_names[]){
-        for(int i=0;i<file_names.length;i++){//URLを取得
+        for(int i = 0; i < file_names.length; i++){
             new ImageLoading().execute(file_names[i]);
-            Log.d("fikename", file_names[i]);
         }
     }
+
     private class ImageLoading extends AsyncTask<String,Void,String>{
         @Override
         protected  String doInBackground(String... params){
+            //Cognito認証
             CognitoCachingCredentialsProvider credentialsProvider=new CognitoCachingCredentialsProvider(
                     getApplicationContext(),
                     identity_pool_id,
                     Regions.AP_NORTHEAST_1
             );
+
             AmazonS3 s3Client=new AmazonS3Client(credentialsProvider);
 
             GeneratePresignedUrlRequest urlRequest=new GeneratePresignedUrlRequest(bucket_name,params[0]);
+
             urlRequest.setExpiration(new Date(System.currentTimeMillis()+360000));
 
             URL presignedUrl=s3Client.generatePresignedUrl(urlRequest);
 
             return presignedUrl.toString();
         }
+
         @Override
-        protected void onPostExecute(String result){//バックグラウンド処理後の関数
+        protected void onPostExecute(String result){
             if(result!=null){
+                Log.d("imagesLoaded", Integer.toString(imagesLoaded));
+
                 file_URL[url_index]=result;
                 imagesLoaded++;
+
                 if (imagesLoaded == file_URL.length) {
                     displayImages();
                 }
