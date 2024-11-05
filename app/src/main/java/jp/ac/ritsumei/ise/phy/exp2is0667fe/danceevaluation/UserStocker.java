@@ -6,7 +6,7 @@ public class UserStocker {
     private Context context;
     private static UserStocker userStocker;
     private int userId;
-    private String userName;
+    private String emailAddress;
 
     public UserStocker(Context context){
         this.context = context.getApplicationContext();
@@ -19,16 +19,12 @@ public class UserStocker {
         return userStocker;
     }
 
-    public void setUserInfo(int userId, String userName){
+    public void setUserInfo(int userId,String emailAddress){
         this.userId = userId;
-        this.userName = userName;
+        this.emailAddress = emailAddress;
     }
 
     public int getUserId(){
         return this.userId;
-    }
-
-    public String getUserName(){
-        return this.userName;
     }
 }

@@ -2,13 +2,16 @@ package jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -22,45 +25,45 @@ import java.io.IOException;
 
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText userIdInput;
+    private Context context;
+
+    private EditText emailAddressInput;
     private EditText passwordInput;
 
     private OkHttpClient client = new OkHttpClient();
+
+    private UserStocker userStocker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        context = this;
+
         // EditTextの初期化
-        userIdInput = findViewById(R.id.userIdInput);
+        emailAddressInput = findViewById(R.id.emailAddressInput);
         passwordInput = findViewById(R.id.passwordInput);
 } // アップロード画面に遷移するメソッド
     public void onStartButtonTapped(View view) {
 //        String userId = userIdInput.getText().toString();
-        String userIdString = userIdInput.getText().toString();
+        String emailAddress = emailAddressInput.getText().toString();
         String password = passwordInput.getText().toString();
-        if (userIdString.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "User ID and Password are required", Toast.LENGTH_SHORT).show();
+        if (emailAddress.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "メールアドレスとパスワードを入力してください。", Toast.LENGTH_SHORT).show();
             return;
         }
-        Integer userId;
-        try {
-            userId = Integer.parseInt(userIdString);
-        } catch (NumberFormatException e) {
-            Toast.makeText(this, "User ID must be a number", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
         // ログインリクエストを送信
-        sendLoginRequest(userId, password);
+        sendLoginRequest(emailAddress, password);
     }
 
     // ログインリクエストを送信するメソッド
-    private void sendLoginRequest(Integer userId, String password) {
+    private void sendLoginRequest(String emailAddress, String password) {
         String url = BuildConfig.LOGIN_API;
         // JSON データを作成
-//        String json = "{\"user_id\": \"" + userId + "\", \"password\": \"" + password + "\"}";
-        String json = "{\"user_id\": " + userId + ", \"password\": \"" + password + "\"}";
+        String json = "{\"email_address\": \"" + emailAddress + "\", \"password\": \"" + password + "\"}";
+        Log.d("json", json);
         RequestBody body = RequestBody.create(
                 json, MediaType.get("application/json; charset=utf-8")
         );
@@ -84,13 +87,40 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String responseData = response.body().string();
+                    Log.d("respinse", responseData);
+
                     // ログイン成功時の処理
-                    runOnUiThread(() -> {
-                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                        // 次の画面に遷移
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(intent);
-                    });
+                    try {
+                        JSONObject outerJson = new JSONObject(responseData);
+                        String body = outerJson.getString("body");
+
+                        Log.d("respinsebody", body);
+
+                        JSONObject innerJson = new JSONObject(body);
+                        int userIdInt = innerJson.getInt("user_id");
+
+                        // result_list作成に成功した時の処理
+                        runOnUiThread(() -> {
+                            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+
+                            //UserStockerに保存
+                            userStocker = userStocker.getInstance(context);
+                            if(userStocker != null){
+                                userStocker.setUserInfo(userIdInt, emailAddress);
+                            }
+
+                            // 次の画面に遷移
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                            startActivity(intent);
+
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        runOnUiThread(() ->
+                                Toast.makeText(LoginActivity.this, "Failed to parse response", Toast.LENGTH_SHORT).show()
+                        );
+                    }
+
                 } else {
                     runOnUiThread(() ->
                             Toast.makeText(LoginActivity.this, "Login failed: " + response.code(), Toast.LENGTH_SHORT).show()
@@ -103,7 +133,6 @@ public class LoginActivity extends AppCompatActivity {
 
     // 新規登録画面に遷移するメソッド
     public void onStartCreateButtonTapped(View view) {
-        System.out.println("メッセージ");
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(intent);
     }

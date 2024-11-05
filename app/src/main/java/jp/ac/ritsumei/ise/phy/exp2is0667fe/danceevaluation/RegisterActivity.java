@@ -1,9 +1,12 @@
 package jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,6 +28,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText emailInput;
     private EditText passwordInput;
     private EditText userNameInput;
+
+    private UserStocker userStocker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +104,26 @@ public class RegisterActivity extends AppCompatActivity {
                         response.append(line);
                     }
                     br.close();
+                    Log.d("loginrespomse",response.toString());
+
+                    int userId;
+
+                    //userIdの取得
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response.toString());
+                        userId = jsonResponse.getInt("user_id");
+                        Log.d("userid", "UserID: " + userId);
+                    } catch (JSONException e) {
+                        Log.e("JSONError", "Failed to parse JSON", e);
+                        return "Error: JSON parsing failed";
+                    }
+
+                    //UserStockerに保存
+                    userStocker = userStocker.getInstance(RegisterActivity.this);
+                    if(userStocker != null){
+                        userStocker.setUserInfo(userId, null);
+                    }
+
                     return response.toString();
                 } else {
                     return "Error: " + responseCode;
