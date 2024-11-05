@@ -40,14 +40,15 @@
             android:minHeight="?android:attr/listPreferredItemHeightSmall"
             android:textColor="#DD000000"
             android:textSize="15sp" />
+
         <Button
             android:id="@+id/buttonDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="69dp"
+            android:layout_height="35dp"
             android:backgroundTint="#999999 "
+            android:text="詳細"
             android:textColor="#FFFFFF"
-            android:textSize="12sp"
-            android:text="詳細" />
+            android:textSize="10sp" />
 
 
     </LinearLayout>

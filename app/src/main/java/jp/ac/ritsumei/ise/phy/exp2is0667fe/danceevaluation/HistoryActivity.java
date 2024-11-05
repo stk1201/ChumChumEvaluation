@@ -3,6 +3,7 @@ package jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,11 +50,10 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
 
         // ビューの初期化
-        editUserID = findViewById(R.id.editUserID);
         editMusicName = findViewById(R.id.editMusicName);
         spinnerSortBy = findViewById(R.id.spinnerSortBy);
         listView = findViewById(R.id.result_list);
-        Button buttonSubmit = findViewById(R.id.buttonSubmit);
+        ImageButton buttonSubmit = findViewById(R.id.buttonSubmit);
 
         // ボタンのクリックリスナーを設定
         buttonSubmit.setOnClickListener(v -> sendApiRequest());
@@ -65,7 +65,7 @@ public class HistoryActivity extends AppCompatActivity {
     // APIリクエストを送信するメソッド
     private void sendApiRequest() {
         String url =BuildConfig.GET_HISTORYLIST_API;
-        String userID = editUserID.getText().toString().trim();
+        String userID = "0";
         String musicName = editMusicName.getText().toString().trim();
         String sortBy = spinnerSortBy.getSelectedItem() != null ? spinnerSortBy.getSelectedItem().toString() : "";
 

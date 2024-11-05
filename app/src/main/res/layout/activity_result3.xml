@@ -69,7 +69,8 @@
         android:textColorHint="#808080"
         app:layout_constraintBottom_toTopOf="@+id/button5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"/>
 
     <LinearLayout
         android:id="@+id/graphParentImageView"
