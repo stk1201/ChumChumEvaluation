@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/black"
+    android:backgroundTint="#FFFFFF"
     android:background="#FFFFFF"
     tools:context=".Result2Activity">
 
@@ -19,7 +19,7 @@
 
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="76dp"
+            android:layout_marginTop="4dp"
             android:backgroundTint="#FFFFFF"
 
             android:contentDescription="Home button"
@@ -27,7 +27,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/home_icon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.924"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,11 +37,11 @@
             android:layout_height="98dp"
             android:layout_marginTop="12dp"
             android:text="日付：2024-10-18 10:18:39\n得点: 90 \nランク: A"
-            android:textColor="@color/white"
+            android:textColor="#000000"
             android:textSize="15dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.99"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="96dp"
             android:text="ベストショット"
-            android:textColor="@color/white"
+            android:textColor="#000000"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="伸びしろショット"
-            android:textColor="@color/white"
+            android:textColor="#000000"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -126,23 +126,23 @@
             android:layout_width="100dp"
             android:layout_height="178dp"
             android:layout_marginTop="60dp"
-            android:layout_marginEnd="76dp"
+            android:layout_marginEnd="68dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/textView3"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <Button
-            android:id="@+id/button7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.913"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.022" />
-        <!--        </LinearLayout>-->
+        <!--        <Button-->
+<!--            android:id="@+id/button7"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Button"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.913"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintVertical_bias="0.022" />-->
+<!--        &lt;!&ndash;        </LinearLayout>&ndash;&gt;-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

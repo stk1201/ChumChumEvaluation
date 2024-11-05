@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,36 +10,62 @@
     tools:context=".HistoryActivity">
 
     <EditText
-        android:id="@+id/editUserID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="UserID"
-
-        android:inputType="number" />
-
-    <EditText
         android:id="@+id/editMusicName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Music Name" />
+        android:layout_width="318dp"
+        android:layout_height="45dp"
+        android:hint="曲名"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-6dp"
+        tools:layout_editor_absoluteY="159dp" />
 
     <Spinner
         android:id="@+id/spinnerSortBy"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/buttonSubmit"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#b0e0e6"
-        android:text="Submit"
-        android:textColor="#191970" />
+        tools:layout_editor_absoluteX="6dp"
+        tools:layout_editor_absoluteY="221dp" />
+
+    <ImageButton
+        android:id="@+id/home"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#FFFFFF"
+        android:contentDescription="Home button"
+        android:scaleType="fitCenter"
+        android:src="@drawable/home_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.107" />
+
+    <ImageButton
+        android:id="@+id/buttonSubmit"
+        android:layout_width="53dp"
+        android:layout_height="48dp"
+        android:backgroundTint="#000000"
+        android:src="@drawable/searchicon"
+        android:text="検索"
+        android:textColor="#FFFFFF"
+        tools:layout_editor_absoluteX="322dp"
+        tools:layout_editor_absoluteY="157dp" />
 
     <ListView
         android:id="@+id/result_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" /> <!-- 残りのスペースを占める -->
+        android:layout_width="401dp"
+        android:layout_height="449dp"
+        android:layout_weight="1"
+        tools:layout_editor_absoluteX="-10dp"
+        tools:layout_editor_absoluteY="260dp" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="131dp"
+        android:layout_height="52dp"
+        android:text="採点履歴"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="130dp"
+        tools:layout_editor_absoluteY="79dp" /> <!-- 残りのスペースを占める -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

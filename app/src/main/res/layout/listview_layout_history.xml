@@ -44,10 +44,10 @@
             android:id="@+id/buttonDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#FFC0CB "
-            android:textColor="#191970"
+            android:backgroundTint="#999999 "
+            android:textColor="#FFFFFF"
             android:textSize="12sp"
-            android:text="Detail" />
+            android:text="詳細" />
 
 
     </LinearLayout>
