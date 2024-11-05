@@ -91,6 +91,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     String responseData = response.body().string();
                     Log.d("respinse", responseData);
+                    System.out.println("Response Data: " + responseData);
+
                     System.out.println("RequestBody: " + json);
 
                     // ログイン成功時の処理
@@ -102,7 +104,16 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println("RequestBody: " + json);
 
                         JSONObject innerJson = new JSONObject(body);
-                        int userIdInt = innerJson.getInt("user_id");
+//                        int userIdInt = innerJson.getInt("user_id");
+//                        JSONObject innerJson = new JSONObject(body);
+                        String message = innerJson.getString("message");
+                        JSONObject userData = innerJson.getJSONObject("user_data");
+                        int userIdInt = userData.getInt("user_id");
+                        String emailAddress = userData.getString("email_address");
+
+                        System.out.println("Message: " + message);
+                        System.out.println("User ID: " + userIdInt);
+                        System.out.println("Email Address: " + emailAddress);
 
                         // result_list作成に成功した時の処理
                         runOnUiThread(() -> {
