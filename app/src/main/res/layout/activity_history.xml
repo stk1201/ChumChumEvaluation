@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="#FFFFFF"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".HistoryActivity">
@@ -13,12 +13,11 @@
         android:id="@+id/home"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="86dp"
         android:backgroundTint="#FFFFFF"
         android:contentDescription="Home button"
+        android:onClick="homeButtonTapped"
         android:scaleType="fitCenter"
         android:src="@drawable/home_icon"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

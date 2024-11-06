@@ -37,7 +37,6 @@ import okhttp3.Response;
 
 public class SaveResult {
     private final Activity activity;
-
     private UserStocker userStocker;
     private ResultStocker resultStocker;
     private OkHttpClient client = new OkHttpClient();
@@ -120,7 +119,7 @@ public class SaveResult {
     }
 
     private String getJson(UserStocker userStocker, ResultStocker resultStocker){
-        String jsonData = "{\"UserID\": \"" + String.valueOf(userStocker.getUserId()) + "\""
+        String jsonData = "{\"UserID\": \"" + userStocker.getUserId() + "\""
                 + ", \"MusicName\": \"" + resultStocker.getMusicName() + "\""
                 + ", \"Score\":" + (int)resultStocker.getTotalScore()
                 + ", \"UserBestShot\": \"" +"userbestshot_url" + "\""

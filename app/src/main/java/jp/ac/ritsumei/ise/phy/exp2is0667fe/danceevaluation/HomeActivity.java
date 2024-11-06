@@ -7,6 +7,8 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class HomeActivity extends AppCompatActivity {
+    private UserStocker userStocker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +24,15 @@ public class HomeActivity extends AppCompatActivity {
     //履歴画面に遷移
     public void onHistoryButtonTapped(View view) {
         Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
+    }
+
+    //ログイン画面に遷移
+    public void onLogoutButtonTapped(View view) {
+        userStocker = userStocker.getInstance(this);
+        userStocker.setUserInfo(0, null);
+
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

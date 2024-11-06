@@ -60,4 +60,10 @@ public class Result2Activity extends AppCompatActivity {
         Intent intent = new Intent(this, Result3Activity.class);
         startActivity(intent);
     }
+
+    //ホーム画面に遷移
+    public void homeButtonTapped(View view) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
 }

@@ -65,12 +65,13 @@
         android:ems="10"
         android:hint="タイトル入力"
         android:inputType="text"
+        android:onClick="homeButtonTapped"
         android:textColor="#000000"
         android:textColorHint="#808080"
         app:layout_constraintBottom_toTopOf="@+id/button5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"/>
+        tools:ignore="MissingConstraints" />
 
     <LinearLayout
         android:id="@+id/graphParentImageView"

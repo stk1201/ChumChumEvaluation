@@ -177,4 +177,10 @@ public class DetailResultActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //ホーム画面に遷移
+    public void homeButtonTapped(View view) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
 }

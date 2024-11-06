@@ -3,6 +3,7 @@ package jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -89,5 +90,15 @@ public class Result3Activity extends AppCompatActivity {
             SaveResult saveResult = new SaveResult(this);
             saveResult.saving();
         }
+
+        //ホーム画面に遷移
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    //ホーム画面に遷移
+    public void homeButtonTapped(View view) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
 }

@@ -36,7 +36,9 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class HistoryActivity extends AppCompatActivity {
-    private EditText editUserID, editMusicName;
+    private UserStocker userStocker;
+
+    private EditText editMusicName;
     private OkHttpClient client = new OkHttpClient();
     private Spinner spinnerSortBy;
     private ListView listView;
@@ -72,8 +74,10 @@ public class HistoryActivity extends AppCompatActivity {
 
     // APIリクエストを送信するメソッド
     private void sendApiRequest() {
+        userStocker = userStocker.getInstance(HistoryActivity.this);
+
         String url =BuildConfig.GET_HISTORYLIST_API;
-        String userID = "0";
+        String userID = Integer.toString(userStocker.getUserId());
         String musicName = editMusicName.getText().toString().trim();
         String sortBy = spinnerSortBy.getSelectedItem() != null ? spinnerSortBy.getSelectedItem().toString() : "";
 
@@ -204,6 +208,12 @@ public class HistoryActivity extends AppCompatActivity {
 
         });
 
+    }
+
+    //ホーム画面に遷移
+    public void homeButtonTapped(View view) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
 
 }
