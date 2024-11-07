@@ -46,7 +46,7 @@ public class DetectPoseLandmarker {
         retriever.setDataSource(context, this.video);
 
         int duration = Integer.parseInt(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));//ms
-        int interval = 1000;//ms
+        int interval = 500;//ms
         List<PoseLandmarkerResult> results = new ArrayList<>();
         List<Bitmap> drawBitmaps = new ArrayList<>();
 

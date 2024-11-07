@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000b24"
+    android:background="#FFFFFF"
     tools:context=".MainActivity">
 
 
@@ -13,7 +13,7 @@
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:background="#fffaf0"
-        android:hint="Enter Password"
+        android:hint="パスワードを入力"
         android:inputType="textPassword"
         android:padding="18dp"
         android:textColor="#000000"
@@ -27,13 +27,13 @@
         app:layout_constraintWidth_percent="0.8" />
 
     <EditText
-        android:id="@+id/userIdInput"
+        android:id="@+id/emailAddressInput"
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:background="#fffaf0"
-        android:hint="Enter UserID"
+        android:hint="メールアドレスを入力"
         app:layout_constraintHorizontal_bias="0.5"
-        android:inputType="textPassword"
+        android:inputType="textPersonName"
         android:padding="10dp"
         android:textColor="#000000"
         android:textColorHint="#808080"
@@ -57,7 +57,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.113"
-        app:srcCompat="@drawable/title" />
+        app:srcCompat="@drawable/title2" />
 
     <Button
         android:id="@+id/imageButton3"
@@ -65,15 +65,15 @@
         android:layout_height="78dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="13dp"
-        android:backgroundTint="#b0e0e6"
+        android:backgroundTint="#555555"
         android:contentDescription="Start Button"
         android:onClick="onStartButtonTapped"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="LOGIN"
-        android:textColor="#191970"
+        android:text="ログイン"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
@@ -81,21 +81,21 @@
 
     <Button
         android:id="@+id/registerButton"
-        android:layout_width="160dp"
-        android:layout_height="50dp"
-        android:backgroundTint="#FFC0CB "
+        android:layout_width="250dp"
+        android:layout_height="78dp"
+        android:backgroundTint="#888888"
         android:contentDescription="Register Button"
         android:onClick="onStartCreateButtonTapped"
-        android:text="REGISTER"
-        android:textColor="#191970"
-        android:textSize="18sp"
         android:shadowColor="#000000"
+        android:text="ユーザー登録"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.938"
-        />
+        app:layout_constraintVertical_bias="0.958" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

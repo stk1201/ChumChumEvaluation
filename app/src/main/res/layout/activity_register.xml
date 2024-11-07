@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
     android:padding="16dp"
-    android:background="#000b24">
+    android:background="#FFFFFF">
 
     <!-- Email Address Input -->
 
@@ -20,7 +20,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="48dp"
         android:background="#fffaf0"
-        android:hint="Password"
+        android:hint="パスワード"
         android:inputType="textPassword"
         android:padding="10dp"
         android:textColor="#000000"
@@ -40,7 +40,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="44dp"
         android:background="#fffaf0"
-        android:hint="User Name"
+        android:hint="ユーザーネーム"
         android:inputType="textPersonName"
         android:padding="10dp"
         android:textColor="#000000"
@@ -53,13 +53,13 @@
 
     <Button
         android:id="@+id/registerButton"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_width="228dp"
+        android:layout_height="78dp"
         android:layout_marginTop="28dp"
-        android:backgroundTint="#FFC0CB"
+        android:backgroundTint="#888888"
         android:onClick="onRegisterButtonTapped"
-        android:text="Register"
-        android:textColor="#000000"
+        android:text="ユーザー登録"
+        android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +73,7 @@
         android:layout_height="50dp"
         android:background="#fffaf0"
         android:backgroundTint="#FFFFFF"
-        android:hint="Email Address"
+        android:hint="Emailアドレス"
         android:inputType="textEmailAddress"
         android:padding="10dp"
         android:textColor="#000000"

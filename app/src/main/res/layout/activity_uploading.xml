@@ -4,33 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000b24"
+    android:background="#FFFFFF"
     tools:context=".UploadingActivity">
 
-    <Button
+    <ImageButton
         android:id="@+id/home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="304dp"
-        android:layout_marginBottom="38dp"
-        android:backgroundTint="#b0e0e6"
-        android:text="HOME"
-        android:textColor="#000b24"
-        app:layout_constraintBottom_toTopOf="@+id/MyDance"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#FFFFFF"
+        android:contentDescription="Home button"
+        android:onClick="homeButtonTapped"
+        android:scaleType="fitCenter"
+        android:src="@drawable/home_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--    <Button-->
+    <!--        android:id="@+id/home"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginTop="24dp"-->
+    <!--        android:layout_marginEnd="304dp"-->
+    <!--        android:layout_marginBottom="38dp"-->
+    <!--        android:backgroundTint="#b0e0e6"-->
+    <!--        android:text="HOME"-->
+    <!--        android:textColor="#000b24"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/MyDance"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.0"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
     <TextView
         android:id="@+id/MyDance"
-        android:layout_width="149dp"
-        android:layout_height="24dp"
+        android:layout_width="151dp"
+        android:layout_height="36dp"
         android:layout_marginStart="36dp"
-        android:text="My Dance"
-        android:textColor="@color/white"
+        android:text="私のダンス動画"
+        android:textColor="#000000"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,11 +54,11 @@
 
     <TextView
         android:id="@+id/originalDance"
-        android:layout_width="149dp"
-        android:layout_height="24dp"
+        android:layout_width="188dp"
+        android:layout_height="31dp"
         android:layout_marginStart="32dp"
-        android:text="Original Dance"
-        android:textColor="@color/white"
+        android:text="見本のダンス動画"
+        android:textColor="#000000"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,18 +68,18 @@
 
     <Button
         android:id="@+id/button6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="145dp"
+        android:layout_height="79dp"
         android:layout_marginStart="153dp"
         android:layout_marginEnd="170dp"
-        android:layout_marginBottom="132dp"
-        android:backgroundTint="#FFC0CB "
+        android:layout_marginBottom="84dp"
+        android:backgroundTint="#000000 "
         android:onClick="onResultButtonTapped"
-        android:text="RESULT"
-        android:textColor="#000b24"
+        android:text="結果"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.596"
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
@@ -86,26 +100,29 @@
             android:id="@+id/userFileName"
             android:layout_width="163dp"
             android:layout_height="62dp"
-            android:text="FileURL"
-            android:textColor="@android:color/white" />
+            android:text="URL"
+            android:textColor="#000000"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:scrollHorizontally="true"/>
 
         <Button
             android:id="@+id/userUploading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#FFC0CB "
+            android:backgroundTint="#888888 "
             android:onClick="onUploadButtonTapped"
-            android:text="REF"
-            android:textColor="#000b24" />
+            android:text="参照"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="327dp"
         android:layout_height="104dp"
-        android:layout_marginStart="6dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="78dp"
+        android:layout_marginEnd="52dp"
         android:layout_marginBottom="68dp"
         android:gravity="center"
         android:orientation="horizontal"
@@ -118,18 +135,23 @@
             android:id="@+id/originalFileName"
             android:layout_width="163dp"
             android:layout_height="62dp"
-            android:layout_marginStart="52dp"
-            android:text="FileURL"
-            android:textColor="@android:color/white" />
+            android:text="URL"
+            android:textColor="#000000"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:scrollHorizontally="true" />
 
         <Button
             android:id="@+id/originalUploading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#FFC0CB "
+            android:backgroundTint="#888888 "
             android:onClick="onUploadButtonTapped"
-            android:text="REF"
-            android:textColor="#000b24" />
+            android:text="参照"
+            android:textColor="#FFFFFF"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:scrollHorizontally="true" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

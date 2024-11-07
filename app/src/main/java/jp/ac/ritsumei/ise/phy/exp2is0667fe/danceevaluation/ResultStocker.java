@@ -94,7 +94,7 @@ public class ResultStocker {
         } else if (this.totalScore > 60) {
             this.rank = "center";
         } else if (this.totalScore > 40) {
-            this.rank = "back";
+            this.rank = "backdancer";
         } else if (this.totalScore > 20) {
             this.rank = "practice";
         } else {
@@ -121,8 +121,8 @@ public class ResultStocker {
             case "center":
                 imageView.setImageResource(R.drawable.center);
                 break;
-            case "back":
-                imageView.setImageResource(R.drawable.back);
+            case "backdancer":
+                imageView.setImageResource(R.drawable.backdancer);
                 break;
             case "practice":
                 imageView.setImageResource(R.drawable.practice);
@@ -153,6 +153,9 @@ public class ResultStocker {
                 minScoreTime = t;
             }
         }
+
+        Log.d("Best", Float.toString(maxScoreTime));
+        Log.d("Worst", Float.toString(minScoreTime));
 
         this.userBestShot = userBitmaps.get(maxScoreTime);
         this.originalBestShot = originalBitmaps.get(maxScoreTime);

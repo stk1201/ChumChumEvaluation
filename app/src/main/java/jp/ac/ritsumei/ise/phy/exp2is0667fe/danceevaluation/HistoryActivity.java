@@ -3,6 +3,8 @@ package jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +36,9 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class HistoryActivity extends AppCompatActivity {
-    private EditText editUserID, editMusicName;
+    private UserStocker userStocker;
+
+    private EditText editMusicName;
     private OkHttpClient client = new OkHttpClient();
     private Spinner spinnerSortBy;
     private ListView listView;
@@ -48,12 +52,18 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
+        //ソートレイアウト設定
+        Spinner spinner = findViewById(R.id.spinnerSortBy);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.sort_history, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
         // ビューの初期化
-        editUserID = findViewById(R.id.editUserID);
         editMusicName = findViewById(R.id.editMusicName);
         spinnerSortBy = findViewById(R.id.spinnerSortBy);
         listView = findViewById(R.id.result_list);
-        Button buttonSubmit = findViewById(R.id.buttonSubmit);
+        ImageButton buttonSubmit = findViewById(R.id.buttonSubmit);
 
         // ボタンのクリックリスナーを設定
         buttonSubmit.setOnClickListener(v -> sendApiRequest());
@@ -64,20 +74,13 @@ public class HistoryActivity extends AppCompatActivity {
 
     // APIリクエストを送信するメソッド
     private void sendApiRequest() {
+        userStocker = userStocker.getInstance(HistoryActivity.this);
+
         String url =BuildConfig.GET_HISTORYLIST_API;
-        String userID = editUserID.getText().toString().trim();
+        String userID = Integer.toString(userStocker.getUserId());
         String musicName = editMusicName.getText().toString().trim();
         String sortBy = spinnerSortBy.getSelectedItem() != null ? spinnerSortBy.getSelectedItem().toString() : "";
 
-        // デフォルト値の設定
-        if (userID.isEmpty()) {
-            Toast.makeText(HistoryActivity.this, "ユーザーIDを入力してください", Toast.LENGTH_SHORT).show();
-//            userID = "7"; // デフォルト値として1を設定
-        }
-        if (musicName.isEmpty()) {
-//            musicName = "Symphony No.5"; // 必要に応じてデフォルトの音楽名を設定
-//            Toast.makeText(HistoryActivity.this, "ユーザーIDを入力してください", Toast.LENGTH_SHORT).show();
-        }
         if (sortBy.isEmpty()) {
             sortBy = "Score"; // デフォルトのソート基準を設定
         }
@@ -205,6 +208,12 @@ public class HistoryActivity extends AppCompatActivity {
 
         });
 
+    }
+
+    //ホーム画面に遷移
+    public void homeButtonTapped(View view) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
 
 }

@@ -1,5 +1,6 @@
 package jp.ac.ritsumei.ise.phy.exp2is0667fe.danceevaluation;
 
+import android.util.Log;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.drawable.Drawable;
@@ -27,13 +28,12 @@ import androidx.annotation.Nullable;
 import java.net.URL;
 
 public class DetailResultActivity extends AppCompatActivity {
-    private EditText score,rank;
-    private final String bucket_name="chum-chum-s3";
-    private final String identity_pool_id="  各自入力 ";
+    private final String bucket_name=BuildConfig.S3_BUCKET_NAME;
+    private final String identity_pool_id=BuildConfig.S3_IDENTITY_POOL_ID;
 
-    private String[] file_names=new String[4];
-    private String[] file_URL=new String[4];
-    private int url_index=0;
+    private String[] file_names=new String[5];
+    private String[] file_URL=new String[5];
+    private int url_index = 0;
     private int imagesLoaded = 0;
 
     @Override
@@ -43,30 +43,35 @@ public class DetailResultActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         String Result_id=intent.getStringExtra("Result_id");
+        String MusicName = intent.getStringExtra("MusicName");
         String Score=intent.getStringExtra("Score");
         String Rank=intent.getStringExtra("UserRank");
         String Date=intent.getStringExtra("Date");
 
-        setImageFileName(Result_id);//ファイル名を設定
-        System.out.println("Rank"+Rank+" Result_id "+Result_id);
-        setFileURL(file_names);//ファイルURLを設定
-        setScore_Rate_Date(Score,Rank,Date);
+        //テキスト表示
+        setText(MusicName, Score, Date);
+        //ランク表示
+        setRank(Rank);
 
+        //画像表示
+        setImageFileName(Result_id);
+        setFileURL(file_names);
     }
     private void displayImages(){
         ImageView[] imageViews = {//id設定
-                findViewById(R.id.userbest),
-                findViewById(R.id.originalbest),
-                findViewById(R.id.userworst),
-                findViewById(R.id.originalworst)
+                findViewById(R.id.graph),
+                findViewById(R.id.userbestView),
+                findViewById(R.id.originalbestView),
+                findViewById(R.id.userworstView),
+                findViewById(R.id.originalworstView)
         };
+
         for (int i = 0; i < imageViews.length; i++) {//画面表示
             Glide.with(DetailResultActivity.this)
                     .load(file_URL[i])
                     .listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                System.out.println("Failed to load image: "+ e);
                 return false; // デフォルトのエラー処理も実行する
             }
 
@@ -78,57 +83,104 @@ public class DetailResultActivity extends AppCompatActivity {
                 .into(imageViews[i]);
     }
     }
-    private void setScore_Rate_Date(String Score,String Rank,String Date){
-        TextView Score_Rank_Date=findViewById(R.id.textViewDate_Score_Rank);
-        Score_Rank_Date.setText("日付："+Date+"\n得点:"+ Score+" \nランク:"+Rank);
+    private void setText(String MusicName, String Score, String Date){
+        TextView musicNameView = findViewById(R.id.musicNameView);
+        musicNameView.setText(MusicName);
 
+        TextView dateView = findViewById(R.id.dateView);
+        dateView.setText(Date);
+
+        TextView scoreView = findViewById(R.id.totalScoreView);
+        scoreView.setText(Score);
     }
+
+    private void setRank(String Rank){
+        Log.d("rank", Rank);
+        ImageView rankView = findViewById(R.id.rank);
+        switch (Rank){
+            case "god":
+                rankView.setImageResource(R.drawable.god);
+                break;
+            case "center":
+                rankView.setImageResource(R.drawable.center);
+                break;
+            case "backdancer":
+                rankView.setImageResource(R.drawable.backdancer);
+                break;
+            case "practice":
+                rankView.setImageResource(R.drawable.practice);
+                break;
+            case "normal":
+                rankView.setImageResource(R.drawable.normal);
+                break;
+        }
+    }
+
     public void setImageFileName(String Result_id){
-        file_names[0]=Result_id+"_user_best_shot.png";
-        file_names[1]=Result_id+"_original_best_shot.png";
+        file_names[0] = Result_id+"_graph.png";
 
-        file_names[2]=Result_id+"_user_worst_shot.png";
-        file_names[3]=Result_id+"_original_worst_shot.png";
+        file_names[1]=Result_id+"_user_best_shot.png";
+        file_names[2]=Result_id+"_original_best_shot.png";
+
+        file_names[3]=Result_id+"_user_worst_shot.png";
+        file_names[4]=Result_id+"_original_worst_shot.png";
     }
-    public void backHomeButtonTapped(View view) {//ホームに戻る
-        Intent intent = new Intent(this, HistoryActivity.class);
-        startActivity(intent);
-    }
+
     private void setFileURL(String file_names[]){
-            for(int i=0;i<4;i++){//URLを取得
-                new ImageLoading().execute(file_names[i]);
-            }
-    }private class ImageLoading extends AsyncTask<String,Void,String>{
+        for(int i = 0; i < file_names.length; i++){
+            new ImageLoading().execute(file_names[i]);
+        }
+    }
+
+    private class ImageLoading extends AsyncTask<String,Void,String>{
         @Override
         protected  String doInBackground(String... params){
+            //Cognito認証
             CognitoCachingCredentialsProvider credentialsProvider=new CognitoCachingCredentialsProvider(
                     getApplicationContext(),
                     identity_pool_id,
                     Regions.AP_NORTHEAST_1
             );
+
             AmazonS3 s3Client=new AmazonS3Client(credentialsProvider);
 
             GeneratePresignedUrlRequest urlRequest=new GeneratePresignedUrlRequest(bucket_name,params[0]);
+
             urlRequest.setExpiration(new Date(System.currentTimeMillis()+360000));
 
             URL presignedUrl=s3Client.generatePresignedUrl(urlRequest);
 
             return presignedUrl.toString();
         }
+
         @Override
-        protected void onPostExecute(String result){//バックグラウンド処理後の関数
+        protected void onPostExecute(String result){
             if(result!=null){
-//                System.out.println("Image URL retrieved successfully: " + result);
+                Log.d("imagesLoaded", Integer.toString(imagesLoaded));
+
                 file_URL[url_index]=result;
                 imagesLoaded++;
-                if (imagesLoaded == 4) {
+
+                if (imagesLoaded == file_URL.length) {
                     displayImages();
                 }
             }else {
-                System.out.println("Failed to retrieve image URL.");
+                Log.d("filename", "Failed to retrieve image URL.");
             }
             url_index++;
         }
+    }
+
+    //履歴に戻る
+    public void backHistoryButtonTapped(View view) {
+        Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
+    }
+
+    //ホーム画面に遷移
+    public void homeButtonTapped(View view) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
 
 }

@@ -13,47 +13,47 @@
         android:layout_height="50dp"
         android:backgroundTint="#FFFFFF"
         android:contentDescription="Home button"
+        android:onClick="homeButtonTapped"
         android:scaleType="fitCenter"
         android:src="@drawable/home_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.107" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <Button-->
-<!--        android:id="@+id/home"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginTop="24dp"-->
-<!--        android:layout_marginEnd="304dp"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        android:backgroundTint="#b0e0e6"-->
-<!--        android:text="HOME"-->
-<!--        android:textColor="#000b24"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    <Button-->
+    <!--        android:id="@+id/home"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginTop="24dp"-->
+    <!--        android:layout_marginEnd="304dp"-->
+    <!--        android:layout_marginBottom="16dp"-->
+    <!--        android:backgroundTint="#b0e0e6"-->
+    <!--        android:text="HOME"-->
+    <!--        android:textColor="#000b24"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.0"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-<!--    <Button-->
-<!--        android:id="@+id/button4"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="158dp"-->
-<!--        android:layout_marginTop="59dp"-->
-<!--        android:layout_marginEnd="165dp"-->
-<!--        android:layout_marginBottom="42dp"-->
-<!--        android:backgroundTint="#FFC0CB "-->
-<!--        android:onClick="onNextButtonTapped"-->
-<!--        android:text="NEXT"-->
-<!--        android:textColor="#000b24"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="1.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/userworst" />-->
+    <!--    <Button-->
+    <!--        android:id="@+id/button4"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="158dp"-->
+    <!--        android:layout_marginTop="59dp"-->
+    <!--        android:layout_marginEnd="165dp"-->
+    <!--        android:layout_marginBottom="42dp"-->
+    <!--        android:backgroundTint="#FFC0CB "-->
+    <!--        android:onClick="onNextButtonTapped"-->
+    <!--        android:text="NEXT"-->
+    <!--        android:textColor="#000b24"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="1.0"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/userworst" />-->
 
     <ImageButton
         android:id="@+id/button4"
@@ -88,7 +88,7 @@
         android:layout_height="178dp"
         android:layout_marginStart="59dp"
         android:layout_marginTop="168dp"
-        android:layout_marginEnd="55dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="103dp"
         app:layout_constraintBottom_toTopOf="@+id/userworst"
         app:layout_constraintEnd_toStartOf="@+id/originalbest"
@@ -117,9 +117,9 @@
         android:id="@+id/userworst"
         android:layout_width="100dp"
         android:layout_height="178dp"
-        android:layout_marginStart="49dp"
+        android:layout_marginStart="59dp"
         android:layout_marginTop="19dp"
-        android:layout_marginEnd="65dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="104dp"
         android:maxWidth="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -134,11 +134,15 @@
         android:id="@+id/originalbest"
         android:layout_width="100dp"
         android:layout_height="178dp"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="168dp"
         android:layout_marginEnd="52dp"
+        android:layout_marginBottom="18dp"
         android:maxWidth="300dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintDimensionRatio="9:16"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/userbest"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -146,12 +150,14 @@
         android:id="@+id/originalworst"
         android:layout_width="100dp"
         android:layout_height="178dp"
+        android:layout_marginStart="94dp"
         android:layout_marginTop="47dp"
         android:layout_marginEnd="52dp"
         android:layout_marginBottom="58dp"
         android:maxWidth="300dp"
         app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/userworst"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         app:layout_constraintVertical_bias="0.437"
         tools:srcCompat="@tools:sample/avatars" />
