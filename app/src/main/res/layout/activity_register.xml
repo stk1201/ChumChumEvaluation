@@ -35,10 +35,30 @@
         app:layout_constraintWidth_percent="0.9" />
 
     <EditText
+        android:id="@+id/passwordInput2"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="96dp"
+        android:background="#44888888"
+        android:hint="確認用パスワード"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailInput"
+        app:layout_constraintVertical_bias="0.08"
+        app:layout_constraintWidth_percent="0.9" />
+
+    <EditText
         android:id="@+id/userNameInput"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="96dp"
         android:background="#fffaf0"
         android:hint="ユーザーネーム"
         android:inputType="textPersonName"

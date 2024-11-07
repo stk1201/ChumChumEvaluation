@@ -27,6 +27,7 @@ import java.net.URL;
 public class RegisterActivity extends AppCompatActivity {
     private EditText emailInput;
     private EditText passwordInput;
+    private EditText passwordInput2;
     private EditText userNameInput;
 
     private UserStocker userStocker;
@@ -39,17 +40,23 @@ public class RegisterActivity extends AppCompatActivity {
         // EditText フィールドを取得
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
+        passwordInput2 = findViewById(R.id.passwordInput2);
         userNameInput = findViewById(R.id.userNameInput);
     }
     // ボタンが押されたときに呼ばれるメソッド
     public void onRegisterButtonTapped(View view) {
         String email = emailInput.getText().toString();
         String password = passwordInput.getText().toString();
+        String password2 = passwordInput2.getText().toString();
         String userName = userNameInput.getText().toString();
 
         // フィールドが空の場合、警告を表示
         if (email.isEmpty() || password.isEmpty() || userName.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!password.equals(password2)) {
+            Toast.makeText(this, "パスワードが一致していません", Toast.LENGTH_SHORT).show();
             return;
         }
 

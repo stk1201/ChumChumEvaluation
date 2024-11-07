@@ -35,4 +35,12 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
+
+    //削除ページに遷移
+    public void onDeleteButtonTapped(View view){
+//        Intent intent =new Intent(this, DeleteUserDataDialogFragment.class);
+//        startActivity(intent);
+        DeleteUserDataDialogFragment dialogFragment = new DeleteUserDataDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), "DeleteUserDataDialog");
+    }
 }

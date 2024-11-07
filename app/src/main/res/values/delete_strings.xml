@@ -1,0 +1,11 @@
+<resources>
+    <!-- ダイアログのタイトル -->
+    <string name="dialog_title">データを削除</string>
+
+    <!-- ダイアログのメッセージ -->
+    <string name="dialog_message">本当にデータを削除しますか？</string>
+
+    <!-- ボタンのテキスト -->
+    <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_cancel">キャンセル</string>
+</resources>
