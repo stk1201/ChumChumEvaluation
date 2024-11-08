@@ -14,6 +14,23 @@
 
     <!-- User Name Input -->
 
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="228dp"
+        android:layout_height="78dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="#333333"
+        android:onClick="onRegisterButtonTapped"
+        android:text="ユーザー登録"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userNameInput"
+        app:layout_constraintVertical_bias="0.42" />
+
     <EditText
         android:id="@+id/passwordInput"
         android:layout_width="300dp"
@@ -27,11 +44,11 @@
         android:textColorHint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.481"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailInput"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.002"
         app:layout_constraintWidth_percent="0.9" />
 
     <EditText
@@ -47,45 +64,29 @@
         android:textColorHint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.481"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailInput"
-        app:layout_constraintVertical_bias="0.08"
+        app:layout_constraintVertical_bias="0.059"
         app:layout_constraintWidth_percent="0.9" />
 
     <EditText
         android:id="@+id/userNameInput"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="88dp"
         android:background="#fffaf0"
         android:hint="ユーザーネーム"
         android:inputType="textPersonName"
         android:padding="10dp"
         android:textColor="#000000"
         android:textColorHint="#000000"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordInput"
         app:layout_constraintWidth_percent="0.9" />
-
-    <Button
-        android:id="@+id/registerButton"
-        android:layout_width="228dp"
-        android:layout_height="78dp"
-        android:layout_marginTop="28dp"
-        android:backgroundTint="#888888"
-        android:onClick="onRegisterButtonTapped"
-        android:text="ユーザー登録"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userNameInput" />
 
     <EditText
         android:id="@+id/emailInput"
@@ -101,10 +102,23 @@
         android:textColorHint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.318"
+        app:layout_constraintVertical_bias="0.124"
         app:layout_constraintWidth_percent="0.9" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ログイン画面に戻る"
+        android:backgroundTint="#888888"
+        android:onClick="onLoginBackButtonTapped"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerButton" />
 
     <!-- Register Button -->
 

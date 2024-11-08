@@ -59,24 +59,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
+<!--    <Button-->
+<!--        android:id="@+id/button3"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="152dp"-->
+<!--        android:layout_marginTop="46dp"-->
+<!--        android:layout_marginEnd="153dp"-->
+<!--        android:layout_marginBottom="85dp"-->
+<!--        android:backgroundTint="#888888"-->
+<!--        android:onClick="onLogoutButtonTapped"-->
+<!--        android:text="ログアウト"-->
+<!--        android:textColor="#FFFFFF"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.461"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/button2"-->
+<!--        app:layout_constraintVertical_bias="0.0" />-->
+
+
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="152dp"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="153dp"
-        android:layout_marginBottom="85dp"
         android:backgroundTint="#888888"
         android:onClick="onLogoutButtonTapped"
         android:text="ログアウト"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
 
     <Button
         android:id="@+id/button4"
@@ -85,7 +102,7 @@
         android:backgroundTint="#888888"
         android:onClick="onDeleteButtonTapped"
         android:text="ユーザー削除"
-        android:textColor="#AAFFFF"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

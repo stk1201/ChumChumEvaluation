@@ -43,6 +43,11 @@ public class RegisterActivity extends AppCompatActivity {
         passwordInput2 = findViewById(R.id.passwordInput2);
         userNameInput = findViewById(R.id.userNameInput);
     }
+    public void onLoginBackButtonTapped(View view) {
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(intent);
+
+    }
     // ボタンが押されたときに呼ばれるメソッド
     public void onRegisterButtonTapped(View view) {
         String email = emailInput.getText().toString();

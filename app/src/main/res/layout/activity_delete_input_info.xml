@@ -3,68 +3,76 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteX="-1dp"
+    tools:layout_editor_absoluteY="101dp">
 
     <!-- 確認メッセージ -->
     <TextView
         android:id="@+id/textViewConfirmation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="本当に削除してもいいですか？\n情報を入力してください"
+        android:layout_marginTop="100dp"
+        android:text="本当に削除してもいいですか？\n\n以下に情報を入力してください"
         android:textSize="18sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- メールアドレス入力フォーム -->
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
         android:hint="メールアドレス"
         android:inputType="textEmailAddress"
-        app:layout_constraintTop_toBottomOf="@id/textViewConfirmation"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewConfirmation" />
 
     <!-- パスワード入力フォーム -->
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
         android:hint="パスワード"
         android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@id/editTextEmail"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextEmail" />
 
     <!-- 削除ボタン -->
     <Button
         android:id="@+id/buttonDelete"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="削除"
-        app:layout_constraintTop_toBottomOf="@id/editTextPassword"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#333333"
+        android:text="削除"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextPassword" />
 
     <!-- キャンセルボタン -->
     <Button
         android:id="@+id/buttonCancel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="キャンセル"
-        app:layout_constraintTop_toBottomOf="@id/buttonDelete"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#888888"
+        android:text="キャンセル"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonDelete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
