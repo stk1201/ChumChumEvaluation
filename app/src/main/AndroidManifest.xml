@@ -3,10 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:enableOnBackInvokedCallback="true"
-        android:hardwareAccelerated="false"
+        android:hardwareAccelerated="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -45,6 +46,9 @@
             android:exported="false" />
         <activity
             android:name=".DeleteUserDataDialogFragment"
+            android:exported="false"/>
+        <activity
+            android:name=".DeleteUserInfoActivity"
             android:exported="false"/>
         <activity
             android:name=".LoginActivity"
