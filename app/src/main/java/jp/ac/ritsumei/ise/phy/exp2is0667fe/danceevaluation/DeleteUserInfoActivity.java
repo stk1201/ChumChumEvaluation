@@ -171,7 +171,7 @@ public class DeleteUserInfoActivity extends AppCompatActivity {
         );
 
         // リクエストの作成
-        String url = "https://tb78lilb8f.execute-api.ap-northeast-1.amazonaws.com/chum/delete";
+        String url = BuildConfig.DELETE_ACCOUNT_API;
         System.out.println( "URL: " + url);
         System.out.println("Request Body: " + outerJson.toString());
 
