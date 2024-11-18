@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アカウント削除確認</title>
+</head>
+<body>
+    <h2>アカウント削除確認</h2>
+    <p>アカウントを削除するには、以下の情報を入力して「削除」ボタンを押してください。</p>
+
+    <form id="deleteForm">
+        <label for="email">メールアドレス:</label>
+        <input type="text" id="email" name="email_address" required><br><br>
+        <label for="password">パスワード:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <button type="submit">削除</button>
+    </form>
+
+    <div id="message"></div>
+    <div id="requestDetails"></div>
+
+    <script>
+        document.getElementById("deleteForm").addEventListener("submit", async (event) => {
+            event.preventDefault(); // フォームのデフォルト送信を防止
+
+            // 入力されたメールアドレスとパスワードを取得
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            // APIリクエスト用のbodyを指定の形式に合わせて作成
+            const bodyData = {
+                body: JSON.stringify({
+                    email_address: email,
+                    password: password
+                })
+            };
+
+            // APIエンドポイント
+            const apiUrl = "https://tb78lilb8f.execute-api.ap-northeast-1.amazonaws.com/chum/delete";
+
+            // リクエストの送信
+            try {
+                // リクエストの詳細を表示
+                document.getElementById("requestDetails").innerText = `送信先URL: ${apiUrl}\n送信ボディ: ${JSON.stringify(bodyData, null, 2)}`;
+
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(bodyData)
+                });
+
+                const responseText = await response.text(); // レスポンスをテキスト形式で取得
+
+                // レスポンスの処理
+                if (response.ok) {
+                    document.getElementById("message").innerText = `成功: ${responseText}`;
+                } else {
+                    document.getElementById("message").innerText = `失敗: ${responseText}`;
+                }
+            } catch (error) {
+                document.getElementById("message").innerText = `エラーが発生しました: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
